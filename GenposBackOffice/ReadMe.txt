@@ -2,10 +2,14 @@
     MICROSOFT FOUNDATION CLASS LIBRARY : GenposBackOffice Project Overview
 ===============================================================================
 
-The application wizard has created this GenposBackOffice application for 
-you.  This application not only demonstrates the basics of using the Microsoft 
-Foundation Classes but is also a starting point for writing your application.
-
+The application GenposBackOffice is an MFC application to provide an interface to a
+GenPOS terminal in order to provide an interface for provisioning and managing a
+GenPOS point of sale cluster. This application has the following target audience and
+environment:
+ - access to a GenPOS cluster using a LAN connection
+ - provide a mechanism for pulling data from a terminal or pushing data to a terminal
+ - allow for multiple clusters each with its own settings one cluster at a time
+ 
 This file contains a summary of what you will find in each of the files that
 make up your GenposBackOffice application.
 
