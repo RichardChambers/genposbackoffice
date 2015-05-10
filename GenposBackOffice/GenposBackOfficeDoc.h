@@ -4,6 +4,8 @@
 #pragma once
 
 #include "TotalRegFin.h"
+#include "ParamFlexMem.h"
+#include "ParamMdc.h"
 
 class CGenposBackOfficeDoc : public COleDocument
 {
@@ -16,13 +18,17 @@ public:
 	CString  m_csHostName;      // host name prefix for this cluster group without the dash (-) and terminal number
 	CString  m_csLastTermNo;    // last terminal number, used with m_csHostName to create DHCP target
 	CString  m_csHostMemo;      // memo information about this cluster group.
+	CString  m_csHostFlexMem;   // information concerning last retrieval of flex mem settings.
 	CString  m_csHostSession;   // either terminal host name or 
 	CString  m_csHostSessionPassword;
+	DWORD    m_dwHostSessionIpAddress;
 	BOOL     m_bLanOpen;
 	BOOL     m_bLanLogInto;
 	short    m_sLanLastError;
 
-	CTotalRegFin  totalRegFinCurDay;
+	CTotalRegFin   totalRegFinCurDay;
+	CParamFlexMem  paramFlexMem;
+	CParamMdc      paramMdc;
 
 // Operations
 public:
@@ -52,6 +58,7 @@ public:
 	afx_msg void OnTerminalLogout();
 	afx_msg void OnTerminalTotalretrieve();
 	afx_msg void OnTerminalEndOfDay();
+	afx_msg void OnTerminalFlexmretrieve();
 };
 
 

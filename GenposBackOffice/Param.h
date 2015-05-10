@@ -14,8 +14,8 @@ public:
 
 	CParam(void);
 	virtual ~CParam(void);
-	virtual ParamClassStruct *getParamStructPtr (void) = 0;
-	virtual short RetrieveParam (void) = 0;
+	virtual short PullParam (void) = 0;
+	virtual short PushParam (void) = 0;
 
 public:
 	short     m_sLastError;

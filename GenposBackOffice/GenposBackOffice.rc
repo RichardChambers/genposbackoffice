@@ -142,6 +142,7 @@ BEGIN
         MENUITEM "Log into ...",                ID_TERMINAL_LOGINTO
         MENUITEM "Log out",                     ID_TERMINAL_LOGOUT
         MENUITEM "Total Retrieve ...",          ID_TERMINAL_TOTALRETRIEVE
+        MENUITEM "Flexm Retrieve ...",          ID_TERMINAL_FLEXMRETRIEVE
     END
     POPUP "&Help"
     BEGIN

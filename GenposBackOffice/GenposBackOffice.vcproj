@@ -220,6 +220,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Lister.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ListerCashier.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -229,6 +237,14 @@
 			</File>
 			<File
 				RelativePath=".\ParamCashier.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamFlexMem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamMdc.cpp"
 				>
 			</File>
 			<File
@@ -310,6 +326,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Lister.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ListerCashier.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.h"
 				>
 			</File>
@@ -319,6 +343,14 @@
 			</File>
 			<File
 				RelativePath=".\ParamCashier.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamFlexMem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamMdc.h"
 				>
 			</File>
 			<File
