@@ -44,6 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\pcif\Include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -67,7 +68,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="NCR2172Pif_20.lib NCR2172Stub_20.lib PifNetPc.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="..\pcif\Lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -126,6 +129,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\pcif\Include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -148,7 +152,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="NCR2172Pif_20.lib NCR2172Stub_20.lib PifNetPc.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\pcif\Lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -194,6 +200,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DialogLan.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogLanLogin.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GenposBackOffice.cpp"
 				>
 			</File>
@@ -207,6 +221,14 @@
 			</File>
 			<File
 				RelativePath=".\MainFrm.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Param.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamCashier.cpp"
 				>
 			</File>
 			<File
@@ -229,6 +251,30 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\Total.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalCashier.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalCoupon.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalIndRegFin.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalMajorDept.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalRegFin.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -236,7 +282,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\a_globals.h"
+				>
+			</File>
+			<File
 				RelativePath=".\CntrItem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogLan.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogLanLogin.h"
 				>
 			</File>
 			<File
@@ -253,6 +311,14 @@
 			</File>
 			<File
 				RelativePath=".\MainFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Param.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamCashier.h"
 				>
 			</File>
 			<File
@@ -281,6 +347,30 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Total.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalCashier.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalCoupon.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalIndRegFin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalMajorDept.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TotalRegFin.h"
 				>
 			</File>
 		</Filter>
@@ -783,5 +873,9 @@
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="GenposBackOffice.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

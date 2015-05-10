@@ -1,4 +1,4 @@
-//Microsoft Visual C++ generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -7,44 +7,51 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-
 #include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
-#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
 
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE  
+1 TEXTINCLUDE 
 BEGIN
-	"resource.h\0"
+    "resource.h\0"
 END
 
-2 TEXTINCLUDE  
+2 TEXTINCLUDE 
 BEGIN
-	"#include ""afxres.h""\r\n"
-	"\0"
+    "#include ""afxres.h""\r\n"
+    "\0"
 END
 
-3 TEXTINCLUDE  
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
-	"\r\n"
-	"#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-	"LANGUAGE 9, 1\r\n"
-	"#pragma code_page(1252)\r\n"
-	"#include ""res\\GenposBackOffice.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-	"#include ""afxres.rc""  	// Standard components\r\n"
-	"#include ""afxprint.rc""	// printing/print preview resources\r\n"
-	"#include ""afxolecl.rc""	// OLE container resources\r\n"
-	"#endif\r\n"
-	"\0"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\GenposBackOffice.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#include ""afxolecl.rc""       // OLE container resources\r\n"
+    "#endif\r\n"
+    "\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -57,115 +64,113 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\GenposBackOffice.ico"
+IDR_GenposBackOfficTYPE ICON                    "res\\GenposBackOfficeDoc.ico"
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE 9, 1
-#pragma code_page(1252)
-IDR_MAINFRAME           ICON         "res\\GenposBackOffice.ico"
-IDR_GenposBackOfficTYPE         ICON         "res\\GenposBackOfficeDoc.ico"
-#endif
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP      "res\\Toolbar.bmp"
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR   16, 15
+IDR_MAINFRAME TOOLBAR  16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
-	SEPARATOR
+    SEPARATOR
     BUTTON      ID_EDIT_CUT
     BUTTON      ID_EDIT_COPY
     BUTTON      ID_EDIT_PASTE
-	SEPARATOR
+    SEPARATOR
     BUTTON      ID_FILE_PRINT
     BUTTON      ID_APP_ABOUT
     BUTTON      ID_CONTEXT_HELP
 END
 
 
-
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE 9, 1
-#pragma code_page(1252)
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDR_MAINFRAME MENU   
+IDR_MAINFRAME MENU 
 BEGIN
-	POPUP "&File"
-	BEGIN
-		MENUITEM "New &Frame",                  ID_FILE_NEW_FRAME
-		MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-		MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-		MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-		MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
-		MENUITEM SEPARATOR
-		MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
-		MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
-		MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
-		MENUITEM SEPARATOR
-		MENUITEM "Recent File",                 ID_FILE_MRU_FILE1,GRAYED
-		MENUITEM SEPARATOR
-		MENUITEM "E&xit",                       ID_APP_EXIT
-	END
-	POPUP "&Edit"
-	BEGIN
-		MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
-		MENUITEM SEPARATOR
-		MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-		MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-		MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    POPUP "&File"
+    BEGIN
+        MENUITEM "New &Frame",                  ID_FILE_NEW_FRAME
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "Paste &Special...",           ID_EDIT_PASTE_SPECIAL
         MENUITEM SEPARATOR
         MENUITEM "Insert &New Object...",       ID_OLE_INSERT_NEW
         MENUITEM "Lin&ks...",                   ID_OLE_EDIT_LINKS
         MENUITEM "<<OLE VERBS GO HERE>>",       ID_OLE_VERB_FIRST
-	END
-	POPUP "&View"
-	BEGIN
-		MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
-		MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
-	END
-	POPUP "&Help"
-	BEGIN
-		MENUITEM "&Help Topics",                ID_HELP_FINDER
-		MENUITEM SEPARATOR
-		MENUITEM "&About GenposBackOffice...",          ID_APP_ABOUT
-	END
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "Lan Connection ...",          ID_VIEW_LANCONNECTION
+    END
+    POPUP "Terminal"
+    BEGIN
+        MENUITEM "Log into ...",                ID_TERMINAL_LOGINTO
+        MENUITEM "Log out",                     ID_TERMINAL_LOGOUT
+        MENUITEM "Total Retrieve ...",          ID_TERMINAL_TOTALRETRIEVE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help Topics",                ID_HELP_FINDER
+        MENUITEM SEPARATOR
+        MENUITEM "&About GenposBackOffice...",  ID_APP_ABOUT
+    END
 END
 
-IDR_CNTR_INPLACE MENU   
+IDR_CNTR_INPLACE MENU 
 BEGIN
-	POPUP "&File"
-	BEGIN
-		MENUITEM "New &Frame",                  ID_FILE_NEW_FRAME
-		MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-		MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-		MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-		MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
-		MENUITEM SEPARATOR
-		MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
-		MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
-		MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
-		MENUITEM SEPARATOR
-		MENUITEM "Recent File",                 ID_FILE_MRU_FILE1,GRAYED
-		MENUITEM SEPARATOR
-		MENUITEM "E&xit",                       ID_APP_EXIT
-	END
-	MENUITEM SEPARATOR
-	MENUITEM SEPARATOR
+    POPUP "&File"
+    BEGIN
+        MENUITEM "New &Frame",                  ID_FILE_NEW_FRAME
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    MENUITEM SEPARATOR
+    MENUITEM SEPARATOR
 END
 
 
@@ -174,40 +179,39 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS   
+IDR_MAINFRAME ACCELERATORS 
 BEGIN
-	"N",            ID_FILE_NEW,            VIRTKEY,CONTROL
-	"O",            ID_FILE_OPEN,           VIRTKEY,CONTROL
-	"S",            ID_FILE_SAVE,           VIRTKEY,CONTROL
-	"P",            ID_FILE_PRINT,          VIRTKEY,CONTROL
-	"Z",            ID_EDIT_UNDO,           VIRTKEY,CONTROL
-	"X",            ID_EDIT_CUT,            VIRTKEY,CONTROL
-	"C",            ID_EDIT_COPY,           VIRTKEY,CONTROL
-	"V",            ID_EDIT_PASTE,          VIRTKEY,CONTROL
-	VK_BACK,        ID_EDIT_UNDO,           VIRTKEY,ALT
-	VK_DELETE,      ID_EDIT_CUT,            VIRTKEY,SHIFT
-	VK_INSERT,      ID_EDIT_COPY,           VIRTKEY,CONTROL
-	VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY,SHIFT
-	VK_F6,          ID_NEXT_PANE,           VIRTKEY 
-	VK_F6,          ID_PREV_PANE,           VIRTKEY,SHIFT
-	VK_F1,          ID_CONTEXT_HELP,        VIRTKEY,SHIFT
-	VK_F1,          ID_HELP,                VIRTKEY
-    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,   	VIRTKEY,NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT
+    VK_F1,          ID_HELP,                VIRTKEY 
+    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,    VIRTKEY, NOINVERT
 END
 
-IDR_CNTR_INPLACE ACCELERATORS   
+IDR_CNTR_INPLACE ACCELERATORS 
 BEGIN
-	"N",            ID_FILE_NEW,            VIRTKEY,CONTROL
-	"O",            ID_FILE_OPEN,           VIRTKEY,CONTROL
-	"S",            ID_FILE_SAVE,           VIRTKEY,CONTROL
-	"P",            ID_FILE_PRINT,          VIRTKEY,CONTROL
-	VK_F6,          ID_NEXT_PANE,           VIRTKEY 
-	VK_F6,          ID_PREV_PANE,           VIRTKEY,SHIFT
-	VK_F1,          ID_CONTEXT_HELP,        VIRTKEY,SHIFT
-	VK_F1,          ID_HELP,                VIRTKEY
-    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,   	VIRTKEY,NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT
+    VK_F1,          ID_HELP,                VIRTKEY 
+    VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,    VIRTKEY, NOINVERT
 END
-
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -215,18 +219,46 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX   0, 0, 235, 55
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About GenposBackOffice"
-STYLE DS_MODALFRAME | DS_SHELLFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU
-FONT 8, "MS Shell Dlg"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-	ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-	LTEXT           "GenposBackOffice Version 1.0",IDC_STATIC,40,10,119,8,
-                    SS_NOPREFIX
-	LTEXT           "Copyright (C) 2015",IDC_STATIC,40,25,119,8
-	DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "GenposBackOffice Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2015",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
 END
 
+IDD_DIALOGLAN DIALOGEX 0, 0, 186, 95
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Lan Connection Details"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,129,26,50,16
+    LTEXT           "Host Name:",IDC_STATIC,7,7,45,11
+    EDITTEXT        IDC_EDIT_HOSTNAME,63,7,53,14,ES_AUTOHSCROLL
+    LTEXT           "Host memo",IDC_STATIC,7,31,42,11
+    EDITTEXT        IDC_EDIT_HOSTMEMO,7,49,172,39,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN
+END
+
+IDD_DIALOGLANLOGIN DIALOGEX 0, 0, 186, 129
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Log into terminal"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,129,26,50,16
+    LTEXT           "Terminal No.:",IDC_STATIC,7,30,50,13
+    LTEXT           "Host",IDC_STATIC_HOSTNAME,7,7,68,13
+    EDITTEXT        IDC_EDIT_TERM_NO,65,27,17,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Use IP address, not DHCP Lookup of Host Name",IDC_CHECK_USE_IP_ADDRESS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,53,131,13
+    CONTROL         "",IDC_IPADDRESS1,"SysIPAddress32",WS_TABSTOP,7,73,81,12
+    LTEXT           "Password",IDC_STATIC,7,103,33,10
+    EDITTEXT        IDC_EDIT_PASSWORD,48,100,65,13,ES_PASSWORD | ES_AUTOHSCROLL
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -234,9 +266,9 @@ END
 // Version
 //
 
-VS_VERSION_INFO     VERSIONINFO
-  FILEVERSION       1,0,0,1
-  PRODUCTVERSION    1,0,0,1
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -247,25 +279,26 @@ VS_VERSION_INFO     VERSIONINFO
  FILETYPE 0x1L
  FILESUBTYPE 0x0L
 BEGIN
-	BLOCK "StringFileInfo"
-	BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
         BLOCK "040904e4"
-		BEGIN 
+        BEGIN
             VALUE "CompanyName", "TODO: <Company name>"
             VALUE "FileDescription", "TODO: <File description>"
-			VALUE "FileVersion",     "1.0.0.1"
-			VALUE "InternalName",    "GenposBackOffice.exe"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "GenposBackOffice.exe"
             VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
-			VALUE "OriginalFilename","GenposBackOffice.exe"
+            VALUE "OriginalFilename", "GenposBackOffice.exe"
             VALUE "ProductName", "TODO: <Product name>"
-			VALUE "ProductVersion",  "1.0.0.1"
-		END
-	END
-	BLOCK "VarFileInfo" 
-	BEGIN 
-		VALUE "Translation", 0x0409, 1252
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
     END
 END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -273,7 +306,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO  
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -282,135 +315,198 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 48
     END
+
+    IDD_DIALOGLAN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_DIALOGLANLOGIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 122
+    END
 END
 #endif    // APSTUDIO_INVOKED
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE  
+STRINGTABLE 
 BEGIN
-	IDP_OLE_INIT_FAILED   	"OLE initialization failed.  Make sure that the OLE libraries are the correct version."
-	IDP_FAILED_TO_CREATE	"Failed to create object.  Make sure the object is entered in the system registry."
-	IDP_SOCKETS_INIT_FAILED	"Windows sockets initialization failed."
-END
-STRINGTABLE   
-BEGIN
-// Non-mac-targeting apps remove the two extra substrings
-  // has a file suffix
-	IDR_MAINFRAME           "GenposBackOffice\n\nGenposBackOffic\nGenposBackOffice Files (*.gpbo)\n.gpbo\nGenposBackOffice.Document\nGenposBackOffice.Document"
-
-END
-STRINGTABLE   
-BEGIN
-	AFX_IDS_APP_TITLE       "GenposBackOffice"
-	AFX_IDS_IDLEMESSAGE     "For Help, press F1"
-	AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
-END
-STRINGTABLE  
-BEGIN
-	ID_INDICATOR_EXT        "EXT"
-	ID_INDICATOR_CAPS       "CAP"
-	ID_INDICATOR_NUM        "NUM"
-	ID_INDICATOR_SCRL       "SCRL"
-	ID_INDICATOR_OVR        "OVR"
-	ID_INDICATOR_REC        "REC"
-END
-STRINGTABLE  
-BEGIN
-	ID_FILE_NEW_FRAME		"Create a new frame\nNew Frame"
-	ID_FILE_NEW             "Create a new document\nNew"
-	ID_FILE_OPEN            "Open an existing document\nOpen"
-	ID_FILE_CLOSE           "Close the active document\nClose"
-	ID_FILE_SAVE            "Save the active document\nSave"
-	ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
-	ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
-	ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
-	ID_FILE_PRINT           "Print the active document\nPrint"
-	ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
-	ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
-	ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
-	ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
-	ID_HELP_INDEX           "Opens Help\nHelp Topics"
-	ID_HELP_FINDER			"List Help topics\nHelp Topics"
-	ID_HELP_USING           "Display instructions about how to use help\nHelp"
-	ID_HELP                 "Display help for current task or command\nHelp"
-	ID_FILE_MRU_FILE1       "Open this document"
-	ID_FILE_MRU_FILE2       "Open this document"
-	ID_FILE_MRU_FILE3       "Open this document"
-	ID_FILE_MRU_FILE4       "Open this document"
-	ID_FILE_MRU_FILE5       "Open this document"
-	ID_FILE_MRU_FILE6       "Open this document"
-	ID_FILE_MRU_FILE7       "Open this document"
-	ID_FILE_MRU_FILE8       "Open this document"
-	ID_FILE_MRU_FILE9       "Open this document"
-	ID_FILE_MRU_FILE10      "Open this document"
-	ID_FILE_MRU_FILE11      "Open this document"
-	ID_FILE_MRU_FILE12      "Open this document"
-	ID_FILE_MRU_FILE13      "Open this document"
-	ID_FILE_MRU_FILE14      "Open this document"
-	ID_FILE_MRU_FILE15      "Open this document"
-	ID_FILE_MRU_FILE16      "Open this document"
-	ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
-	ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
-	ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
-	ID_EDIT_CLEAR           "Erase the selection\nErase"
-	ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
-	ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
-	ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
-	ID_EDIT_FIND            "Find the specified text\nFind"
-	ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
-	ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
-	ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
-	ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
-	ID_EDIT_UNDO            "Undo the last action\nUndo"
-	ID_EDIT_REDO            "Redo the previously undone action\nRedo"
-	ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
-	ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
-	ID_EDIT_PASTE_LINK      "Insert Clipboard contents and a link to its source\nPaste Link"
-	ID_EDIT_PASTE_SPECIAL	"Insert Clipboard contents with options\nPaste Special"
-	ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
-	ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
-	ID_OLE_VERB_FIRST       "Activate embedded or linked object"
-	57873					"Activate embedded or linked object"
-	57874					"Activate embedded or linked object"
-	57875					"Activate embedded or linked object"
-	ID_OLE_EDIT_CONVERT		"Convert object to different type\nConvert Object"
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+    IDP_FAILED_TO_CREATE    "Failed to create object.  Make sure the object is entered in the system registry."
+    IDP_SOCKETS_INIT_FAILED "Windows sockets initialization failed."
 END
 
-STRINGTABLE  
+STRINGTABLE 
 BEGIN
-	AFX_IDS_SCSIZE          "Change the window size"
-	AFX_IDS_SCMOVE          "Change the window position"
-	AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
-	AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
-	AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
-	AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
-	AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
-	AFX_IDS_SCRESTORE       "Restore the window to normal size"
-	AFX_IDS_SCTASKLIST      "Activate Task List"
-	AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+    IDR_MAINFRAME           "GenposBackOffice\n\nGenposBackOffic\nGenposBackOffice Files (*.gpbo)\n.gpbo\nGenposBackOffice.Document\nGenposBackOffice.Document"
 END
 
-#endif
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "GenposBackOffice"
+    AFX_IDS_IDLEMESSAGE     "For Help, press F1"
+    AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+    ID_FILE_NEW_FRAME       "Create a new frame\nNew Frame"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_HELP_INDEX           "Opens Help\nHelp Topics"
+    ID_HELP_FINDER          "List Help topics\nHelp Topics"
+    ID_HELP_USING           "Display instructions about how to use help\nHelp"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
+    ID_HELP                 "Display help for current task or command\nHelp"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_PASTE_LINK      "Insert Clipboard contents and a link to its source\nPaste Link"
+    ID_EDIT_PASTE_SPECIAL   "Insert Clipboard contents with options\nPaste Special"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
+    ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
+    ID_OLE_EDIT_CONVERT     "Convert object to different type\nConvert Object"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_OLE_VERB_FIRST       "Activate embedded or linked object"
+    57873                   "Activate embedded or linked object"
+    57874                   "Activate embedded or linked object"
+    57875                   "Activate embedded or linked object"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
 #define _AFX_NO_SPLITTER_RESOURCES
 #define _AFX_NO_PROPERTY_RESOURCES
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1
 #pragma code_page(1252)
-#include "res\\GenposBackOffice.rc2"  // non-Microsoft Visual C++ edited resources
-#include "afxres.rc"  	// Standard components
-#include "afxprint.rc"  // printing/print preview resources
-#include "afxolecl.rc"  // OLE container resources
+#include "res\GenposBackOffice.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#include "afxolecl.rc"       // OLE container resources
 #endif
+
+/////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+

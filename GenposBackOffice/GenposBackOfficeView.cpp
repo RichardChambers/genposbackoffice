@@ -67,6 +67,10 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	CRect currentLine(m_firstTextLine);
 	pDC->DrawText (pDoc->m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
 	currentLine += m_lineIncrement;
+	currentLine.bottom += 300;
+	currentLine.right  += 50;
+	pDC->DrawText (pDoc->m_csHostMemo, currentLine, DT_LEFT | DT_VCENTER | DT_WORDBREAK);
+	currentLine += m_lineIncrement;
 
 	// TODO: also draw all OLE items in the document
 	POSITION pos = pDoc->GetStartPosition ();
@@ -110,7 +114,6 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 void CGenposBackOfficeView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
-
 
 	// TODO: remove this code when final selection model code is written
 	m_pSelection = NULL;    // initialize selection
