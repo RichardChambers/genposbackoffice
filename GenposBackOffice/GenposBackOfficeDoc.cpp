@@ -94,6 +94,11 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 		ar >> m_csHostMemo;
 	}
 
+	paramFlexMem.Serialize (ar);
+	if (!ar.IsStoring()) {
+		paramFlexMem.SummaryToText (m_csHostFlexMem);
+	}
+
 	// Calling the base class COleDocument enables serialization
 	//  of the container document's COleClientItem objects.
 	COleDocument::Serialize(ar);
@@ -221,50 +226,11 @@ void CGenposBackOfficeDoc::OnTerminalEndOfDay()
 void CGenposBackOfficeDoc::OnTerminalFlexmretrieve()
 {
 	if (m_bLanOpen && m_bLanLogInto) {
-		TCHAR *pFormat = _T("Guest Check System:\n\t%s \nMax # of Guest Checks\t\t\t%-4d\t \n\tMax # of Items in G.C.\t\t%-3d\t \n\tMax # of Items in Transaction\t%-3d\n \nMax # of Departments\t\t\t%-3d \n\tPTD - %d \nMax # of PLU\t\t\t\t%-6d \n\tPTD - %d \nMax # of Operators\t\t\t%-3d \n\tPTD - %d \nMax # of Coupons\t\t\t%-3d \n\tPTD - %d \nMax # of EJ\t\t\t\t%-4d \n\tO/R - %d \nMax # of Employees\t\t\t%-3d \nMax # of Control Strings\t\t\t%-4d \nMax # of PPI\t\t\t\t%-3d \nProgrammable Report Size\t\t\t%-2d");
-		TCHAR *szGCSys, *pGcSystem [] = {
-			_T("Pre-GuestCheck Buffering"),
-			_T("Pre-GuestCheck UnBuffering"),
-			_T("Post GuestCheck Buffering"),
-			_T("Store/Recall Buffering"),
-			_T("")
-		};
-
 		paramFlexMem.PullParam ();
 		paramMdc.PullParam ();
 
-		unsigned short test = 0;
-		test = paramMdc.GetMdcValue (17, CParamMdc::MdcBitD);
-		test = paramMdc.GetMdcValue (17, CParamMdc::MdcBitC);
-		test = paramMdc.GetMdcValue (17, CParamMdc::MdcBitB);
-		test = paramMdc.GetMdcValue (17, CParamMdc::MdcBitA);
-		test = paramMdc.GetMdcValue (18, CParamMdc::MdcBitD);
-		test = paramMdc.GetMdcValue (18, CParamMdc::MdcBitC);
-		test = paramMdc.GetMdcValue (18, CParamMdc::MdcBitB);
-		test = paramMdc.GetMdcValue (18, CParamMdc::MdcBitA);
-
-		int  nGcSysMax = sizeof(pGcSystem)/sizeof(pGcSystem[0]);
-		int  nGcSysType = paramFlexMem.m_paraFlexMem[8].uchPTDFlag;
-		szGCSys = (nGcSysType < nGcSysMax) ? pGcSystem[nGcSysType] : pGcSystem[nGcSysMax - 1];
-
-		m_csHostFlexMem.Format (pFormat,
-			   	  szGCSys,
-				  paramFlexMem.m_paraFlexMem[8].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[7].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[6].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[0].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[0].uchPTDFlag,
-				  paramFlexMem.m_paraFlexMem[1].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[1].uchPTDFlag,
-				  paramFlexMem.m_paraFlexMem[3].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[3].uchPTDFlag,
-				  paramFlexMem.m_paraFlexMem[9].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[9].uchPTDFlag,
-				  paramFlexMem.m_paraFlexMem[4].ulRecordNumber,
-                  paramFlexMem.m_paraFlexMem[4].uchPTDFlag,
-				  paramFlexMem.m_paraFlexMem[5].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[10].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[12].ulRecordNumber,
-				  paramFlexMem.m_paraFlexMem[11].ulRecordNumber);
+		paramFlexMem.SummaryToText (m_csHostFlexMem);
+		SetModifiedFlag ();
+		UpdateAllViews (NULL);
 	}
 }

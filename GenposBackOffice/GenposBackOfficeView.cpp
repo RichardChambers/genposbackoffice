@@ -66,6 +66,13 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	// TODO: add draw code for native data here
 	CRect currentLine(m_firstTextLine);
 	pDC->DrawText (pDoc->m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
+	if (!pDoc->m_csHostFlexMem.IsEmpty()) {
+		CRect rectFlexMem(currentLine);
+		rectFlexMem.left += currentLine.right + 20;
+		rectFlexMem.right += currentLine.right + 100;
+		rectFlexMem.bottom += 700;
+		pDC->DrawText (pDoc->m_csHostFlexMem, rectFlexMem, DT_LEFT | DT_VCENTER | DT_WORDBREAK | DT_EXPANDTABS);
+	}
 	currentLine += m_lineIncrement;
 	currentLine.bottom += 300;
 	currentLine.right  += 50;
@@ -88,6 +95,7 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 		}
 		cDoc->Draw(pDC, rect);
 	}
+
 
 	// Draw the selection at an arbitrary position.  This code should be
 	//  removed once your real drawing code is implemented.  This position
