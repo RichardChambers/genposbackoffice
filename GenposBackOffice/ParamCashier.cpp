@@ -10,18 +10,28 @@ CParamCashier::~CParamCashier(void)
 {
 }
 
-short CParamCashier::PullParam (CashierId cashierNo /* = 0 */)
+short CParamCashier::PullParam (void)
+{
+	m_sLastErrorCas = -1;
+	if (m_paraCashier.ulCashierNo > 0) {
+		m_sLastErrorCas = ::SerCasIndRead( &m_paraCashier );
+		memset (&m_jobETK, 0, sizeof(m_jobETK));
+		m_sLastErrorEtk = ::SerEtkIndJobRead( m_paraCashier.ulCashierNo, &m_jobETK, m_auchETKName );
+	}
+
+	m_sLastError = m_sLastErrorCas;
+	return m_sLastError;
+}
+
+short CParamCashier::PullParam (CashierId cashierNo)
 {
 	if (cashierNo > 0) {
 		// allow the caller to over ride the cashier number if desired.
 		m_paraCashier.ulCashierNo = cashierNo;
+		return PullParam();
 	}
-	m_sLastErrorCas = ::SerCasIndRead( &m_paraCashier );
-	memset (&m_jobETK, 0, sizeof(m_jobETK));
-	m_sLastErrorEtk = ::SerEtkIndJobRead( m_paraCashier.ulCashierNo, &m_jobETK, m_auchETKName );
 
-	m_sLastError = m_sLastErrorCas;
-	return m_sLastError;
+	return -1;
 }
 
 short CParamCashier::PushParam (void)

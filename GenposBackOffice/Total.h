@@ -1,3 +1,20 @@
+/*
+ * CTotal - the base class for the various types of total objects that are
+ *          stored in the terminal.  Total objects contain total data or measurements
+ *          that provide information about how often an object is used within the terminal.
+ *
+ *          Generally a total object contains various kind of financial amounts and usage
+ *          counts.  A total object shadows an actual data object or parameter object
+ *          such as a cashier or a register or a PLU and each time the parameter object is
+ *          involved in an operation, e.g. ringing up a PLU, the appropriate total objects
+ *          are updated.  A particular action may affect more than one total object as we
+ *          may be interested in rolling up measurements of various kinds.
+ *
+ *          So ringing up a PLU may affect the PLU totals for the PLU followed by
+ *          changes to the cashier totals for the cashier who rang up the item and the
+ *          terminal (register) financial totals for the terminal used to ring up the item.
+**/
+
 #pragma once
 
 #include "R20_PC2172.h"

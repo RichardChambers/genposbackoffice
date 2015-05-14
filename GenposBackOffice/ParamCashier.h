@@ -7,7 +7,8 @@ public:
 	CParamCashier(CashierId cashierNo);
 	virtual ~CParamCashier(void);
 
-	virtual short PullParam (CashierId cashierNo = 0);
+	virtual short PullParam (void);
+	virtual short PullParam (CashierId cashierNo);
 	virtual short PushParam (void);
 	virtual CashierId setParamCashier (CashierId cashierNo) { CashierId oldCashier = m_paraCashier.ulCashierNo; m_paraCashier.ulCashierNo = cashierNo; return oldCashier; }
 

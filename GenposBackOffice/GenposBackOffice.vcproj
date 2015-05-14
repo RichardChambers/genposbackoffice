@@ -200,6 +200,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DialogCashier.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogCoupon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DialogLan.cpp"
 				>
 			</File>
@@ -228,6 +236,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ListerCoupon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -240,7 +252,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ParamCoupon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ParamFlexMem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamMajorDept.cpp"
 				>
 			</File>
 			<File
@@ -306,6 +326,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DialogCashier.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogCoupon.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DialogLan.h"
 				>
 			</File>
@@ -334,6 +362,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ListerCoupon.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.h"
 				>
 			</File>
@@ -346,7 +378,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ParamCoupon.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ParamFlexMem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamMajorDept.h"
 				>
 			</File>
 			<File

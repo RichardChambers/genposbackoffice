@@ -7,6 +7,9 @@
 #include "GenposBackOfficeDoc.h"
 #include "CntrItem.h"
 
+#include "DialogCashier.h"
+#include "DialogCoupon.h"
+
 #include <R20_PC2172.h>
 
 #ifdef _DEBUG
@@ -35,6 +38,8 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, COleDocument)
 	ON_UPDATE_COMMAND_UI(ID_TERMINAL_LOGOUT, &CGenposBackOfficeDoc::OnUpdateViewLanconnection)
 	ON_COMMAND(ID_TERMINAL_TOTALRETRIEVE, &CGenposBackOfficeDoc::OnTerminalTotalretrieve)
 	ON_COMMAND(ID_TERMINAL_FLEXMRETRIEVE, &CGenposBackOfficeDoc::OnTerminalFlexmretrieve)
+	ON_COMMAND(ID_TERMINAL_CASHIERRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCashierretrieve)
+	ON_COMMAND(ID_TERMINAL_COUPONRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCouponretrieve)
 END_MESSAGE_MAP()
 
 
@@ -233,4 +238,18 @@ void CGenposBackOfficeDoc::OnTerminalFlexmretrieve()
 		SetModifiedFlag ();
 		UpdateAllViews (NULL);
 	}
+}
+
+void CGenposBackOfficeDoc::OnTerminalCashierretrieve()
+{
+	CDialogCashier dialogCashier;
+
+	dialogCashier.DoModal ();
+}
+
+void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
+{
+	CDialogCoupon dialogCoupon;
+
+	dialogCoupon.DoModal ();
 }

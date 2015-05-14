@@ -59,6 +59,8 @@ public:
 	afx_msg void OnTerminalTotalretrieve();
 	afx_msg void OnTerminalEndOfDay();
 	afx_msg void OnTerminalFlexmretrieve();
+	afx_msg void OnTerminalCashierretrieve();
+	afx_msg void OnTerminalCouponretrieve();
 };
 
 

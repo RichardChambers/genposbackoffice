@@ -63,14 +63,45 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
-	// TODO: add draw code for native data here
+    // --- get client area of this view ---
+	// these provide the physical sizes of the display device rather than
+	// the client rectangle sizes.  used for printing to determine the
+	// size and resolution of the page to be printed.
+	int  vertRes = pDC->GetDeviceCaps (VERTRES);
+	int  hortRes = pDC->GetDeviceCaps (HORZRES);
+    CRect   rcClient;
+	if (pDC->m_bPrinting) {
+		rcClient.bottom = vertRes;
+		rcClient.right = hortRes;
+		rcClient.left = 0;
+		rcClient.top = 0;
+	} else {
+		GetClientRect( &rcClient );
+	}
+
+	//  We will divide up the client rectangle into several different sections.
+	//  The basic layout is that cluster description information is on the left
+	//  and the provisioning related description is on the right. The provisioning
+	//  related data is from the flexible memory data that has been pulled from
+	//  the terminal.
+
 	CRect currentLine(m_firstTextLine);
+	if (pDC->m_bPrinting) {
+		currentLine.top += 50;
+		currentLine.left += 50;
+		currentLine.right += 50;
+		currentLine.right *= 4;
+	}
 	pDC->DrawText (pDoc->m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
 	if (!pDoc->m_csHostFlexMem.IsEmpty()) {
 		CRect rectFlexMem(currentLine);
 		rectFlexMem.left += currentLine.right + 20;
 		rectFlexMem.right += currentLine.right + 100;
 		rectFlexMem.bottom += 700;
+		if (pDC->m_bPrinting) {
+			rectFlexMem.right += 1000;
+			rectFlexMem.bottom += 2000;
+		}
 		pDC->DrawText (pDoc->m_csHostFlexMem, rectFlexMem, DT_LEFT | DT_VCENTER | DT_WORDBREAK | DT_EXPANDTABS);
 	}
 	currentLine += m_lineIncrement;
