@@ -32,7 +32,7 @@ END_MESSAGE_MAP()
 
 // CGenposBackOfficeView construction/destruction
 
-CGenposBackOfficeView::CGenposBackOfficeView() : m_firstTextLine(10, 10, 300, 25), m_lineIncrement(0, 25)
+CGenposBackOfficeView::CGenposBackOfficeView() : m_firstTextLine (10, 50, 350, 75), m_lineIncrement(0, 25)
 {
 	m_pSelection = NULL;
 	// TODO: add construction code here
@@ -63,6 +63,16 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
+	if (pDoc->m_bLanOpen) {
+		// enable the buttons we need to use when logged into a terminal
+		cbuttonLogOut.EnableWindow (1);
+		cbuttonFlexMem.EnableWindow (1);
+	} else {
+		// disable the buttons we need to use when logged into a terminal
+		cbuttonLogOut.EnableWindow (0);
+		cbuttonFlexMem.EnableWindow (0);
+	}
+
     // --- get client area of this view ---
 	// these provide the physical sizes of the display device rather than
 	// the client rectangle sizes.  used for printing to determine the
@@ -85,14 +95,16 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	//  related data is from the flexible memory data that has been pulled from
 	//  the terminal.
 
-	CRect currentLine(m_firstTextLine);
+	CRect  currentLine(m_firstTextLine);
+	CPoint incrementLine(m_lineIncrement);
 	if (pDC->m_bPrinting) {
 		currentLine.top += 50;
 		currentLine.left += 50;
 		currentLine.right += 50;
 		currentLine.right *= 4;
+		currentLine.bottom *= 4;
+		incrementLine.y += 200;
 	}
-	pDC->DrawText (pDoc->m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
 	if (!pDoc->m_csHostFlexMem.IsEmpty()) {
 		CRect rectFlexMem(currentLine);
 		rectFlexMem.left += currentLine.right + 20;
@@ -104,11 +116,16 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 		}
 		pDC->DrawText (pDoc->m_csHostFlexMem, rectFlexMem, DT_LEFT | DT_VCENTER | DT_WORDBREAK | DT_EXPANDTABS);
 	}
-	currentLine += m_lineIncrement;
+	pDC->DrawText (pDoc->m_currentRootFolder, currentLine, DT_LEFT | DT_VCENTER);
+	currentLine += incrementLine;
+	pDC->DrawText (pDoc->m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
+	currentLine += incrementLine;
 	currentLine.bottom += 300;
 	currentLine.right  += 50;
 	pDC->DrawText (pDoc->m_csHostMemo, currentLine, DT_LEFT | DT_VCENTER | DT_WORDBREAK);
-	currentLine += m_lineIncrement;
+
+	currentLine.top += 300;
+	currentLine += incrementLine;
 
 	// TODO: also draw all OLE items in the document
 	POSITION pos = pDoc->GetStartPosition ();
@@ -157,6 +174,22 @@ void CGenposBackOfficeView::OnInitialUpdate()
 	// TODO: remove this code when final selection model code is written
 	m_pSelection = NULL;    // initialize selection
 
+	int  rectButtonWidth = 65;
+	CRect  rectButton(10, 0, 10 + rectButtonWidth, 40);
+	cbuttonLogIn.Create (_T("Log In"), 0, rectButton, this, ID_TERMINAL_LOGINTO);
+	cbuttonLogIn.ShowWindow (SW_SHOW);
+
+	rectButton.left += rectButtonWidth + 5;
+	rectButton.right += rectButtonWidth + 5;
+	cbuttonLogOut.Create (_T("Log Out"), 0, rectButton, this, ID_TERMINAL_LOGOUT);
+	cbuttonLogOut.ShowWindow (SW_SHOW);
+	cbuttonLogOut.EnableWindow (0);
+
+	rectButton.left = 350;
+	rectButton.right = rectButton.left + rectButtonWidth;
+	cbuttonFlexMem.Create (_T("Flex Mem"), 0, rectButton, this, ID_TERMINAL_FLEXMRETRIEVE);
+	cbuttonFlexMem.ShowWindow (SW_SHOW);
+	cbuttonFlexMem.EnableWindow (0);
 }
 
 

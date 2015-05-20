@@ -388,6 +388,17 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_TOTALCASHIER_CASHIER_NO          "Cashier Number"
+    IDS_TOTALCASHIER_PLUSVOID            "Plus Void"
+    IDS_TOTALCASHIER_PRESELECTVOID       "Preselect Void"
+    IDS_TOTALCASHIER_TRANSACTIONRETURN   "Transaction Return"
+    IDS_TOTALCASHIER_TRANSACTIONEXCHNG   "Transaction Return"
+    IDS_TOTALCASHIER_TRANSACTIONREFUND   "Transaction Return"
+    IDS_TOTALCASHIER_CONSCOUPON          "Consolidated Coupon"
+END
+
+STRINGTABLE 
+BEGIN
     IDR_MAINFRAME           "GenposBackOffice\n\nGenposBackOffic\nGenposBackOffice Files (*.gpbo)\n.gpbo\nGenposBackOffice.Document\nGenposBackOffice.Document"
 END
 

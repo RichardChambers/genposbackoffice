@@ -26,6 +26,10 @@ class CTotal
 public:
 	enum TtlType {TtlTypeNone = 0, TtlTypeCurDay = 1, TtlTypeSaveDay = 2, TtlTypeCurPtd = 3, TtlTypeSavePtd = 4};
 
+	enum TtlLineType {TtlLineTypeNone = 0, TtlLineTypeText = 1, TtlLineTypeTextXml = 2, TtlLineTypeTextJson = 3, TtlLineTypeTextCsv = 4 };
+
+	enum TtlVarType {TtlVarTypeNone = 0, TtlVarTypeLong = 1, TtlVarTypeTotal = 2};
+
 	typedef unsigned char TtlClass;
 
 	struct TtlClassStruct {
@@ -37,6 +41,8 @@ public:
 	CTotal(CTotal::TtlClass major = 0, CTotal::TtlType type = CTotal::TtlTypeNone);
 	virtual ~CTotal(void);
 	virtual TtlClassStruct *getTotalStructPtr (void) = 0;
+	virtual short getTotalStructLine (short &sPos, CString &csLine, TtlLineType lineType) = 0;
+	virtual short getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType) = 0;
 
 	//	CLASS_TTLCURDAY     1       /* Current Daily File */
 	//	CLASS_TTLSAVDAY     2       /* Previous Daily File */

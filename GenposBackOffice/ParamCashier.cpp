@@ -1,6 +1,11 @@
 #include "StdAfx.h"
 #include "ParamCashier.h"
 
+CParamCashier::CParamCashier(void)
+{
+	m_paraCashier.ulCashierNo = 0;
+}
+
 CParamCashier::CParamCashier(CashierId cashierNo)
 {
 	m_paraCashier.ulCashierNo = cashierNo;
@@ -13,10 +18,12 @@ CParamCashier::~CParamCashier(void)
 short CParamCashier::PullParam (void)
 {
 	m_sLastErrorCas = -1;
+	m_bDataRead = 0;
 	if (m_paraCashier.ulCashierNo > 0) {
 		m_sLastErrorCas = ::SerCasIndRead( &m_paraCashier );
 		memset (&m_jobETK, 0, sizeof(m_jobETK));
 		m_sLastErrorEtk = ::SerEtkIndJobRead( m_paraCashier.ulCashierNo, &m_jobETK, m_auchETKName );
+		m_bDataRead = 1;
 	}
 
 	m_sLastError = m_sLastErrorCas;

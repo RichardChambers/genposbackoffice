@@ -13,8 +13,10 @@ CParamCoupon::~CParamCoupon(void)
 short CParamCoupon::PullParam (void)
 {
 	m_sLastError = -1;
+	m_bDataRead = 0;
 	if (m_paraCoupon.uchCpnNo > 0) {
 		m_sLastError = ::CliOpCpnIndRead( &m_paraCoupon, 0 );
+		m_bDataRead = (m_sLastError == 0);
 	}
 
 	return m_sLastError;

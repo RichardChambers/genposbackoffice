@@ -10,3 +10,14 @@ CTotalRegFin::CTotalRegFin(CTotal::TtlType type) : CTotal(CLASS_TTLREGFIN, type)
 CTotalRegFin::~CTotalRegFin(void)
 {
 }
+
+
+short CTotalRegFin::getTotalStructLine (short &sPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}
+
+short CTotalRegFin::getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}

@@ -15,6 +15,7 @@ short CParamFlexMem::PullParam (void)
 	USHORT  usActualRead = 0;
 
 	m_sLastError = ::CliParaAllRead (CLASS_PARAFLEXMEM, (UCHAR *)m_paraFlexMem, sizeof( m_paraFlexMem ), usReadOffset, &usActualRead);
+	m_bDataRead = (m_sLastError == 0);
 	return m_sLastError;
 }
 
@@ -78,6 +79,8 @@ void CParamFlexMem::Serialize (CArchive &ar)
 	}
 	else
 	{
+		m_bDataRead = 1;
+
 		ULONG mySize;
 		memset(&m_paraFlexMem, 0, sizeof(m_paraFlexMem));
 		ar>>mySize;

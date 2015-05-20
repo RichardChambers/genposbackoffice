@@ -15,6 +15,7 @@ short CParamMdc::PullParam (void)
 	USHORT  usActualRead = 0;
 
 	m_sLastError = ::CliParaAllRead (CLASS_PARAMDC, (UCHAR *)abMDCData, sizeof( abMDCData ), usReadOffset, &usActualRead);
+	m_bDataRead = 1;
 	return m_sLastError;
 }
 

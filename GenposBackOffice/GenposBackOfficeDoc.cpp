@@ -48,7 +48,8 @@ END_MESSAGE_MAP()
 CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 	m_dwHostSessionIpAddress(0),
 	m_bLanOpen(FALSE), m_bLanLogInto(FALSE), m_sLanLastError(0),
-	totalRegFinCurDay(CTotal::TtlTypeCurDay)
+	totalRegFinCurDay(CTotal::TtlTypeCurDay),
+	totalCashierCurDay(CTotal::TtlTypeCurDay)
 {
 	// Use OLE compound files
 	EnableCompoundFile();
@@ -71,6 +72,9 @@ BOOL CGenposBackOfficeDoc::OnNewDocument()
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
+	paramFlexMem.ClearParam ();
+	paramMdc.ClearParam ();
+	listCashier.CashierDataList.SetSize(0);
 
 	return TRUE;
 }
@@ -103,6 +107,10 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 	if (!ar.IsStoring()) {
 		paramFlexMem.SummaryToText (m_csHostFlexMem);
 	}
+
+	listCashier.CashierDataList.Serialize (ar);
+
+	int iCount = listCashier.CashierDataList.GetCount ();
 
 	// Calling the base class COleDocument enables serialization
 	//  of the container document's COleClientItem objects.
@@ -186,8 +194,13 @@ void CGenposBackOfficeDoc::OnTerminalLoginto()
 			m_sLanLastError = ::IspHostLogOn( m_csHostSession, m_csHostSessionPassword );
 			m_bLanLogInto = ( m_sLanLastError == PCIF_SUCCESS );
 			TRACE1 ("  OnTerminalLoginto   >> ::IspHostLogOn() = %d\n", m_sLanLastError );
+			if (m_bLanLogInto && paramFlexMem.m_bDataRead == 0) {
+				paramFlexMem.PullParam ();
+			}
 		}
 	}
+
+	UpdateAllViews (NULL);
 }
 
 void CGenposBackOfficeDoc::OnTerminalLogout()
@@ -201,8 +214,10 @@ void CGenposBackOfficeDoc::OnTerminalLogout()
 	if (m_bLanOpen) {
 		m_sLanLastError = ::PcifCloseEx(PCIF_FUNC_CLOSE_LAN, NULL);
 	    TRACE1 ("  OnTerminalLogout   >> ::PcifCloseEx() = %d\n", m_sLanLastError );
-		m_bLanOpen = (m_sLanLastError == PCIF_SUCCESS);
+		m_bLanOpen = !(m_sLanLastError == PCIF_SUCCESS);
 	}
+
+	UpdateAllViews (NULL);
 }
 
 void CGenposBackOfficeDoc::OnTerminalTotalretrieve()
@@ -210,10 +225,27 @@ void CGenposBackOfficeDoc::OnTerminalTotalretrieve()
 	TRACE2 ("%S(%d): -- OnTerminalTotalretrieve() Entry.\n", __FILE__, __LINE__);
 
 	short  sRetrieveStatus = 0;
+	CString  mTotalCashierLine;
 
 	if (m_bLanOpen && m_bLanLogInto) {
 		sRetrieveStatus = totalRegFinCurDay.RetrieveTotal ();
 		TRACE1("  totalRegFinCurDay.RetrieveTotal %d\n", sRetrieveStatus);
+		totalCashierCurDay.setTotalCashier (1);
+		sRetrieveStatus = totalCashierCurDay.RetrieveTotal ();
+		TRACE1("  totalCashierCurDay.RetrieveTotal %d\n", sRetrieveStatus);
+		short mPos = 0;
+		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
+		mPos++;
+		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
+		mPos++;
+		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
+
+		mPos = 0;
+		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
+		mPos++;
+		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
+		mPos++;
+		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
 	}
 }
 
@@ -245,6 +277,9 @@ void CGenposBackOfficeDoc::OnTerminalCashierretrieve()
 	CDialogCashier dialogCashier;
 
 	dialogCashier.DoModal ();
+
+	listCashier.BuildCashierArray ();
+
 }
 
 void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
@@ -252,4 +287,32 @@ void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
 	CDialogCoupon dialogCoupon;
 
 	dialogCoupon.DoModal ();
+}
+
+BOOL CGenposBackOfficeDoc::OnOpenDocument(LPCTSTR lpszPathName)
+{
+	if (!COleDocument::OnOpenDocument(lpszPathName))
+		return FALSE;
+
+	// Use this file as the marker for where the document root folder begins.
+	// The file that is opened or is saved is in the folder which is the
+	// document database directory tree. The directory tree is where we will
+	// store the various files for this cluster which is described by the file
+	// we are opening.  From the file we are opening, determine the path to the
+	// folder where the file is located as that is the root folder for where all
+	// of the data files are stored.
+	m_currentRootFolder = lpszPathName;
+	const TCHAR  *tcsText = lpszPathName + _tcslen(lpszPathName);
+
+	for ( ; tcsText >= lpszPathName; ) {
+		if (*tcsText == _T('\\') || *tcsText == _T('/')) {
+			break;
+		}
+		tcsText--;
+	}
+
+	int iLen = tcsText - lpszPathName + 1;
+	m_currentRootFolder.Truncate (iLen);
+
+	return TRUE;
 }

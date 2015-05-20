@@ -4,8 +4,11 @@
 #pragma once
 
 #include "TotalRegFin.h"
+#include "TotalCashier.h"
 #include "ParamFlexMem.h"
 #include "ParamMdc.h"
+
+#include "ListerCashier.h"
 
 class CGenposBackOfficeDoc : public COleDocument
 {
@@ -26,9 +29,14 @@ public:
 	BOOL     m_bLanLogInto;
 	short    m_sLanLastError;
 
+	CString  m_currentRootFolder;  // root folder for the current data set
+
 	CTotalRegFin   totalRegFinCurDay;
+	CTotalCashier  totalCashierCurDay;
 	CParamFlexMem  paramFlexMem;
 	CParamMdc      paramMdc;
+
+	CListerCashier listCashier;
 
 // Operations
 public:
@@ -61,6 +69,7 @@ public:
 	afx_msg void OnTerminalFlexmretrieve();
 	afx_msg void OnTerminalCashierretrieve();
 	afx_msg void OnTerminalCouponretrieve();
+	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 };
 
 

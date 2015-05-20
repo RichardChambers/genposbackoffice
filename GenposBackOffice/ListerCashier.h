@@ -20,6 +20,8 @@ public:
 	virtual  short    GetCurrentListItemTotal (void);
 	virtual  short    GetCurrentListTotalItem (void);
 
+	short  BuildCashierArray (void);
+
 public:
 	BOOL      bCashierData;
 	short     CashierDataCount;
@@ -30,4 +32,6 @@ public:
 	ULONG     CashierNoList[CAS_NUMBER_OF_MAX_CASHIER];
 	CParamCashier  CashierData;
 	CTotalCashier  CashierTotal;
+
+	CArray <CParamCashier, CParamCashier &> CashierDataList;
 };

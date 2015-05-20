@@ -11,3 +11,14 @@ CTotalIndRegFin::CTotalIndRegFin(CTotal::TtlType type, short sTermNo/* = 0 */) :
 CTotalIndRegFin::~CTotalIndRegFin(void)
 {
 }
+
+short CTotalIndRegFin::getTotalStructLine (short &sPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}
+
+short CTotalIndRegFin::getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}
+

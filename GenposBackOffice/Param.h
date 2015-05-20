@@ -31,8 +31,9 @@ public:
 	virtual ~CParam(void);
 	virtual short PullParam (void) = 0;
 	virtual short PushParam (void) = 0;
+	virtual void ClearParam (void) = 0;
 
 public:
 	short     m_sLastError;
-
+	short     m_bDataRead;
 };

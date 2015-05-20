@@ -11,3 +11,13 @@ CTotalCoupon::CTotalCoupon(CTotal::TtlType type, CouponNo couponNo /* = 0 */) : 
 CTotalCoupon::~CTotalCoupon(void)
 {
 }
+
+short CTotalCoupon::getTotalStructLine (short &sPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}
+
+short CTotalCoupon::getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}

@@ -8,6 +8,7 @@ public:
 	~CParamFlexMem(void);
 	virtual short PullParam (void);
 	virtual short PushParam (void);
+	virtual void ClearParam(void) { memset (m_paraFlexMem, 0, sizeof(m_paraFlexMem)); m_bDataRead = 0; }
 
 	short SummaryToText (CString &csMemo);
 	void Serialize (CArchive &ar);

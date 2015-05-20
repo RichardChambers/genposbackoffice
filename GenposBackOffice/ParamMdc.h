@@ -10,6 +10,7 @@ public:
 	virtual ~CParamMdc(void);
 	virtual short PullParam (void);
 	virtual short PushParam (void);
+	virtual void ClearParam(void) { memset (abMDCData, 0, sizeof(abMDCData)); m_bDataRead = 0; }
 
 	unsigned short GetMdcValue (unsigned short usAddress, MdcBit usBit);
 

@@ -102,3 +102,17 @@ short   CListerCashier::GetCurrentListTotalItem (void)
 
 	return GetCurrentListItem ();
 }
+
+short  CListerCashier::BuildCashierArray (void)
+{
+	if (RetrieveList () >= 0) {
+		CashierDataList.RemoveAll ();
+		for (GetFirstListItem(); bCashierData; GetNextListItem ()) {
+			CashierDataList.Add (CashierData);
+		}
+
+		int iCount = CashierDataList.GetCount ();
+	}
+
+	return 0;
+}

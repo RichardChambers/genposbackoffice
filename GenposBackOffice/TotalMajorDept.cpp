@@ -11,3 +11,13 @@ CTotalMajorDept::CTotalMajorDept(CTotal::TtlType type, MajorDeptNo deptNo/* = 0 
 CTotalMajorDept::~CTotalMajorDept(void)
 {
 }
+
+short CTotalMajorDept::getTotalStructLine (short &sPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}
+
+short CTotalMajorDept::getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType)
+{
+	return 0;
+}

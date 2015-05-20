@@ -12,8 +12,10 @@ CParamMajorDept::~CParamMajorDept(void)
 short CParamMajorDept::PullParam (void)
 {
 	m_sLastError = -1;
+	m_bDataRead = 0;
 	if (m_paraMajorDept.uchMajorDeptNo > 0) {
 		m_sLastError = ::SerOpMajorDeptRead( &m_paraMajorDept, 0 );
+		m_bDataRead = 1;
 	}
 
 	return m_sLastError;

@@ -27,6 +27,10 @@ public:
 	CRect   m_firstTextLine;
 	CPoint  m_lineIncrement;
 
+	CButton   cbuttonLogIn;
+	CButton   cbuttonLogOut;
+	CButton   cbuttonFlexMem;
+
 // Operations
 public:
 
