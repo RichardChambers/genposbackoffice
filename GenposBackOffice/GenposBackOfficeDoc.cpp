@@ -9,6 +9,7 @@
 
 #include "DialogCashier.h"
 #include "DialogCoupon.h"
+#include "DialogPlu.h"
 
 #include <R20_PC2172.h>
 
@@ -40,6 +41,9 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, COleDocument)
 	ON_COMMAND(ID_TERMINAL_FLEXMRETRIEVE, &CGenposBackOfficeDoc::OnTerminalFlexmretrieve)
 	ON_COMMAND(ID_TERMINAL_CASHIERRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCashierretrieve)
 	ON_COMMAND(ID_TERMINAL_COUPONRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCouponretrieve)
+	ON_COMMAND(ID_TERMINAL_PLURETRIEVE, &CGenposBackOfficeDoc::OnTerminalPluretrieve)
+	ON_COMMAND(ID_TERMINAL_LOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalLockkeyboard)
+	ON_COMMAND(ID_TERMINAL_UNLOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalUnlockkeyboard)
 END_MESSAGE_MAP()
 
 
@@ -47,7 +51,8 @@ END_MESSAGE_MAP()
 
 CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 	m_dwHostSessionIpAddress(0),
-	m_bLanOpen(FALSE), m_bLanLogInto(FALSE), m_sLanLastError(0),
+	m_bLanOpen(FALSE), m_bLanLogInto(FALSE), m_bKeyBoardLock(FALSE),
+	m_sLanLastError(0),
 	totalRegFinCurDay(CTotal::TtlTypeCurDay),
 	totalCashierCurDay(CTotal::TtlTypeCurDay)
 {
@@ -206,6 +211,7 @@ void CGenposBackOfficeDoc::OnTerminalLoginto()
 void CGenposBackOfficeDoc::OnTerminalLogout()
 {
 	TRACE2 ("%S(%d): -- OnTerminalLogout() Entry.\n", __FILE__, __LINE__);
+	OnTerminalUnlockkeyboard();
 	if (m_bLanLogInto) {
 		m_sLanLastError = ::IspLogOff( );
 		TRACE1 ("  OnTerminalLoginto   >> ::IspLogOff() = %d\n", m_sLanLastError );
@@ -279,7 +285,6 @@ void CGenposBackOfficeDoc::OnTerminalCashierretrieve()
 	dialogCashier.DoModal ();
 
 	listCashier.BuildCashierArray ();
-
 }
 
 void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
@@ -315,4 +320,31 @@ BOOL CGenposBackOfficeDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	m_currentRootFolder.Truncate (iLen);
 
 	return TRUE;
+}
+
+void CGenposBackOfficeDoc::OnTerminalPluretrieve()
+{
+	// TODO: Add your command handler code here
+	CDialogPlu dialogPlu;
+
+	dialogPlu.DoModal ();
+
+}
+
+void CGenposBackOfficeDoc::OnTerminalLockkeyboard()
+{
+	if (m_bLanOpen && m_bLanLogInto && ~m_bKeyBoardLock) {
+		m_sLanLastError = ::IspLockKeyBoard ();
+	    TRACE1 ("  OnTerminalLockkeyboard   >> ::IspLockKeyBoard() = %d\n", m_sLanLastError );
+		m_bKeyBoardLock = (m_sLanLastError == PCIF_SUCCESS);
+	}
+}
+
+void CGenposBackOfficeDoc::OnTerminalUnlockkeyboard()
+{
+	if (m_bLanOpen && m_bLanLogInto && m_bKeyBoardLock) {
+		m_sLanLastError = ::IspUnLockKeyBoard ();
+	    TRACE1 ("  OnTerminalUnlockkeyboard   >> ::IspUnLockKeyBoard() = %d\n", m_sLanLastError );
+		m_bKeyBoardLock = !(m_sLanLastError == PCIF_SUCCESS);
+	}
 }

@@ -140,11 +140,15 @@ BEGIN
     POPUP "Terminal"
     BEGIN
         MENUITEM "Log into ...",                ID_TERMINAL_LOGINTO
+        MENUITEM "Lock Keyboard",               ID_TERMINAL_LOCKKEYBOARD
+        MENUITEM "Unlock Keyboard",             ID_TERMINAL_UNLOCKKEYBOARD
         MENUITEM "Log out",                     ID_TERMINAL_LOGOUT
+        MENUITEM SEPARATOR
         MENUITEM "Total Retrieve ...",          ID_TERMINAL_TOTALRETRIEVE
         MENUITEM "Flexm Retrieve ...",          ID_TERMINAL_FLEXMRETRIEVE
         MENUITEM "Cashier Retrieve ...",        ID_TERMINAL_CASHIERRETRIEVE
         MENUITEM "Coupon Retrieve ...",         ID_TERMINAL_COUPONRETRIEVE
+        MENUITEM "PLU Retrieve ...",            ID_TERMINAL_PLURETRIEVE
     END
     POPUP "&Help"
     BEGIN
@@ -283,6 +287,28 @@ BEGIN
     LISTBOX         IDC_LIST_COUPONS,7,18,120,160,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
 END
 
+IDD_DIALOGPLU DIALOGEX 0, 0, 186, 196
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,129,26,50,16
+    LISTBOX         IDC_LIST_PLU,7,7,118,182,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOGEDITPLU DIALOGEX 0, 0, 229, 94
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,172,7,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,172,26,50,16
+    LTEXT           "PLU No.:",IDC_STATIC,7,7,59,10
+    LTEXT           "PLU Mnemonic:",IDC_STATIC,8,19,60,10
+    EDITTEXT        IDC_EDIT_MNEMONIC,80,22,71,10,ES_AUTOHSCROLL
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -370,6 +396,22 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 178
     END
+
+    IDD_DIALOGPLU, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 189
+    END
+
+    IDD_DIALOGEDITPLU, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 222
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 87
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -388,18 +430,14 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_TOTALCASHIER_CASHIER_NO          "Cashier Number"
-    IDS_TOTALCASHIER_PLUSVOID            "Plus Void"
-    IDS_TOTALCASHIER_PRESELECTVOID       "Preselect Void"
-    IDS_TOTALCASHIER_TRANSACTIONRETURN   "Transaction Return"
-    IDS_TOTALCASHIER_TRANSACTIONEXCHNG   "Transaction Return"
-    IDS_TOTALCASHIER_TRANSACTIONREFUND   "Transaction Return"
-    IDS_TOTALCASHIER_CONSCOUPON          "Consolidated Coupon"
-END
-
-STRINGTABLE 
-BEGIN
     IDR_MAINFRAME           "GenposBackOffice\n\nGenposBackOffic\nGenposBackOffice Files (*.gpbo)\n.gpbo\nGenposBackOffice.Document\nGenposBackOffice.Document"
+    IDS_TOTALCASHIER_CASHIER_NO "Cashier Number"
+    IDS_TOTALCASHIER_PLUSVOID "Plus Void"
+    IDS_TOTALCASHIER_PRESELECTVOID "Preselect Void"
+    IDS_TOTALCASHIER_TRANSACTIONRETURN "Transaction Return"
+    IDS_TOTALCASHIER_TRANSACTIONEXCHNG "Transaction Return"
+    IDS_TOTALCASHIER_TRANSACTIONREFUND "Transaction Return"
+    IDS_TOTALCASHIER_CONSCOUPON "Consolidated Coupon"
 END
 
 STRINGTABLE 

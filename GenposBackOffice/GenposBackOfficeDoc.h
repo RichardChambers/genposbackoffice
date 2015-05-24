@@ -9,6 +9,7 @@
 #include "ParamMdc.h"
 
 #include "ListerCashier.h"
+#include "ListerPlu.h"
 
 class CGenposBackOfficeDoc : public COleDocument
 {
@@ -27,6 +28,7 @@ public:
 	DWORD    m_dwHostSessionIpAddress;
 	BOOL     m_bLanOpen;
 	BOOL     m_bLanLogInto;
+	BOOL     m_bKeyBoardLock;
 	short    m_sLanLastError;
 
 	CString  m_currentRootFolder;  // root folder for the current data set
@@ -37,6 +39,7 @@ public:
 	CParamMdc      paramMdc;
 
 	CListerCashier listCashier;
+	CListerPlu     listPlu;
 
 // Operations
 public:
@@ -70,6 +73,9 @@ public:
 	afx_msg void OnTerminalCashierretrieve();
 	afx_msg void OnTerminalCouponretrieve();
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
+	afx_msg void OnTerminalPluretrieve();
+	afx_msg void OnTerminalLockkeyboard();
+	afx_msg void OnTerminalUnlockkeyboard();
 };
 
 

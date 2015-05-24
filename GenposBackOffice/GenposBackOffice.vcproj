@@ -208,11 +208,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DialogEditPlu.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DialogLan.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\DialogLanLogin.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogPlu.cpp"
 				>
 			</File>
 			<File
@@ -237,6 +245,10 @@
 			</File>
 			<File
 				RelativePath=".\ListerCoupon.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ListerPlu.cpp"
 				>
 			</File>
 			<File
@@ -265,6 +277,10 @@
 			</File>
 			<File
 				RelativePath=".\ParamMdc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamPlu.cpp"
 				>
 			</File>
 			<File
@@ -334,11 +350,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DialogEditPlu.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DialogLan.h"
 				>
 			</File>
 			<File
 				RelativePath=".\DialogLanLogin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DialogPlu.h"
 				>
 			</File>
 			<File
@@ -363,6 +387,10 @@
 			</File>
 			<File
 				RelativePath=".\ListerCoupon.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ListerPlu.h"
 				>
 			</File>
 			<File
@@ -391,6 +419,10 @@
 			</File>
 			<File
 				RelativePath=".\ParamMdc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ParamPlu.h"
 				>
 			</File>
 			<File
