@@ -44,6 +44,10 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, COleDocument)
 	ON_COMMAND(ID_TERMINAL_PLURETRIEVE, &CGenposBackOfficeDoc::OnTerminalPluretrieve)
 	ON_COMMAND(ID_TERMINAL_LOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalLockkeyboard)
 	ON_COMMAND(ID_TERMINAL_UNLOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalUnlockkeyboard)
+	ON_COMMAND(ID_TERMINAL_SETTINGSRETRIEVE, &CGenposBackOfficeDoc::OnTerminalSettingsretrieve)
+	ON_COMMAND(ID_EDIT_CASHIEREDIT, &CGenposBackOfficeDoc::OnEditCashieredit)
+	ON_COMMAND(ID_EDIT_COUPONEDIT, &CGenposBackOfficeDoc::OnEditCouponedit)
+	ON_COMMAND(ID_EDIT_PLUEDIT, &CGenposBackOfficeDoc::OnEditPluedit)
 END_MESSAGE_MAP()
 
 
@@ -280,18 +284,16 @@ void CGenposBackOfficeDoc::OnTerminalFlexmretrieve()
 
 void CGenposBackOfficeDoc::OnTerminalCashierretrieve()
 {
-	CDialogCashier dialogCashier;
-
-	dialogCashier.DoModal ();
-
-	listCashier.BuildCashierArray ();
+	if (m_bLanOpen && m_bLanLogInto) {
+		listCashier.BuildCashierArray ();
+	}
 }
 
 void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
 {
-	CDialogCoupon dialogCoupon;
-
-	dialogCoupon.DoModal ();
+	if (m_bLanOpen && m_bLanLogInto) {
+		listCoupon.RetrieveList ();
+	}
 }
 
 BOOL CGenposBackOfficeDoc::OnOpenDocument(LPCTSTR lpszPathName)
@@ -324,11 +326,9 @@ BOOL CGenposBackOfficeDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 void CGenposBackOfficeDoc::OnTerminalPluretrieve()
 {
-	// TODO: Add your command handler code here
-	CDialogPlu dialogPlu;
-
-	dialogPlu.DoModal ();
-
+	if (m_bLanOpen && m_bLanLogInto) {
+		listPlu.RetrieveList ();
+	}
 }
 
 void CGenposBackOfficeDoc::OnTerminalLockkeyboard()
@@ -346,5 +346,49 @@ void CGenposBackOfficeDoc::OnTerminalUnlockkeyboard()
 		m_sLanLastError = ::IspUnLockKeyBoard ();
 	    TRACE1 ("  OnTerminalUnlockkeyboard   >> ::IspUnLockKeyBoard() = %d\n", m_sLanLastError );
 		m_bKeyBoardLock = !(m_sLanLastError == PCIF_SUCCESS);
+	}
+}
+
+void CGenposBackOfficeDoc::OnTerminalSettingsretrieve()
+{
+	// TODO: Add your command handler code here
+	if (m_bLanOpen && m_bLanLogInto) {
+		paramFlexMem.PullParam ();
+		paramFlexMem.SummaryToText (m_csHostFlexMem);
+		paramMdc.PullParam ();
+
+		listPlu.RetrieveList ();
+		listCoupon.RetrieveList ();
+		listCashier.BuildCashierArray ();
+
+		SetModifiedFlag ();
+		UpdateAllViews (NULL);
+	}
+}
+
+void CGenposBackOfficeDoc::OnEditCashieredit()
+{
+	if (m_bLanOpen && m_bLanLogInto) {
+		CDialogCashier dialogCashier;
+		dialogCashier.SetListCashier (&listCashier);
+		dialogCashier.DoModal ();
+	}
+}
+
+void CGenposBackOfficeDoc::OnEditCouponedit()
+{
+	if (m_bLanOpen && m_bLanLogInto) {
+		CDialogCoupon dialogCoupon;
+		dialogCoupon.SetListCoupon (&listCoupon);
+		dialogCoupon.DoModal ();
+	}
+}
+
+void CGenposBackOfficeDoc::OnEditPluedit()
+{
+	if (m_bLanOpen && m_bLanLogInto) {
+		CDialogPlu dialogPlu;
+		dialogPlu.SetListPlu (&listPlu);
+		dialogPlu.DoModal ();
 	}
 }

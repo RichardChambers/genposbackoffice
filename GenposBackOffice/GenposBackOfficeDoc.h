@@ -10,6 +10,7 @@
 
 #include "ListerCashier.h"
 #include "ListerPlu.h"
+#include "ListerCoupon.h"
 
 class CGenposBackOfficeDoc : public COleDocument
 {
@@ -38,8 +39,9 @@ public:
 	CParamFlexMem  paramFlexMem;
 	CParamMdc      paramMdc;
 
-	CListerCashier listCashier;
-	CListerPlu     listPlu;
+	CListerCashier  listCashier;
+	CListerPlu      listPlu;
+	CListerCoupon   listCoupon;
 
 // Operations
 public:
@@ -76,6 +78,10 @@ public:
 	afx_msg void OnTerminalPluretrieve();
 	afx_msg void OnTerminalLockkeyboard();
 	afx_msg void OnTerminalUnlockkeyboard();
+	afx_msg void OnTerminalSettingsretrieve();
+	afx_msg void OnEditCashieredit();
+	afx_msg void OnEditCouponedit();
+	afx_msg void OnEditPluedit();
 };
 
 

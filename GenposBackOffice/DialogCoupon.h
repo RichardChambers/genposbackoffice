@@ -13,6 +13,7 @@ public:
 	CDialogCoupon(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDialogCoupon();
 
+	CListerCoupon  *SetListCoupon (CListerCoupon  *p) { CListerCoupon  *pSave = m_myList; m_myList = p; return pSave; }
 // Dialog Data
 	enum { IDD = IDD_DIALOGCOUPON };
 
@@ -21,6 +22,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CListerCoupon  myList;
+	CListerCoupon  *m_myList;
 	CListBox m_ListBox;
 };

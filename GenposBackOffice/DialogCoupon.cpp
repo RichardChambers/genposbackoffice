@@ -11,7 +11,7 @@
 IMPLEMENT_DYNAMIC(CDialogCoupon, CDialog)
 
 CDialogCoupon::CDialogCoupon(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogCoupon::IDD, pParent)
+	: CDialog(CDialogCoupon::IDD, pParent), m_myList(0)
 {
 
 }
@@ -25,11 +25,12 @@ void CDialogCoupon::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_COUPONS, m_ListBox);
 	if (!pDX->m_bSaveAndValidate) {
-		myList.RetrieveList ();
-		for (myList.GetFirstListItem(); myList.bCouponData; myList.GetNextListItem ()) {
-			CString listItem;
-			listItem.Format (_T("%8d : %-20s"), myList.CouponData.m_paraCoupon.uchCpnNo, myList.CouponData.m_paraCoupon.ParaCpn.aszCouponMnem);
-			m_ListBox.AddString (listItem);
+		if (m_myList) {
+			for (m_myList->GetFirstListItem(); m_myList->bCouponData; m_myList->GetNextListItem ()) {
+				CString listItem;
+				listItem.Format (_T("%8d : %-20s"), m_myList->CouponData.m_paraCoupon.uchCpnNo, m_myList->CouponData.m_paraCoupon.ParaCpn.aszCouponMnem);
+				m_ListBox.AddString (listItem);
+			}
 		}
 	}
 }

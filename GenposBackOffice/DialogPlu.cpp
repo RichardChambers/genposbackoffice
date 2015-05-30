@@ -12,7 +12,7 @@
 IMPLEMENT_DYNAMIC(CDialogPlu, CDialog)
 
 CDialogPlu::CDialogPlu(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogPlu::IDD, pParent)
+	: CDialog(CDialogPlu::IDD, pParent), m_myList(0)
 {
 
 }
@@ -26,15 +26,16 @@ void CDialogPlu::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_PLU, m_ListBox);
 	if (!pDX->m_bSaveAndValidate) {
-		myList.RetrieveList ();
-		int  iItem, iItemCount;
-		iItemCount = myList.PluDataList.GetCount ();
-		for (iItem = 0; iItem < iItemCount; iItem++) {
-			CParamPlu::ParamPluKey jj = myList.PluDataList.GetAt(iItem);
-			jj.auchPluNo[13] = 0;   // eliminate check sum digit
-			CString listItem;
-			listItem.Format (_T("%-13s %2d"), jj.auchPluNo, jj.uchPluAdj);
-			m_ListBox.AddString (listItem);
+		if (m_myList) {
+			int  iItem, iItemCount;
+			iItemCount = m_myList->PluDataList.GetCount ();
+			for (iItem = 0; iItem < iItemCount; iItem++) {
+				CParamPlu::ParamPluKey jj = m_myList->PluDataList.GetAt(iItem);
+				jj.auchPluNo[13] = 0;   // eliminate check sum digit
+				CString listItem;
+				listItem.Format (_T("%-13s %2d"), jj.auchPluNo, jj.uchPluAdj);
+				m_ListBox.AddString (listItem);
+			}
 		}
 	}
 }
@@ -50,7 +51,7 @@ END_MESSAGE_MAP()
 void CDialogPlu::OnLbnDblclkListPlu()
 {
 	int iItem = m_ListBox.GetCurSel ();
-	CParamPlu::ParamPluKey tempPluKey = myList.PluDataList.GetAt(iItem);
+	CParamPlu::ParamPluKey tempPluKey = m_myList->PluDataList.GetAt(iItem);
 	CParamPlu myPlu;
 
 	myPlu.PullParam (tempPluKey);

@@ -10,7 +10,7 @@
 IMPLEMENT_DYNAMIC(CDialogCashier, CDialog)
 
 CDialogCashier::CDialogCashier(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogCashier::IDD, pParent)
+	: CDialog(CDialogCashier::IDD, pParent), m_myList(0)
 {
 
 }
@@ -25,11 +25,12 @@ void CDialogCashier::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST_CASHIERS, m_ListBox);
 
 	if (!pDX->m_bSaveAndValidate) {
-		myList.RetrieveList ();
-		for (myList.GetFirstListItem(); myList.bCashierData; myList.GetNextListItem ()) {
-			CString listItem;
-			listItem.Format (_T("%8d : %-20s"), myList.CashierData.m_paraCashier.ulCashierNo, myList.CashierData.m_paraCashier.auchCashierName);
-			m_ListBox.AddString (listItem);
+		if (m_myList) {
+			for (m_myList->GetFirstListItem(); m_myList->bCashierData; m_myList->GetNextListItem ()) {
+				CString listItem;
+				listItem.Format (_T("%8d : %-20s"), m_myList->CashierData.m_paraCashier.ulCashierNo, m_myList->CashierData.m_paraCashier.auchCashierName);
+				m_ListBox.AddString (listItem);
+			}
 		}
 	}
 }

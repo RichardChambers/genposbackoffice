@@ -45,13 +45,18 @@
 #define ID_TERMINAL_PLURETRIEVE         32778
 #define ID_TERMINAL_LOCKKEYBOARD        32779
 #define ID_TERMINAL_UNLOCKKEYBOARD      32780
+#define ID_TERMINAL_SETTINGSRETRIEVE    32781
+#define ID_EDIT                         32782
+#define ID_EDIT_CASHIEREDIT             32783
+#define ID_EDIT_COUPONEDIT              32784
+#define ID_EDIT_PLUEDIT                 32785
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        137
-#define _APS_NEXT_COMMAND_VALUE         32781
+#define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1010
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

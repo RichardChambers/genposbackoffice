@@ -67,10 +67,12 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 		// enable the buttons we need to use when logged into a terminal
 		cbuttonLogOut.EnableWindow (1);
 		cbuttonFlexMem.EnableWindow (1);
+		cbuttonSettingsRetrieve.EnableWindow (1);
 	} else {
 		// disable the buttons we need to use when logged into a terminal
 		cbuttonLogOut.EnableWindow (0);
 		cbuttonFlexMem.EnableWindow (0);
+		cbuttonSettingsRetrieve.EnableWindow (0);
 	}
 
     // --- get client area of this view ---
@@ -190,6 +192,12 @@ void CGenposBackOfficeView::OnInitialUpdate()
 	cbuttonFlexMem.Create (_T("Flex Mem"), 0, rectButton, this, ID_TERMINAL_FLEXMRETRIEVE);
 	cbuttonFlexMem.ShowWindow (SW_SHOW);
 	cbuttonFlexMem.EnableWindow (0);
+
+	rectButton.left += rectButtonWidth + 5;
+	rectButton.right += rectButtonWidth + 5;
+	cbuttonSettingsRetrieve.Create (_T("Retrieve"), 0, rectButton, this, ID_TERMINAL_SETTINGSRETRIEVE);
+	cbuttonSettingsRetrieve.ShowWindow (SW_SHOW);
+	cbuttonSettingsRetrieve.EnableWindow (0);
 }
 
 

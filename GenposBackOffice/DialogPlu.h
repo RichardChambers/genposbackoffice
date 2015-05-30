@@ -13,6 +13,8 @@ public:
 	CDialogPlu(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDialogPlu();
 
+	CListerPlu  *SetListPlu (CListerPlu *p) {CListerPlu *pSave = m_myList; m_myList = p; return pSave; }
+
 // Dialog Data
 	enum { IDD = IDD_DIALOGPLU };
 
@@ -21,7 +23,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CListBox m_ListBox;
-	CListerPlu  myList;
+	CListBox    m_ListBox;
+	CListerPlu  *m_myList;
 	afx_msg void OnLbnDblclkListPlu();
 };

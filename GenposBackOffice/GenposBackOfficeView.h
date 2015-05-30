@@ -30,6 +30,7 @@ public:
 	CButton   cbuttonLogIn;
 	CButton   cbuttonLogOut;
 	CButton   cbuttonFlexMem;
+	CButton   cbuttonSettingsRetrieve;
 
 // Operations
 public:

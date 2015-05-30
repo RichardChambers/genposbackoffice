@@ -144,11 +144,22 @@ BEGIN
         MENUITEM "Unlock Keyboard",             ID_TERMINAL_UNLOCKKEYBOARD
         MENUITEM "Log out",                     ID_TERMINAL_LOGOUT
         MENUITEM SEPARATOR
-        MENUITEM "Total Retrieve ...",          ID_TERMINAL_TOTALRETRIEVE
+    END
+    POPUP "Retrieve"
+    BEGIN
         MENUITEM "Flexm Retrieve ...",          ID_TERMINAL_FLEXMRETRIEVE
+        MENUITEM "Settings Retrieve ...",       ID_TERMINAL_SETTINGSRETRIEVE
         MENUITEM "Cashier Retrieve ...",        ID_TERMINAL_CASHIERRETRIEVE
         MENUITEM "Coupon Retrieve ...",         ID_TERMINAL_COUPONRETRIEVE
         MENUITEM "PLU Retrieve ...",            ID_TERMINAL_PLURETRIEVE
+        MENUITEM SEPARATOR
+        MENUITEM "Total Retrieve ...",          ID_TERMINAL_TOTALRETRIEVE
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Cashier Edit ...",            ID_EDIT_CASHIEREDIT
+        MENUITEM "Coupon Edit ...",             ID_EDIT_COUPONEDIT
+        MENUITEM "PLU Edit ...",                ID_EDIT_PLUEDIT
     END
     POPUP "&Help"
     BEGIN
