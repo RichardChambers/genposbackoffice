@@ -27,7 +27,7 @@ CDialogLanLogin::~CDialogLanLogin()
 void CDialogLanLogin::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_STATIC_HOSTNAME, m_csHostName);
+	DDX_Text(pDX, IDC_EDIT_HOSTNAME, m_csHostName);
 	DDX_Text(pDX, IDC_EDIT_TERM_NO, m_csTermNo);
 	DDV_MaxChars(pDX, m_csTermNo, 2);
 	DDX_Text(pDX, IDC_EDIT_PASSWORD, m_csHostPassword);

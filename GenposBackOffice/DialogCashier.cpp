@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "GenposBackOffice.h"
 #include "DialogCashier.h"
+#include "DialogCashierEdit.h"
 
 // CDialogCashier dialog
 
@@ -37,7 +38,21 @@ void CDialogCashier::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDialogCashier, CDialog)
+	ON_BN_CLICKED(IDC_BUTTON_EDIT, &CDialogCashier::OnBnClickedButtonEdit)
 END_MESSAGE_MAP()
 
 
 // CDialogCashier message handlers
+
+void CDialogCashier::OnBnClickedButtonEdit()
+{
+	// TODO: Add your control notification handler code here
+
+	int iSel = m_ListBox.GetCurSel ();
+
+	if (iSel != LB_ERR) {
+		CDialogCashierEdit myDialog;
+
+		myDialog.DoModal ();
+	}
+}

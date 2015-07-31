@@ -25,4 +25,5 @@ protected:
 public:
 	CListBox        m_ListBox;
 	CListerCashier  *m_myList;
+	afx_msg void OnBnClickedButtonEdit();
 };

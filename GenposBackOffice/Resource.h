@@ -22,6 +22,7 @@
 #define IDS_TOTALCASHIER_TRANSACTIONEXCHNG 134
 #define IDS_TOTALCASHIER_TRANSACTIONREFUND 135
 #define IDS_TOTALCASHIER_CONSCOUPON     136
+#define IDD_DIALOGCASHIEREDIT           137
 #define IDC_EDIT_HOSTNAME               1000
 #define IDC_EDIT_HOSTMEMO               1001
 #define IDC_STATIC_HOSTNAME             1002
@@ -31,9 +32,12 @@
 #define IDC_EDIT1                       1006
 #define IDC_EDIT_PASSWORD               1006
 #define IDC_EDIT_MNEMONIC               1006
+#define IDC_EDIT_CASHIERNAME            1006
 #define IDC_LIST_CASHIERS               1007
 #define IDC_LIST_COUPONS                1008
 #define IDC_LIST_PLU                    1009
+#define IDC_BUTTON1                     1010
+#define IDC_BUTTON_EDIT                 1010
 #define ID_CANCEL_EDIT_CNTR             32768
 #define ID_VIEW_LANCONNECTION           32771
 #define ID_TERMINAL_LOGINTO             32772
@@ -55,9 +59,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        137
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1010
+#define _APS_NEXT_CONTROL_VALUE         1011
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

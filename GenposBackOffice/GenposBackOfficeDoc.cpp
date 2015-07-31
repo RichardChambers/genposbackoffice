@@ -74,7 +74,7 @@ CGenposBackOfficeDoc::~CGenposBackOfficeDoc()
 
 BOOL CGenposBackOfficeDoc::OnNewDocument()
 {
-	TRACE2 ("%S(%d): -- OnNewDocument() Entry.\n", __FILE__, __LINE__);
+	TRACE2 ("** %S(%d): -- OnNewDocument() Entry.\n", __FILE__, __LINE__);
 
 	if (!COleDocument::OnNewDocument())
 		return FALSE;
@@ -95,19 +95,19 @@ BOOL CGenposBackOfficeDoc::OnNewDocument()
 
 void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 {
-	TRACE2 ("%S(%d): -- Serialize() Entry.\n", __FILE__, __LINE__);
+	TRACE2 ("** %S(%d): -- Serialize() Entry.\n", __FILE__, __LINE__);
 
 	// WARNING:  Make sure that storing of the archive is the same
 	//           variables and in the same order as opening and reading the archive!
 	if (ar.IsStoring())
 	{
-		TRACE1 ("  Serialize() Storing %s.\n", ar.m_strFileName);
+		TRACE1 ("  ** Serialize() Storing %s.\n", ar.m_strFileName);
 		ar << m_csHostName;
 		ar << m_csHostMemo;
 	}
 	else
 	{
-		TRACE1 ("  Serialize() Reading %s.\n", ar.m_strFileName);
+		TRACE1 ("  ** Serialize() Reading %s.\n", ar.m_strFileName);
 		ar >> m_csHostName;
 		ar >> m_csHostMemo;
 	}
@@ -155,7 +155,7 @@ void CGenposBackOfficeDoc::Dump(CDumpContext& dc) const
 
 void CGenposBackOfficeDoc::OnViewLanconnection()
 {
-	TRACE2 ("%S(%d): -- OnViewLanconnection() Entry.\n", __FILE__, __LINE__);
+	TRACE2 ("** %S(%d): -- OnViewLanconnection() Entry.\n", __FILE__, __LINE__);
 
 	CDialogLan dialogLan;
 
@@ -176,7 +176,7 @@ void CGenposBackOfficeDoc::OnUpdateViewLanconnection(CCmdUI *pCmdUI)
 
 void CGenposBackOfficeDoc::OnTerminalLoginto()
 {
-	TRACE2 ("%S(%d): -- OnTerminalLoginto() Entry.\n", __FILE__, __LINE__);
+	TRACE2 ("** %S(%d): -- OnTerminalLoginto() Entry.\n", __FILE__, __LINE__);
 
 	CDialogLanLogin dialogLanLogin;
 
@@ -184,25 +184,26 @@ void CGenposBackOfficeDoc::OnTerminalLoginto()
 	dialogLanLogin.m_csTermNo = m_csLastTermNo;
 	dialogLanLogin.m_dwIpAddress = m_dwHostSessionIpAddress;
 	if (dialogLanLogin.DoModal() == IDOK) {
+		m_csHostName = dialogLanLogin.m_csHostName;
 		m_csLastTermNo = dialogLanLogin.m_csTermNo;
 		m_csHostSession = dialogLanLogin.m_csHostSession;
 		m_dwHostSessionIpAddress = dialogLanLogin.m_dwIpAddress;
 		m_csHostSessionPassword = dialogLanLogin.m_csHostPassword;
 		if (m_bLanOpen) {
 			m_sLanLastError = ::PcifCloseEx(PCIF_FUNC_CLOSE_LAN, NULL);
-			TRACE1 ("  OnTerminalLoginto   >> ::PcifCloseEx() = %d\n", m_sLanLastError );
+			TRACE1 ("  ** OnTerminalLoginto   >> ::PcifCloseEx() = %d\n", m_sLanLastError );
 			m_bLanLogInto = (m_sLanLastError == PCIF_SUCCESS);
 		}
 
 		// --- open serial port with user specified configuration ---
 		m_sLanLastError = ::PcifOpenEx( PCIF_FUNC_OPEN_LAN, NULL );
 		m_bLanOpen = ( m_sLanLastError == PCIF_SUCCESS );
-		TRACE1 ("  OnTerminalLoginto   >> ::PcifOpenEx() = %d\n", m_sLanLastError );
+		TRACE1 ("  ** OnTerminalLoginto   >> ::PcifOpenEx() = %d\n", m_sLanLastError );
 
 		if (m_bLanOpen) {
 			m_sLanLastError = ::IspHostLogOn( m_csHostSession, m_csHostSessionPassword );
 			m_bLanLogInto = ( m_sLanLastError == PCIF_SUCCESS );
-			TRACE1 ("  OnTerminalLoginto   >> ::IspHostLogOn() = %d\n", m_sLanLastError );
+			TRACE1 ("  ** OnTerminalLoginto   >> ::IspHostLogOn() = %d\n", m_sLanLastError );
 			if (m_bLanLogInto && paramFlexMem.m_bDataRead == 0) {
 				paramFlexMem.PullParam ();
 			}
@@ -214,16 +215,16 @@ void CGenposBackOfficeDoc::OnTerminalLoginto()
 
 void CGenposBackOfficeDoc::OnTerminalLogout()
 {
-	TRACE2 ("%S(%d): -- OnTerminalLogout() Entry.\n", __FILE__, __LINE__);
+	TRACE2 ("** %S(%d): -- OnTerminalLogout() Entry.\n", __FILE__, __LINE__);
 	OnTerminalUnlockkeyboard();
 	if (m_bLanLogInto) {
 		m_sLanLastError = ::IspLogOff( );
-		TRACE1 ("  OnTerminalLoginto   >> ::IspLogOff() = %d\n", m_sLanLastError );
+		TRACE1 ("  ** OnTerminalLoginto   >> ::IspLogOff() = %d\n", m_sLanLastError );
 		m_bLanLogInto = (m_sLanLastError == PCIF_SUCCESS);
 	}
 	if (m_bLanOpen) {
 		m_sLanLastError = ::PcifCloseEx(PCIF_FUNC_CLOSE_LAN, NULL);
-	    TRACE1 ("  OnTerminalLogout   >> ::PcifCloseEx() = %d\n", m_sLanLastError );
+	    TRACE1 ("  ** OnTerminalLogout   >> ::PcifCloseEx() = %d\n", m_sLanLastError );
 		m_bLanOpen = !(m_sLanLastError == PCIF_SUCCESS);
 	}
 
@@ -232,17 +233,17 @@ void CGenposBackOfficeDoc::OnTerminalLogout()
 
 void CGenposBackOfficeDoc::OnTerminalTotalretrieve()
 {
-	TRACE2 ("%S(%d): -- OnTerminalTotalretrieve() Entry.\n", __FILE__, __LINE__);
+	TRACE2 ("** %S(%d): -- OnTerminalTotalretrieve() Entry.\n", __FILE__, __LINE__);
 
 	short  sRetrieveStatus = 0;
 	CString  mTotalCashierLine;
 
 	if (m_bLanOpen && m_bLanLogInto) {
 		sRetrieveStatus = totalRegFinCurDay.RetrieveTotal ();
-		TRACE1("  totalRegFinCurDay.RetrieveTotal %d\n", sRetrieveStatus);
+		TRACE1("  ** totalRegFinCurDay.RetrieveTotal %d\n", sRetrieveStatus);
 		totalCashierCurDay.setTotalCashier (1);
 		sRetrieveStatus = totalCashierCurDay.RetrieveTotal ();
-		TRACE1("  totalCashierCurDay.RetrieveTotal %d\n", sRetrieveStatus);
+		TRACE1("  ** totalCashierCurDay.RetrieveTotal %d\n", sRetrieveStatus);
 		short mPos = 0;
 		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
 		mPos++;
@@ -261,7 +262,7 @@ void CGenposBackOfficeDoc::OnTerminalTotalretrieve()
 
 void CGenposBackOfficeDoc::OnTerminalEndOfDay()
 {
-	TRACE2 ("%S(%d): -- OnTerminalEndOfDay() Entry.\n", __FILE__, __LINE__);
+	TRACE2 ("** %S(%d): -- OnTerminalEndOfDay() Entry.\n", __FILE__, __LINE__);
 
 	short  sRetrieveStatus = 0;
 
@@ -335,7 +336,7 @@ void CGenposBackOfficeDoc::OnTerminalLockkeyboard()
 {
 	if (m_bLanOpen && m_bLanLogInto && ~m_bKeyBoardLock) {
 		m_sLanLastError = ::IspLockKeyBoard ();
-	    TRACE1 ("  OnTerminalLockkeyboard   >> ::IspLockKeyBoard() = %d\n", m_sLanLastError );
+	    TRACE1 ("  ** OnTerminalLockkeyboard   >> ::IspLockKeyBoard() = %d\n", m_sLanLastError );
 		m_bKeyBoardLock = (m_sLanLastError == PCIF_SUCCESS);
 	}
 }
@@ -344,7 +345,7 @@ void CGenposBackOfficeDoc::OnTerminalUnlockkeyboard()
 {
 	if (m_bLanOpen && m_bLanLogInto && m_bKeyBoardLock) {
 		m_sLanLastError = ::IspUnLockKeyBoard ();
-	    TRACE1 ("  OnTerminalUnlockkeyboard   >> ::IspUnLockKeyBoard() = %d\n", m_sLanLastError );
+	    TRACE1 ("  ** OnTerminalUnlockkeyboard   >> ::IspUnLockKeyBoard() = %d\n", m_sLanLastError );
 		m_bKeyBoardLock = !(m_sLanLastError == PCIF_SUCCESS);
 	}
 }
