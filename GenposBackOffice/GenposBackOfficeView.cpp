@@ -35,8 +35,15 @@ END_MESSAGE_MAP()
 CGenposBackOfficeView::CGenposBackOfficeView() : m_firstTextLine (10, 50, 350, 75), m_lineIncrement(0, 25)
 {
 	m_pSelection = NULL;
-	// TODO: add construction code here
 
+	LOGFONT lf = {0};
+	// request a 12-pixel-height font
+	// request a face name "Arial"
+	lf.lfHeight = 18;
+	_tcsncpy_s(lf.lfFaceName, LF_FACESIZE, _T("Arial"), 7);
+
+	// create the font 
+	VERIFY(m_ViewFont.CreateFontIndirect(&lf));
 }
 
 CGenposBackOfficeView::~CGenposBackOfficeView()
@@ -62,6 +69,8 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+
+	CFont* def_font = pDC->SelectObject(&m_ViewFont);
 
 	if (pDoc->m_bLanOpen) {
 		// enable the buttons we need to use when logged into a terminal
@@ -167,6 +176,8 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 		}
 		m_pSelection->Draw(pDC, rect);
 	}
+
+	pDC->SelectObject(def_font);
 }
 
 void CGenposBackOfficeView::OnInitialUpdate()

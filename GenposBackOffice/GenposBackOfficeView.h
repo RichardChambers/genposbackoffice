@@ -24,6 +24,7 @@ public:
 	// TODO: replace this selection mechanism with one appropriate to your app
 	CGenposBackOfficeCntrItem* m_pSelection;
 
+	CFont   m_ViewFont;
 	CRect   m_firstTextLine;
 	CPoint  m_lineIncrement;
 

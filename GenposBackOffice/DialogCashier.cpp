@@ -51,8 +51,9 @@ void CDialogCashier::OnBnClickedButtonEdit()
 	int iSel = m_ListBox.GetCurSel ();
 
 	if (iSel != LB_ERR) {
+		CASIF myCashier = {0};
 		CDialogCashierEdit myDialog;
-
+		myDialog.ImportCasif (&myCashier);
 		myDialog.DoModal ();
 	}
 }
