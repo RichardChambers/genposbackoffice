@@ -240,6 +240,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LanThread.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Lister.cpp"
 				>
 			</File>
@@ -383,6 +387,10 @@
 			</File>
 			<File
 				RelativePath=".\GenposBackOfficeView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LanThread.h"
 				>
 			</File>
 			<File

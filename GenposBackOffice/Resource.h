@@ -74,13 +74,15 @@
 #define ID_EDIT_CASHIEREDIT             32783
 #define ID_EDIT_COUPONEDIT              32784
 #define ID_EDIT_PLUEDIT                 32785
+#define ID_TERMINAL_EJRETRIEVE          32786
+#define ID_TERMINAL_EJRETRIEVERESET     32787
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        141
-#define _APS_NEXT_COMMAND_VALUE         32786
+#define _APS_NEXT_COMMAND_VALUE         32788
 #define _APS_NEXT_CONTROL_VALUE         1011
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

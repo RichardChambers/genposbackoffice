@@ -11,6 +11,7 @@
 #include "ListerCashier.h"
 #include "ListerPlu.h"
 #include "ListerCoupon.h"
+#include "LanThread.h"
 
 class CGenposBackOfficeDoc : public COleDocument
 {
@@ -33,6 +34,9 @@ public:
 	short    m_sLanLastError;
 
 	CString  m_currentRootFolder;  // root folder for the current data set
+
+	CLanThread     *m_LanThread;
+	LONG            m_LanInProgress;
 
 	CTotalRegFin   totalRegFinCurDay;
 	CTotalCashier  totalCashierCurDay;
@@ -74,6 +78,7 @@ public:
 	afx_msg void OnTerminalFlexmretrieve();
 	afx_msg void OnTerminalCashierretrieve();
 	afx_msg void OnTerminalCouponretrieve();
+	afx_msg void OnTerminalEJretrieve();
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	afx_msg void OnTerminalPluretrieve();
 	afx_msg void OnTerminalLockkeyboard();

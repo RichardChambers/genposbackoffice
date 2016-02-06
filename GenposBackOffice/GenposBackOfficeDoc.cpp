@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, COleDocument)
 	ON_COMMAND(ID_TERMINAL_FLEXMRETRIEVE, &CGenposBackOfficeDoc::OnTerminalFlexmretrieve)
 	ON_COMMAND(ID_TERMINAL_CASHIERRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCashierretrieve)
 	ON_COMMAND(ID_TERMINAL_COUPONRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCouponretrieve)
+	ON_COMMAND(ID_TERMINAL_EJRETRIEVE, &CGenposBackOfficeDoc::OnTerminalEJretrieve)
 	ON_COMMAND(ID_TERMINAL_PLURETRIEVE, &CGenposBackOfficeDoc::OnTerminalPluretrieve)
 	ON_COMMAND(ID_TERMINAL_LOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalLockkeyboard)
 	ON_COMMAND(ID_TERMINAL_UNLOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalUnlockkeyboard)
@@ -66,6 +67,8 @@ CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 	// temporary default text
 	m_csHostName = _T("HostName");
 	m_csHostMemo = _T("host memo");
+	m_LanThread = dynamic_cast<CLanThread *>(AfxBeginThread(RUNTIME_CLASS(CLanThread), THREAD_PRIORITY_NORMAL, 0, 0));
+	m_LanInProgress = 0;
 }
 
 CGenposBackOfficeDoc::~CGenposBackOfficeDoc()
@@ -294,6 +297,26 @@ void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
 {
 	if (m_bLanOpen && m_bLanLogInto) {
 		listCoupon.RetrieveList ();
+	}
+}
+
+void CGenposBackOfficeDoc::OnTerminalEJretrieve()
+{
+	static  char filePath[512] = {0};
+
+	CFileDialog fileDialog(TRUE, L"*.txt");
+	if (fileDialog.DoModal () == IDOK) {
+		CString mFileName = fileDialog.GetFileName();
+		for (int i = 0; i < mFileName.GetLength(); i++) {
+			filePath[i] = mFileName.GetAt(i);
+		}
+		filePath[mFileName.GetLength()] = 0;
+		if (m_bLanOpen && m_bLanLogInto && m_LanInProgress == 0) {
+			m_LanInProgress = 1;
+			m_LanThread->PostThreadMessage (ID_TERMINAL_EJRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanInProgress);
+		} else if (m_LanInProgress != 0) {
+			AfxMessageBox (L"Retrieval of data from Terminal already started.");
+		}
 	}
 }
 

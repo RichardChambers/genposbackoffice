@@ -152,6 +152,7 @@ BEGIN
         MENUITEM "Cashier Retrieve ...",        ID_TERMINAL_CASHIERRETRIEVE
         MENUITEM "Coupon Retrieve ...",         ID_TERMINAL_COUPONRETRIEVE
         MENUITEM "PLU Retrieve ...",            ID_TERMINAL_PLURETRIEVE
+        MENUITEM "EJ Retrieve ...",             ID_TERMINAL_EJRETRIEVE
         MENUITEM SEPARATOR
         MENUITEM "Total Retrieve ...",          ID_TERMINAL_TOTALRETRIEVE
     END

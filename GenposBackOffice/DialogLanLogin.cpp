@@ -61,3 +61,13 @@ void CDialogLanLogin::OnBnClickedCheckUseDhcp()
 	CIPAddressCtrl *p2 = (CIPAddressCtrl *)GetDlgItem (IDC_IPADDRESS1);
 	p2->EnableWindow(p->GetCheck ());
 }
+
+BOOL CDialogLanLogin::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// TODO:  Add extra initialization here
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// EXCEPTION: OCX Property Pages should return FALSE
+}
