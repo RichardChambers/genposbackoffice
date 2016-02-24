@@ -200,34 +200,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DialogCashier.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogCashierEdit.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogCoupon.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogEditPlu.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogLan.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogLanLogin.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogPlu.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\GenposBackOffice.cpp"
 				>
 			</File>
@@ -335,6 +307,38 @@
 				RelativePath=".\TotalRegFin.cpp"
 				>
 			</File>
+			<Filter
+				Name="Dialog"
+				>
+				<File
+					RelativePath=".\DialogCashier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogCashierEdit.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogCoupon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogEditPlu.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogLan.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogLanLogin.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogPlu.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -347,34 +351,6 @@
 			</File>
 			<File
 				RelativePath=".\CntrItem.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogCashier.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogCashierEdit.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogCoupon.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogEditPlu.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogLan.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogLanLogin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DialogPlu.h"
 				>
 			</File>
 			<File
@@ -493,6 +469,38 @@
 				RelativePath=".\TotalRegFin.h"
 				>
 			</File>
+			<Filter
+				Name="Dialog"
+				>
+				<File
+					RelativePath=".\DialogCashier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogCashierEdit.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogCoupon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogEditPlu.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogLan.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogLanLogin.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogPlu.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

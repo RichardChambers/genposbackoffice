@@ -242,24 +242,42 @@ void CGenposBackOfficeDoc::OnTerminalTotalretrieve()
 	CString  mTotalCashierLine;
 
 	if (m_bLanOpen && m_bLanLogInto) {
+		short mPos = 0;
+		TRACE0("Retrieve Regular Financial Total\n");
 		sRetrieveStatus = totalRegFinCurDay.RetrieveTotal ();
 		TRACE1("  ** totalRegFinCurDay.RetrieveTotal %d\n", sRetrieveStatus);
-		totalCashierCurDay.setTotalCashier (1);
-		sRetrieveStatus = totalCashierCurDay.RetrieveTotal ();
-		TRACE1("  ** totalCashierCurDay.RetrieveTotal %d\n", sRetrieveStatus);
-		short mPos = 0;
-		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
-		mPos++;
-		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
-		mPos++;
-		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
+		short sRet;
+		do {
+			sRet = totalRegFinCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
+			TRACE2("  line %d - %s\n", mPos, mTotalCashierLine);
+			mPos++;
+		} while (sRet == 0);
 
 		mPos = 0;
-		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
-		mPos++;
-		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
-		mPos++;
-		totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
+		do {
+			sRet = totalRegFinCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
+			TRACE2("  line %d - %s\n", mPos, mTotalCashierLine);
+			mPos++;
+		} while (sRet == 0);
+
+		totalCashierCurDay.setTotalCashier (1);
+		TRACE0("Retrieve Cashier Total\n");
+		sRetrieveStatus = totalCashierCurDay.RetrieveTotal ();
+		TRACE1("  ** totalCashierCurDay.RetrieveTotal %d\n", sRetrieveStatus);
+
+		mPos = 0;
+		do {
+			sRet = totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeText);
+			TRACE2("  line %d - %s\n", mPos, mTotalCashierLine);
+			mPos++;
+		} while (sRet == 0);
+
+		mPos = 0;
+		do {
+			sRet = totalCashierCurDay.getTotalStructLine (mPos, mTotalCashierLine, CTotal::TtlLineTypeTextJson);
+			TRACE2("  line %d - %s\n", mPos, mTotalCashierLine);
+			mPos++;
+		} while (sRet == 0);
 	}
 }
 

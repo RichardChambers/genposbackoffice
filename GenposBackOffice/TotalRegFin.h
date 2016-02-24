@@ -11,6 +11,8 @@ public:
 	virtual short getTotalStructLine (short &sPos, CString &csLine, TtlLineType lineType);
 	virtual short getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType);
 
+	static const CTotalText transtable[];
+
 public:
     TTLREGFIN   m_ttlRegFin;
 };

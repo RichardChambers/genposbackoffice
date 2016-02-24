@@ -28,15 +28,30 @@ public:
 
 	enum TtlLineType {TtlLineTypeNone = 0, TtlLineTypeText = 1, TtlLineTypeTextXml = 2, TtlLineTypeTextJson = 3, TtlLineTypeTextCsv = 4 };
 
-	enum TtlVarType {TtlVarTypeNone = 0, TtlVarTypeLong = 1, TtlVarTypeTotal = 2};
+	enum TtlVarType {TtlVarTypeNone = 0, TtlVarTypeShort = 1, TtlVarTypeLong = 2, TtlVarTypeLongLong = 3, TtlVarTypeTotal = 4};
 
 	typedef unsigned char TtlClass;
 
+#pragma pack(push, 1)
 	struct TtlClassStruct {
 		UCHAR       uchMajorClass;      /* Major Class Data definition */
 		UCHAR       uchMinorClass;      /* Minor Class Data definition */
 	};
 
+	union TtlMember {
+		short       sVal;
+		long        lVal;
+		long long   llVal;
+		TOTAL       tVal;
+	};
+#pragma pack(pop)
+
+	struct CTotalText {
+		int                 idString;
+		CTotal::TtlVarType  iType;
+		char                *aszTag;
+		int                 iOffset;
+	};
 
 	CTotal(CTotal::TtlClass major = 0, CTotal::TtlType type = CTotal::TtlTypeNone);
 	virtual ~CTotal(void);
@@ -53,6 +68,8 @@ public:
 	short RetrieveTotal (void);
 	short ResetTotal (void);
 	short ResetTotalEndOfDay (void);
+
+	int CreateString (CString &csLine, TtlLineType lineType, const CTotalText &totalLine, const TtlMember val);
 
 protected:
 	unsigned char DetermineMinorClass (TtlType type);

@@ -12,14 +12,8 @@ public:
 	virtual short getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType);
 
 public:
-	struct CTotalCashierText {
-		int                 idString;
-		CTotal::TtlVarType  iType;
-		char                *aszTag;
-		int                 iOffset;
-	};
 
-	static const CTotalCashierText transtable[];
+	static const CTotalText transtable[];
 
 public:
 

@@ -1,4 +1,6 @@
 #include "StdAfx.h"
+#include <stddef.h>
+
 #include "TotalCashier.h"
 #include "Resource.h"
 
@@ -13,9 +15,9 @@ CTotalCashier::~CTotalCashier(void)
 {
 }
 
-#define CTOTALCASHIEROFFSET(x) #x , (int)&(((TTLCASHIER *)NULL)->x)
+#define CTOTALCASHIEROFFSET(x) #x , offsetof(TTLCASHIER, x)
 
-const CTotalCashier::CTotalCashierText CTotalCashier::transtable[] = {
+const CTotalCashier::CTotalText CTotalCashier::transtable[] = {
 	{IDS_TOTALCASHIER_CASHIER_NO, CTotal::TtlVarTypeLong, CTOTALCASHIEROFFSET(ulCashierNumber)},
 	{IDS_TOTALCASHIER_PLUSVOID, CTotal::TtlVarTypeTotal, CTOTALCASHIEROFFSET(PlusVoid)},
 	{IDS_TOTALCASHIER_PRESELECTVOID, CTotal::TtlVarTypeTotal, CTOTALCASHIEROFFSET(PreselectVoid)},
@@ -29,52 +31,11 @@ short CTotalCashier::getTotalStructLine (short &iPos, CString &csLine, CTotal::T
 {
 	short  sRetStatus = -1;
 
-	if (iPos < sizeof(CTotalCashier::transtable)/sizeof(CTotalCashier::transtable[0])) {
-		ULONG  ulValue = *((ULONG *) (((UCHAR *)&m_ttlCashier) + CTotalCashier::transtable[iPos].iOffset));
-		TOTAL  totValue = *((TOTAL *) (((UCHAR *)&m_ttlCashier) + CTotalCashier::transtable[iPos].iOffset));
-		int    iType = CTotalCashier::transtable[iPos].iType;
-		CString  csLineString;  csLineString.LoadString(CTotalCashier::transtable[iPos].idString);
-		char     *aszTag = transtable[iPos].aszTag;
+	if (iPos < sizeof(transtable)/sizeof(transtable[0])) {
+		TtlMember  val = *((TtlMember *) (((UCHAR *)&m_ttlCashier) + transtable[iPos].iOffset));
 
-		switch (lineType)
-		{
-			case TtlLineTypeText:
-				switch (iType) {
-					case CTotal::TtlVarTypeLong:
-						csLine.Format(_T("%-25s  %8d"), csLineString, ulValue);
-						break;
-					case CTotal::TtlVarTypeTotal:
-						csLine.Format(_T("%-25s  %8d   %6d"), csLineString, totValue.lAmount, totValue.sCounter);
-						break;
-				}
-				sRetStatus = 0;
-				break;
-			case TtlLineTypeTextXml:
-				sRetStatus = 0;
-				break;
-			case TtlLineTypeTextJson:
-				switch (iType) {
-					case CTotal::TtlVarTypeLong:
-						csLine.Format(_T("{\"%S\" : %8d}"), aszTag, ulValue);
-						break;
-					case CTotal::TtlVarTypeTotal:
-						csLine.Format(_T("{ \"%S\" : { \"lAmount\" : %8d, \"sCount\" : %6d } }"), aszTag, totValue.lAmount, totValue.sCounter);
-						break;
-				}
-				sRetStatus = 0;
-				break;
-			case TtlLineTypeTextCsv:
-				switch (iType) {
-					case CTotal::TtlVarTypeLong:
-						csLine.Format(_T("%S, %8d}"), aszTag, ulValue);
-						break;
-					case CTotal::TtlVarTypeTotal:
-						csLine.Format(_T("%S, %8d, %6d"), aszTag, totValue.lAmount, totValue.sCounter);
-						break;
-				}
-				sRetStatus = 0;
-				break;
-		}
+		CreateString (csLine, lineType, transtable[iPos], val);
+		sRetStatus = 0;
 	}
 
 	return sRetStatus;
@@ -84,8 +45,8 @@ short CTotalCashier::getTotalStructLine (int idsPos, CString &csLine, CTotal::Tt
 {
 	short  sPos = 0;
 
-	for (sPos = 0; sPos < sizeof(CTotalCashier::transtable)/sizeof(CTotalCashier::transtable[0]); sPos++) {
-		if (CTotalCashier::transtable[sPos].idString == idsPos) {
+	for (sPos = 0; sPos < sizeof(transtable)/sizeof(transtable[0]); sPos++) {
+		if (transtable[sPos].idString == idsPos) {
 			return getTotalStructLine (sPos, csLine, lineType);
 		}
 	}
