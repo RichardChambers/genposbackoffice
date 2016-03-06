@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -79,7 +77,7 @@ IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR  16, 15
+IDR_MAINFRAME TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -100,7 +98,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU 
+IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -161,6 +159,7 @@ BEGIN
         MENUITEM "Cashier Edit ...",            ID_EDIT_CASHIEREDIT
         MENUITEM "Coupon Edit ...",             ID_EDIT_COUPONEDIT
         MENUITEM "PLU Edit ...",                ID_EDIT_PLUEDIT
+        MENUITEM "Mnemonic Edit ...",           ID_EDIT_MNEMONICEDIT
     END
     POPUP "&Help"
     BEGIN
@@ -170,7 +169,7 @@ BEGIN
     END
 END
 
-IDR_CNTR_INPLACE MENU 
+IDR_CNTR_INPLACE MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -198,7 +197,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS 
+IDR_MAINFRAME ACCELERATORS
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
@@ -219,7 +218,7 @@ BEGIN
     VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,    VIRTKEY, NOINVERT
 END
 
-IDR_CNTR_INPLACE ACCELERATORS 
+IDR_CNTR_INPLACE ACCELERATORS
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
@@ -346,10 +345,9 @@ IDD_DIALOGCASHIEREDIT_TAB_ONE DIALOGEX 0, 10, 178, 120
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
-    CONTROL         "&Training Operator",IDC_TAB_CASHIER_EDIT_A20ST01,
-					"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,5,5,166,9
+    CONTROL         "&Training Operator",IDC_TAB_CASHIER_EDIT_A20ST01,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,5,5,166,9
     CONTROL         "Prohibit &Guest Check Open",IDC_TAB_CASHIER_EDIT_A20ST02,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
     CONTROL         "Prohibit Non-&Guest Check Transaction",IDC_TAB_CASHIER_EDIT_A20ST03,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
     CONTROL         "Prohibit Operator to &Close Own Check",IDC_TAB_CASHIER_EDIT_A20ST04,
@@ -357,45 +355,42 @@ BEGIN
     CONTROL         "Prohibit Operator to &Close Any Check",IDC_TAB_CASHIER_EDIT_A20ST05,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,45,166,9
     CONTROL         "Prohibit Check &Transfer from Other Operator",IDC_TAB_CASHIER_EDIT_A20ST06,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
     CONTROL         "Prohibit Check &Transfer to Other Operator",IDC_TAB_CASHIER_EDIT_A20ST07,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,166,9
     CONTROL         "Require &Secret Code",IDC_TAB_CASHIER_EDIT_A20ST08,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
     CONTROL         "&Release on Finalize at Guest Check Transaction",IDC_TAB_CASHIER_EDIT_A20ST09,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
     CONTROL         "&Release on Finalize at Non-GC Transaction",IDC_TAB_CASHIER_EDIT_A20ST10,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,95,166,9
     CONTROL         "Prohibit &Sign-in as surrogate",IDC_TAB_CASHIER_EDIT_A20ST11,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
 END
 
 IDD_DIALOGCASHIEREDIT_TAB_TWO DIALOGEX 0, 10, 178, 120
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
-    CONTROL         "&A Drawer",IDC_TAB_CASHIER_EDIT_A20ST01,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,5,166,9
-    CONTROL         "&B Drawer",IDC_TAB_CASHIER_EDIT_A20ST02,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
-    CONTROL         "&Use Team",IDC_TAB_CASHIER_EDIT_A20ST03,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
+    CONTROL         "&A Drawer",IDC_TAB_CASHIER_EDIT_A20ST01,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,5,166,9
+    CONTROL         "&B Drawer",IDC_TAB_CASHIER_EDIT_A20ST02,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
+    CONTROL         "&Use Team",IDC_TAB_CASHIER_EDIT_A20ST03,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
     CONTROL         "Prohibit &Operator Interrupt",IDC_TAB_CASHIER_EDIT_A20ST04,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,35,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,35,166,9
     CONTROL         "&Open Cash Drawer on Sign-In",IDC_TAB_CASHIER_EDIT_A20ST05,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,45,166,9
-	CONTROL         "&Open Cash Drawer on Sign-Out",IDC_TAB_CASHIER_EDIT_A20ST06,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
-	CONTROL			"Prohibit &Manual Register Sign-in on MSR",IDC_TAB_CASHIER_EDIT_A20ST07,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,166,9
-	CONTROL			"Auto Sign Out Disabled",IDC_TAB_CASHIER_EDIT_A20ST08,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
-	CONTROL         "PIN required for Sign-in",IDC_TAB_CASHIER_EDIT_A20ST09,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,45,166,9
+    CONTROL         "&Open Cash Drawer on Sign-Out",IDC_TAB_CASHIER_EDIT_A20ST06,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
+    CONTROL         "Prohibit &Manual Register Sign-in on MSR",IDC_TAB_CASHIER_EDIT_A20ST07,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,166,9
+    CONTROL         "Auto Sign Out Disabled",IDC_TAB_CASHIER_EDIT_A20ST08,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
+    CONTROL         "PIN required for Sign-in",IDC_TAB_CASHIER_EDIT_A20ST09,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
     CONTROL         "PIN required for Time-in",IDC_TAB_CASHIER_EDIT_A20ST10,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,95,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,95,166,9
     CONTROL         "PIN required for Supervisor",IDC_TAB_CASHIER_EDIT_A20ST11,
-					"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
 END
 
 IDD_DIALOGCASHIEREDIT_TAB_THRE DIALOGEX 0, 10, 178, 120
@@ -403,6 +398,16 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
     LTEXT           "Dialog Tab three",IDC_STATIC,6,44,90,17
+END
+
+IDD_DIALOGMNEMONIC DIALOGEX 0, 0, 201, 256
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,144,38,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,144,7,50,14
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,128,242
 END
 
 
@@ -451,7 +456,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -514,7 +519,14 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 179
         TOPMARGIN, 7
-        BOTTOMMARGIN, 175
+    END
+
+    IDD_DIALOGMNEMONIC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 194
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 249
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -525,14 +537,14 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
     IDP_FAILED_TO_CREATE    "Failed to create object.  Make sure the object is entered in the system registry."
     IDP_SOCKETS_INIT_FAILED "Windows sockets initialization failed."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "GenposBackOffice\n\nGenposBackOffic\nGenposBackOffice Files (*.gpbo)\n.gpbo\nGenposBackOffice.Document\nGenposBackOffice.Document"
     IDS_TOTALCASHIER_CASHIER_NO "Cashier Number"
@@ -544,14 +556,14 @@ BEGIN
     IDS_TOTALCASHIER_CONSCOUPON "Consolidated Coupon"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_APP_TITLE       "GenposBackOffice"
     AFX_IDS_IDLEMESSAGE     "For Help, press F1"
     AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -561,7 +573,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -575,7 +587,7 @@ BEGIN
     ID_FILE_NEW_FRAME       "Create a new frame\nNew Frame"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
@@ -586,7 +598,7 @@ BEGIN
     ID_HELP                 "Display help for current task or command\nHelp"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -606,18 +618,18 @@ BEGIN
     ID_FILE_MRU_FILE16      "Open this document"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_EDIT_CLEAR           "Erase the selection\nErase"
     ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
@@ -634,20 +646,20 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
     ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
     ID_OLE_EDIT_CONVERT     "Convert object to different type\nConvert Object"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_OLE_VERB_FIRST       "Activate embedded or linked object"
     57873                   "Activate embedded or linked object"
@@ -655,7 +667,7 @@ BEGIN
     57875                   "Activate embedded or linked object"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -666,18 +678,18 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

@@ -26,6 +26,7 @@
 #define IDD_DIALOGCASHIEREDIT_TAB_ONE   138
 #define IDD_DIALOGCASHIEREDIT_TAB_TWO   139
 #define IDD_DIALOGCASHIEREDIT_TAB_THRE  140
+#define IDD_DIALOGMNEMONIC              141
 #define IDC_EDIT_HOSTNAME               1000
 #define IDC_EDIT_HOSTMEMO               1001
 #define IDC_STATIC_HOSTNAME             1002
@@ -40,6 +41,8 @@
 #define IDC_LIST_PLU                    1009
 #define IDC_BUTTON1                     1010
 #define IDC_BUTTON_EDIT                 1010
+#define IDC_LIST1                       1011
+#define IDC_LIST2                       1012
 #define IDC_EDIT_CASHIER_NAME           1107
 #define IDC_EDIT_CASHIER_SUPNO          1108
 #define IDC_EDIT_CASHIER_TEAMNO         1109
@@ -76,14 +79,15 @@
 #define ID_EDIT_PLUEDIT                 32785
 #define ID_TERMINAL_EJRETRIEVE          32786
 #define ID_TERMINAL_EJRETRIEVERESET     32787
+#define ID_EDIT_MNEMONICEDIT            32788
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        141
-#define _APS_NEXT_COMMAND_VALUE         32788
-#define _APS_NEXT_CONTROL_VALUE         1011
+#define _APS_NEXT_RESOURCE_VALUE        142
+#define _APS_NEXT_COMMAND_VALUE         32789
+#define _APS_NEXT_CONTROL_VALUE         1013
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
