@@ -236,34 +236,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Param.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamCashier.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamCoupon.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamFlexMem.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamMajorDept.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamMdc.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamPlu.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -282,30 +254,6 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Total.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalCashier.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalCoupon.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalIndRegFin.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalMajorDept.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalRegFin.cpp"
-				>
 			</File>
 			<Filter
 				Name="Dialog"
@@ -335,7 +283,71 @@
 					>
 				</File>
 				<File
+					RelativePath=".\DialogMnemonic.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\DialogPlu.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Param"
+				>
+				<File
+					RelativePath=".\Param.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamCashier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamCoupon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamFlexMem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamMajorDept.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamMdc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamPlu.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Total"
+				>
+				<File
+					RelativePath=".\Total.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalCashier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalCoupon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalIndRegFin.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalMajorDept.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalRegFin.cpp"
 					>
 				</File>
 			</Filter>
@@ -390,34 +402,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Param.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamCashier.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamCoupon.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamFlexMem.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamMajorDept.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamMdc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ParamPlu.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Resource.h"
 				>
 				<FileConfiguration
@@ -443,30 +427,6 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Total.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalCashier.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalCoupon.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalIndRegFin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalMajorDept.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TotalRegFin.h"
 				>
 			</File>
 			<Filter
@@ -497,7 +457,71 @@
 					>
 				</File>
 				<File
+					RelativePath=".\DialogMnemonic.h"
+					>
+				</File>
+				<File
 					RelativePath=".\DialogPlu.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Param"
+				>
+				<File
+					RelativePath=".\Param.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamCashier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamCoupon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamFlexMem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamMajorDept.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamMdc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamPlu.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Total"
+				>
+				<File
+					RelativePath=".\Total.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalCashier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalCoupon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalIndRegFin.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalMajorDept.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TotalRegFin.h"
 					>
 				</File>
 			</Filter>

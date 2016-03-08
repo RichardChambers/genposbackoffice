@@ -5,7 +5,7 @@
 
 // CDialogMnemonic dialog
 
-class CDialogMnemonic : public CDialogEx
+class CDialogMnemonic : public CDialog
 {
 	DECLARE_DYNAMIC(CDialogMnemonic)
 
