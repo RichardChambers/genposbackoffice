@@ -400,6 +400,8 @@ void CGenposBackOfficeDoc::OnTerminalSettingsretrieve()
 		paramFlexMem.PullParam ();
 		paramFlexMem.SummaryToText (m_csHostFlexMem);
 		paramMdc.PullParam ();
+		paramTrans.PullParam ();
+		paramLeadThru.PullParam ();
 
 		listPlu.RetrieveList ();
 		listCoupon.RetrieveList ();

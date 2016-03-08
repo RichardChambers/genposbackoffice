@@ -319,6 +319,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ParamMnemonic.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\ParamPlu.cpp"
 					>
 				</File>
@@ -490,6 +494,10 @@
 				</File>
 				<File
 					RelativePath=".\ParamMdc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ParamMnemonic.h"
 					>
 				</File>
 				<File

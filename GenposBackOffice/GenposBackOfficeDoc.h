@@ -7,6 +7,7 @@
 #include "TotalCashier.h"
 #include "ParamFlexMem.h"
 #include "ParamMdc.h"
+#include "ParamMnemonic.h"
 
 #include "ListerCashier.h"
 #include "ListerPlu.h"
@@ -42,6 +43,8 @@ public:
 	CTotalCashier  totalCashierCurDay;
 	CParamFlexMem  paramFlexMem;
 	CParamMdc      paramMdc;
+	CParamTransaction  paramTrans;
+	CParamLeadThru     paramLeadThru;
 
 	CListerCashier  listCashier;
 	CListerPlu      listPlu;
