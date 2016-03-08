@@ -2,16 +2,18 @@
 #include "afxwin.h"
 #include "afxcmn.h"
 
+#include "ParamMnemonic.h"
 
 // CDialogMnemonic dialog
 
-class CDialogMnemonic : public CDialogEx
+class CDialogMnemonic : public CDialog
 {
 	DECLARE_DYNAMIC(CDialogMnemonic)
 
 public:
 	CDialogMnemonic(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDialogMnemonic();
+	CDialogMnemonic(CParamMnemonic *para, CWnd* pParent = NULL);
 
 // Dialog Data
 	enum { IDD = IDD_DIALOGMNEMONIC };
@@ -21,6 +23,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	CParamMnemonic *m_para;
+
 	CListCtrl m_listctrl;
 
 	struct MnemonicItem {

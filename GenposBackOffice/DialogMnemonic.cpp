@@ -7,15 +7,20 @@
 
 #include "GenposBackOffice.h"
 #include "DialogMnemonic.h"
-#include "afxdialogex.h"
 
 
 // CDialogMnemonic dialog
 
-IMPLEMENT_DYNAMIC(CDialogMnemonic, CDialogEx)
+IMPLEMENT_DYNAMIC(CDialogMnemonic, CDialog)
 
 CDialogMnemonic::CDialogMnemonic(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CDialogMnemonic::IDD, pParent)
+	: CDialog(CDialogMnemonic::IDD, pParent), m_para(0)
+{
+
+}
+
+CDialogMnemonic::CDialogMnemonic(CParamMnemonic *para, CWnd* pParent /*=NULL*/)
+	: CDialog(CDialogMnemonic::IDD, pParent), m_para(para)
 {
 
 }
@@ -26,7 +31,7 @@ CDialogMnemonic::~CDialogMnemonic()
 
 void CDialogMnemonic::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_listctrl);
 
 	if (!pDX->m_bSaveAndValidate) {
@@ -106,7 +111,7 @@ void CDialogMnemonic::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDialogMnemonic, CDialogEx)
+BEGIN_MESSAGE_MAP(CDialogMnemonic, CDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST1, &CDialogMnemonic::OnLvnItemchangedList1)
 END_MESSAGE_MAP()
 
