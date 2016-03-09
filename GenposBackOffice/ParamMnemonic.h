@@ -1,6 +1,8 @@
 #pragma once
 #include "param.h"
 
+#include "resource.h"
+
 class CParamMnemonic : public CParam
 {
 public:
@@ -15,10 +17,10 @@ public:
 	virtual short PushParam (void) = 0;
 	virtual void ClearParam(void) = 0;
 
-	virtual unsigned short GetMnemonicValue (unsigned short usAddress, CString &mnemonic) = 0;
+	virtual unsigned short GetMnemonicValue (unsigned short *usAddress, CString &mnemonic) = 0;
 	virtual unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic) = 0;
 
-	virtual unsigned short GetPromptText (unsigned short usAddress, CString &mnemonic) = 0;
+	virtual unsigned short GetPromptText (unsigned short usAddress, LPWSTR mnemonic) = 0;
 	virtual sizes GetMnemonicSizes (void) = 0;
 
 public:
@@ -38,10 +40,10 @@ public:
 	virtual short PushParam (void);
 	virtual void ClearParam(void);
 
-	virtual unsigned short GetMnemonicValue (unsigned short usAddress, CString &mnemonic);
+	virtual unsigned short GetMnemonicValue (unsigned short *usAddress, CString &mnemonic);
 	virtual unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic);
 
-	virtual unsigned short GetPromptText (unsigned short usAddress, CString &mnemonic);
+	virtual unsigned short GetPromptText (unsigned short usAddress, LPWSTR mnemonic);
 	virtual sizes GetMnemonicSizes (void);
 
 private:
@@ -58,10 +60,10 @@ public:
 	virtual short PushParam (void);
 	virtual void ClearParam(void);
 
-	virtual unsigned short GetMnemonicValue (unsigned short usAddress, CString &mnemonic);
+	virtual unsigned short GetMnemonicValue (unsigned short *usAddress, CString &mnemonic);
 	virtual unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic);
 
-	virtual unsigned short GetPromptText (unsigned short usAddress, CString &mnemonic);
+	virtual unsigned short GetPromptText (unsigned short usAddress, LPWSTR mnemonic);
 	virtual sizes GetMnemonicSizes (void);
 
 private:

@@ -14,13 +14,13 @@
 IMPLEMENT_DYNAMIC(CDialogMnemonic, CDialog)
 
 CDialogMnemonic::CDialogMnemonic(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogMnemonic::IDD, pParent), m_para(0)
+	: CDialog(CDialogMnemonic::IDD, pParent), m_MnemonicList(0)
 {
 
 }
 
 CDialogMnemonic::CDialogMnemonic(CParamMnemonic *para, CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogMnemonic::IDD, pParent), m_para(para)
+	: CDialog(CDialogMnemonic::IDD, pParent), m_MnemonicList(para)
 {
 
 }
@@ -42,71 +42,33 @@ void CDialogMnemonic::DoDataExchange(CDataExchange* pDX)
 
 		lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
 		lvColumn.fmt = LVCFMT_LEFT;
-		lvColumn.cx = 120;
-		lvColumn.pszText = L"Full Name";
+		lvColumn.cx = 160;
+		lvColumn.pszText = L"Prompt";
 		nCol = m_listctrl.InsertColumn(0, &lvColumn);
 
 		lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
 		lvColumn.fmt = LVCFMT_LEFT;
-		lvColumn.cx = 100;
-		lvColumn.pszText = L"Profession";
+		lvColumn.cx = 160;
+		lvColumn.pszText = L"Mnemonic";
 		m_listctrl.InsertColumn(1, &lvColumn);
-
-		lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
-		lvColumn.fmt = LVCFMT_LEFT;
-		lvColumn.cx = 80;
-		lvColumn.pszText = L"Fav Sport";
-		m_listctrl.InsertColumn(2, &lvColumn);
-
-		lvColumn.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
-		lvColumn.fmt = LVCFMT_LEFT;
-		lvColumn.cx = 75;
-		lvColumn.pszText = L"Hobby";
-		m_listctrl.InsertColumn(3, &lvColumn);
 
 		LVITEM lvItem = {0};
 		int nItem;
 
-		lvItem.mask = LVIF_TEXT;
-		lvItem.iItem = 0;
-		lvItem.iSubItem = 0;
-		lvItem.pszText = L"Sandra C. Anschwitz";
-		nItem = m_listctrl.InsertItem(&lvItem);
+		WCHAR   wcsPrompt[128];
+		CString csMnemonic;
+		unsigned short usAddress = 0;
 
-		m_listctrl.SetItemText(nItem, 1, L"Singer");
-		m_listctrl.SetItemText(nItem, 2, L"HandBall");
-		m_listctrl.SetItemText(nItem, 3, L"Beach");
+		for (CParamMnemonic *p = m_MnemonicList; p && p->GetPromptText (usAddress, wcsPrompt); ) {
+			p->GetMnemonicValue (&usAddress, csMnemonic);
+			lvItem.mask = LVIF_TEXT;
+			lvItem.iItem = 0;
+			lvItem.iSubItem = 0;
+			lvItem.pszText = wcsPrompt;
+			nItem = m_listctrl.InsertItem(&lvItem);
 
-		lvItem.mask = LVIF_TEXT;
-		lvItem.iItem = 1;
-		lvItem.iSubItem = 0;
-		lvItem.pszText = L"Roger A. Miller";
-		nItem = m_listctrl.InsertItem(&lvItem);
-
-		m_listctrl.SetItemText(nItem, 1, L"Footballer");
-		m_listctrl.SetItemText(nItem, 2, L"Tennis");
-		m_listctrl.SetItemText(nItem, 3, L"Teaching");
-
-		lvItem.mask = LVIF_TEXT;
-		lvItem.iItem = 2;
-		lvItem.iSubItem = 0;
-		lvItem.pszText = L"Marie-Julie W. Gross";
-		nItem = m_listctrl.InsertItem(&lvItem);
-
-		m_listctrl.SetItemText(nItem, 1, L"Student");
-		m_listctrl.SetItemText(nItem, 2, L"Boxing");
-		m_listctrl.SetItemText(nItem, 3, L"Programming");
-
-		lvItem.mask = LVIF_TEXT;
-		lvItem.iItem = 3;
-		lvItem.iSubItem = 0;
-		lvItem.pszText = L"Ella Pius Roger";
-		nItem = m_listctrl.InsertItem(&lvItem);
-
-		m_listctrl.SetItemText(nItem, 1, L"Architect");
-		m_listctrl.SetItemText(nItem, 2, L"Ping-Pong");
-		m_listctrl.SetItemText(nItem, 3, L"Songo");
-
+			m_listctrl.SetItemText(nItem, 1, csMnemonic);
+		}
 	}
 }
 

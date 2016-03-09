@@ -442,7 +442,7 @@ void CGenposBackOfficeDoc::OnEditPluedit()
 void CGenposBackOfficeDoc::OnEditMnemonicedit()
 {
 	if (m_bLanOpen && m_bLanLogInto) {
-		CDialogMnemonic dialogMnemonic;
+		CDialogMnemonic dialogMnemonic(&paramTrans);
 //		dialogMnemonic.SetListPlu (&listPlu);
 		dialogMnemonic.DoModal ();
 	}

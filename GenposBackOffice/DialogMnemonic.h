@@ -32,11 +32,7 @@ public:
 		WCHAR   text[32];
 	};
 
-	struct MnemoicList {
-		MnemonicItem  items[32];
-		MnemonicItem * GetFirstListItem() { iOffset = 0; return items; }
-		MnemonicItem * GetNextListItem() { return items + iOffset; }
-		int iOffset;
-	} * m_myList;
+	CParamMnemonic *m_MnemonicList;
+
 	afx_msg void OnLvnItemchangedList1(NMHDR *pNMHDR, LRESULT *pResult);
 };
