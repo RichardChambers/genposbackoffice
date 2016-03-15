@@ -1,28 +1,10 @@
 #pragma once
 #include "afxwin.h"
 
+#include "TabCtrlDialog.h"
+
 #include "R20_PC2172.h"
 
-class CEditInt : public CEdit
-{
-public:
-	int GetWindowTextAsInt (void);
-	void SetWindowTextAsInt (int iValue);
-};
-
-class CTabCtrlDialog : public CTabCtrl
-{
-public:
-	CTabCtrlDialog();
-	~CTabCtrlDialog();
-	void InsertItemDialogTemplate (UINT nIDTemplate, int nItem, TCITEM* pTabCtrlItem);
-
-public:
-	struct {
-		UINT     nIDTemplate;
-		CDialog  *pDialog;
-	}  m_pDialogData[10];
-};
 
 // DialogCashierEdit dialog
 
@@ -55,7 +37,7 @@ public:
 	CEditInt m_GuestCheckEnd;
 	CTabCtrlDialog m_TabCtrl;
 
-	TCITEM  m_TabItem[6];          // tab control tabs array.  first element not used.
+	TCITEM  m_TabItem[8];          // tab control tabs array.  first element not used.
 
 	struct TabToStatus {
 		short  sTabItem;
@@ -67,6 +49,6 @@ public:
 	static const struct TabToStatus m_TabItemOneStatus[];
 
 public:
-	afx_msg void OnTcnSelchangeTabCashierEditStatus(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnTcnSelchangingTabCashierEditStatus(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTcnSelchangeTabControlEditStatus(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnTcnSelchangingTabControlEditStatus(NMHDR *pNMHDR, LRESULT *pResult);
 };

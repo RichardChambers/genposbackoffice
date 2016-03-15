@@ -216,22 +216,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Lister.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ListerCashier.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ListerCoupon.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ListerPlu.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -254,6 +238,10 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\TabCtrlDialog.cpp"
+				>
 			</File>
 			<Filter
 				Name="Dialog"
@@ -355,6 +343,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Lister"
+				>
+				<File
+					RelativePath=".\Lister.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListerCashier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListerCoupon.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ListerPlu.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -383,22 +391,6 @@
 			</File>
 			<File
 				RelativePath=".\LanThread.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Lister.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ListerCashier.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ListerCoupon.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ListerPlu.h"
 				>
 			</File>
 			<File
@@ -431,6 +423,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TabCtrlDialog.h"
 				>
 			</File>
 			<Filter
@@ -530,6 +526,26 @@
 				</File>
 				<File
 					RelativePath=".\TotalRegFin.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Lister"
+				>
+				<File
+					RelativePath=".\Lister.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListerCashier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListerCoupon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListerPlu.h"
 					>
 				</File>
 			</Filter>

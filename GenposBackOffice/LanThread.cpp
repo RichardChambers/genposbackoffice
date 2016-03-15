@@ -140,7 +140,7 @@ bool CLanThread::ElectronicJournalRead (char *pFilePath, HWND hWndProgress)
 	SHORT  sResult = ::SerEJNoOfTrans();  // check Electronic Journal status and get number of blocks.
 	USHORT  usCount = 0;
 
-	TRACE1("BEGIN CLanThread::ElectronicJournalRead - SerEJNoOfTrans() %d output file %s\n", sResult, pFilePath);
+	TRACE2("BEGIN CLanThread::ElectronicJournalRead - SerEJNoOfTrans() %d output file %s\n", sResult, pFilePath);
 
 	ElectronicJournalRecord  EJ_RecData;
 

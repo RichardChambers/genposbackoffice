@@ -312,16 +312,81 @@ BEGIN
     LISTBOX         IDC_LIST_PLU,7,7,118,182,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
 END
 
-IDD_DIALOGEDITPLU DIALOGEX 0, 0, 229, 94
+IDD_DIALOGEDITPLU DIALOGEX 0, 0, 294, 197
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "PLU Edit"
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,172,7,50,16
-    PUSHBUTTON      "Cancel",IDCANCEL,172,26,50,16
-    LTEXT           "PLU No.:",IDC_STATIC,7,7,59,10
-    LTEXT           "PLU Mnemonic:",IDC_STATIC,8,19,60,10
-    EDITTEXT        IDC_EDIT_MNEMONIC,80,22,71,10,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,237,7,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,237,26,50,16
+    LTEXT           "PLU No.:",IDC_STATIC,11,10,59,10
+    LTEXT           "PLU Mnemonic:",IDC_STATIC,11,26,60,10
+    EDITTEXT        IDC_EDIT_MNEMONIC,80,25,71,12,ES_AUTOHSCROLL
+    LTEXT           "Dept. No.:",IDC_STATIC,10,53,59,12
+    LTEXT           "Table No.:",IDC_STATIC,10,70,59,12
+    LTEXT           "Report Code :",IDC_STATIC,10,97,59,12
+    LTEXT           "Group No.:",IDC_STATIC,10,84,59,12
+    LTEXT           "Print Priority :",IDC_STATIC,10,110,59,12
+    LTEXT           "Sales Code :",IDC_STATIC,10,149,59,12
+    LTEXT           "Family Code :",IDC_STATIC,10,165,59,12
+    LTEXT           "Alt Mnemonic:",IDC_STATIC,10,40,60,10
+    EDITTEXT        IDC_EDIT_MNEMONIC2,80,40,71,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TAB_CONTROL_EDIT_STATUS,"SysTabControl32",0x0,119,60,168,130
+    LTEXT           "Link PLU :",IDC_STATIC,10,135,59,12
+END
+
+IDD_DIALOGEDITPLU_TAB_ONE DIALOGEX 0, 10, 178, 120
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Minus(Credit) PLU",IDC_TAB_CONTROL_EDIT_ST01,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,5,5,166,9
+    CONTROL         "Special Print Remote Device",IDC_TAB_CONTROL_EDIT_ST02,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
+    CONTROL         "Request Supervisor Intervention",IDC_TAB_CONTROL_EDIT_ST03,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
+    CONTROL         "Compulsory Print Modifier Key",IDC_TAB_CONTROL_EDIT_ST04,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,35,166,9
+    CONTROL         "Print Modifier or Condiment Key",IDC_TAB_CONTROL_EDIT_ST05,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,45,166,9
+    CONTROL         "Validation Print",IDC_TAB_CONTROL_EDIT_ST06,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
+    CONTROL         "Issue Single or Double Receipt",IDC_TAB_CONTROL_EDIT_ST07,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,166,9
+    CONTROL         "Print Double Receipt",IDC_TAB_CONTROL_EDIT_ST08,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
+    CONTROL         "Affects - Taxable Itemizer #1",IDC_TAB_CONTROL_EDIT_ST09,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
+    CONTROL         "Affects - Taxable Itemizer #2",IDC_TAB_CONTROL_EDIT_ST10,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,95,166,9
+    CONTROL         "Affects - Taxable Itemizer #3",IDC_TAB_CONTROL_EDIT_ST11,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
+END
+
+IDD_DIALOGEDITPLU_TAB_TWO DIALOGEX 0, 10, 178, 120
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Affects - Discountable Itemizer #1",IDC_TAB_CONTROL_EDIT_ST01,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,5,5,166,9
+    CONTROL         "Affects - Discountable Itemizer #2",IDC_TAB_CONTROL_EDIT_ST02,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
+    CONTROL         "Scalable PLU",IDC_TAB_CONTROL_EDIT_ST03,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
+    CONTROL         "Condiment PLU",IDC_TAB_CONTROL_EDIT_ST04,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,35,166,9
+    CONTROL         "Use Department Control Code",IDC_TAB_CONTROL_EDIT_ST05,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,45,166,9
+    CONTROL         "Send to Remote Device #1",IDC_TAB_CONTROL_EDIT_ST06,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
+    CONTROL         "Send to Remote Device #2",IDC_TAB_CONTROL_EDIT_ST07,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,166,9
+    CONTROL         "Send to Remote Device #3",IDC_TAB_CONTROL_EDIT_ST08,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
+    CONTROL         "Send to Remote Device #4",IDC_TAB_CONTROL_EDIT_ST09,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
+    CONTROL         "future ",IDC_TAB_CONTROL_EDIT_ST10,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,95,166,9
+    CONTROL         "future ",IDC_TAB_CONTROL_EDIT_ST11,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
 END
 
 IDD_DIALOGCASHIEREDIT DIALOGEX 0, 0, 300, 160
@@ -340,33 +405,33 @@ BEGIN
     EDITTEXT        IDC_EDIT_CASHIER_TEAMNO,84,54,34,12,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT_CASHIER_GCSTART,84,72,34,12,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT_CASHIER_GCEND,84,84,34,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_TAB_CASHIER_EDIT_STATUS,"SysTabControl32",0x0,124,26,168,130
+    CONTROL         "",IDC_TAB_CONTROL_EDIT_STATUS,"SysTabControl32",0x0,124,26,168,130
 END
 
 IDD_DIALOGCASHIEREDIT_TAB_ONE DIALOGEX 0, 10, 178, 120
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
-    CONTROL         "&Training Operator",IDC_TAB_CASHIER_EDIT_A20ST01,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,5,5,166,9
-    CONTROL         "Prohibit &Guest Check Open",IDC_TAB_CASHIER_EDIT_A20ST02,
+    CONTROL         "&Training Operator",IDC_TAB_CONTROL_EDIT_ST01,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,5,5,166,9
+    CONTROL         "Prohibit &Guest Check Open",IDC_TAB_CONTROL_EDIT_ST02,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
-    CONTROL         "Prohibit Non-&Guest Check Transaction",IDC_TAB_CASHIER_EDIT_A20ST03,
+    CONTROL         "Prohibit Non-&Guest Check Transaction",IDC_TAB_CONTROL_EDIT_ST03,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
-    CONTROL         "Prohibit Operator to &Close Own Check",IDC_TAB_CASHIER_EDIT_A20ST04,
+    CONTROL         "Prohibit Operator to &Close Own Check",IDC_TAB_CONTROL_EDIT_ST04,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,35,166,9
-    CONTROL         "Prohibit Operator to &Close Any Check",IDC_TAB_CASHIER_EDIT_A20ST05,
+    CONTROL         "Prohibit Operator to &Close Any Check",IDC_TAB_CONTROL_EDIT_ST05,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,45,166,9
-    CONTROL         "Prohibit Check &Transfer from Other Operator",IDC_TAB_CASHIER_EDIT_A20ST06,
+    CONTROL         "Prohibit Check &Transfer from Other Operator",IDC_TAB_CONTROL_EDIT_ST06,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
-    CONTROL         "Prohibit Check &Transfer to Other Operator",IDC_TAB_CASHIER_EDIT_A20ST07,
+    CONTROL         "Prohibit Check &Transfer to Other Operator",IDC_TAB_CONTROL_EDIT_ST07,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,166,9
-    CONTROL         "Require &Secret Code",IDC_TAB_CASHIER_EDIT_A20ST08,
+    CONTROL         "Require &Secret Code",IDC_TAB_CONTROL_EDIT_ST08,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
-    CONTROL         "&Release on Finalize at Guest Check Transaction",IDC_TAB_CASHIER_EDIT_A20ST09,
+    CONTROL         "&Release on Finalize at Guest Check Transaction",IDC_TAB_CONTROL_EDIT_ST09,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
-    CONTROL         "&Release on Finalize at Non-GC Transaction",IDC_TAB_CASHIER_EDIT_A20ST10,
+    CONTROL         "&Release on Finalize at Non-GC Transaction",IDC_TAB_CONTROL_EDIT_ST10,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,95,166,9
-    CONTROL         "Prohibit &Sign-in as surrogate",IDC_TAB_CASHIER_EDIT_A20ST11,
+    CONTROL         "Prohibit &Sign-in as surrogate",IDC_TAB_CONTROL_EDIT_ST11,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
 END
 
@@ -374,24 +439,24 @@ IDD_DIALOGCASHIEREDIT_TAB_TWO DIALOGEX 0, 10, 178, 120
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
-    CONTROL         "&A Drawer",IDC_TAB_CASHIER_EDIT_A20ST01,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,5,166,9
-    CONTROL         "&B Drawer",IDC_TAB_CASHIER_EDIT_A20ST02,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
-    CONTROL         "&Use Team",IDC_TAB_CASHIER_EDIT_A20ST03,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
-    CONTROL         "Prohibit &Operator Interrupt",IDC_TAB_CASHIER_EDIT_A20ST04,
+    CONTROL         "&A Drawer",IDC_TAB_CONTROL_EDIT_ST01,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,5,166,9
+    CONTROL         "&B Drawer",IDC_TAB_CONTROL_EDIT_ST02,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,15,166,9
+    CONTROL         "&Use Team",IDC_TAB_CONTROL_EDIT_ST03,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,25,166,9
+    CONTROL         "Prohibit &Operator Interrupt",IDC_TAB_CONTROL_EDIT_ST04,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,35,166,9
-    CONTROL         "&Open Cash Drawer on Sign-In",IDC_TAB_CASHIER_EDIT_A20ST05,
+    CONTROL         "&Open Cash Drawer on Sign-In",IDC_TAB_CONTROL_EDIT_ST05,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,45,166,9
-    CONTROL         "&Open Cash Drawer on Sign-Out",IDC_TAB_CASHIER_EDIT_A20ST06,
+    CONTROL         "&Open Cash Drawer on Sign-Out",IDC_TAB_CONTROL_EDIT_ST06,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,55,166,9
-    CONTROL         "Prohibit &Manual Register Sign-in on MSR",IDC_TAB_CASHIER_EDIT_A20ST07,
+    CONTROL         "Prohibit &Manual Register Sign-in on MSR",IDC_TAB_CONTROL_EDIT_ST07,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,65,166,9
-    CONTROL         "Auto Sign Out Disabled",IDC_TAB_CASHIER_EDIT_A20ST08,
+    CONTROL         "Auto Sign Out Disabled",IDC_TAB_CONTROL_EDIT_ST08,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,75,166,9
-    CONTROL         "PIN required for Sign-in",IDC_TAB_CASHIER_EDIT_A20ST09,
+    CONTROL         "PIN required for Sign-in",IDC_TAB_CONTROL_EDIT_ST09,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,85,166,9
-    CONTROL         "PIN required for Time-in",IDC_TAB_CASHIER_EDIT_A20ST10,
+    CONTROL         "PIN required for Time-in",IDC_TAB_CONTROL_EDIT_ST10,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,95,166,9
-    CONTROL         "PIN required for Supervisor",IDC_TAB_CASHIER_EDIT_A20ST11,
+    CONTROL         "PIN required for Supervisor",IDC_TAB_CONTROL_EDIT_ST11,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
 END
 
@@ -511,9 +576,9 @@ BEGIN
     IDD_DIALOGEDITPLU, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 222
+        RIGHTMARGIN, 287
         TOPMARGIN, 7
-        BOTTOMMARGIN, 87
+        BOTTOMMARGIN, 190
     END
 
     IDD_DIALOGCASHIEREDIT, DIALOG
@@ -691,7 +756,7 @@ BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-STRINGTABLE DISCARDABLE
+STRINGTABLE 
 BEGIN
     IDS_P020DESC001         "  1 : Period from"
     IDS_P020DESC002         "  2 : Period to"
@@ -700,6 +765,10 @@ BEGIN
     IDS_P020DESC005         "  5 : Tax No.1 Total /VAT No. 1"
     IDS_P020DESC006         "  6 : Tax Exempt No.1 Total"
     IDS_P020DESC007         "  7 : Taxable No.2 Total /VAT Applicable No.2"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC008         "  8 : Tax No.2 Total /VAT No.2"
     IDS_P020DESC009         "  9 : Tax Exempt No.2 Total"
     IDS_P020DESC010         " 10 : Taxable No.3 Total /VAT Applicable No.3"
@@ -709,10 +778,6 @@ BEGIN
     IDS_P020DESC014         " 14 : Tax No.4 Total (Int'l Service Total)"
     IDS_P020DESC015         " 15 : Tax Exempt No.4 Total"
     IDS_P020DESC016         " 16 : PST all Tax"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC017         " 17 : Consolidation Tax"
     IDS_P020DESC018         " 18 : Non Taxable Total"
     IDS_P020DESC019         " 19 : Training Gross Group Total"
@@ -720,6 +785,10 @@ BEGIN
     IDS_P020DESC021         " 21 : Daily Gross Group Total"
     IDS_P020DESC022         " 22 : Plus Void"
     IDS_P020DESC023         " 23 : Transaction Void"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC024         " 24 : Consolidation Coupon"
     IDS_P020DESC025         " 25 : Motorized Item Discount"
     IDS_P020DESC026         " 26 : Non-Motorized Item Discount"
@@ -729,10 +798,6 @@ BEGIN
     IDS_P020DESC030         " 30 : Received on Account"
     IDS_P020DESC031         " 31 : Tips Paid Out"
     IDS_P020DESC032         " 32 : Tender No. 1 (Cash)"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC033         " 33 : Tender No. 2 (Check)"
     IDS_P020DESC034         " 34 : Tender No. 3 (Charge)"
     IDS_P020DESC035         " 35 : Tender No. 4 (Misc. No. 1)"
@@ -740,6 +805,10 @@ BEGIN
     IDS_P020DESC037         " 37 : Tender No. 6 (Misc. No. 3)"
     IDS_P020DESC038         " 38 : Tender No. 7 (Misc. No. 4)"
     IDS_P020DESC039         " 39 : Tender No. 8 (Misc. No. 5)"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC040         " 40 : Foreign Total No. 1"
     IDS_P020DESC041         " 41 : Foreign Total No. 2"
     IDS_P020DESC042         " 42 : Total No. 1"
@@ -749,10 +818,6 @@ BEGIN
     IDS_P020DESC046         " 46 : Total No. 5"
     IDS_P020DESC047         " 47 : Total No. 6"
     IDS_P020DESC048         " 48 : Total No. 7"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC049         " 49 : Total No. 8"
     IDS_P020DESC050         " 50 : Service Total No. 1"
     IDS_P020DESC051         " 51 : Service Total No. 2"
@@ -760,6 +825,10 @@ BEGIN
     IDS_P020DESC053         " 53 : Add Check Total No. 1"
     IDS_P020DESC054         " 54 : Add Check Total No. 2"
     IDS_P020DESC055         " 55 : Add Check Total No. 3"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC056         " 56 : Charge Tips No. 1"
     IDS_P020DESC057         " 57 : Cancel Transaction"
     IDS_P020DESC058         " 58 : Cancel Total"
@@ -769,10 +838,6 @@ BEGIN
     IDS_P020DESC062         " 62 : Item Productivity Counter"
     IDS_P020DESC063         " 63 : Number of Person Counter"
     IDS_P020DESC064         " 64 : Number of Checks Opened"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC065         " 65 : Number of Checks Closed"
     IDS_P020DESC066         " 66 : Customer Counter"
     IDS_P020DESC067         " 67 : Hash Department"
@@ -780,6 +845,10 @@ BEGIN
     IDS_P020DESC069         " 69 : Bonus No. 2"
     IDS_P020DESC070         " 70 : Bonus No. 3"
     IDS_P020DESC071         " 71 : Bonus No. 4"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC072         " 72 : Bonus No. 5"
     IDS_P020DESC073         " 73 : Bonus No. 6"
     IDS_P020DESC074         " 74 : Bonus No. 7"
@@ -789,10 +858,6 @@ BEGIN
     IDS_P020DESC078         " 78 : Outstanding for Report"
     IDS_P020DESC079         " 79 : Addition"
     IDS_P020DESC080         " 80 : Deletion"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC081         " 81 : Change (Maintenance)"
     IDS_P020DESC082         " 82 : Net Sales/ No. of Person"
     IDS_P020DESC083         " 83 : Abort"
@@ -800,6 +865,10 @@ BEGIN
     IDS_P020DESC085         " 85 : Print on Demand"
     IDS_P020DESC086         " 86 : Guest Check Number"
     IDS_P020DESC087         " 87 : Previous Balance"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC088         " 88 : Check Paid"
     IDS_P020DESC089         " 89 : Error Correct"
     IDS_P020DESC090         " 90 : Number (#)"
@@ -809,16 +878,16 @@ BEGIN
     IDS_P020DESC094         " 94 : Reserved"
     IDS_P020DESC095         " 95 : Time Opened (GCF)"
     IDS_P020DESC096         " 96 : Elapsed Time (GCF)"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC097         " 97 : Current Balance (GCF)"
     IDS_P020DESC098         " 98 : Transferred Balance (GCF)"
     IDS_P020DESC099         " 99 : Old Server No. (GCF)"
     IDS_P020DESC100         "100 : Checks Transferred To"
     IDS_P020DESC101         "101 : Checks Transferred From"
     IDS_P020DESC103         "103 : Calculate Tips"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC104         "104 : Quantity"
     IDS_P020DESC105         "105 : Double Receipt ID"
     IDS_P020DESC106         "106 : Change Amount"
@@ -828,10 +897,6 @@ BEGIN
     IDS_P020DESC110         "110 : Manual (Scale Operation)"
     IDS_P020DESC111         "111 : Tray Counter"
     IDS_P020DESC112         "112 : Time In (ETK)"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC113         "113 : Time Out (ETK)"
     IDS_P020DESC114         "114 : Post Receipt Message"
     IDS_P020DESC115         "115 : Tender # 9"
@@ -839,6 +904,10 @@ BEGIN
     IDS_P020DESC117         "117 : Tender # 11"
     IDS_P020DESC118         "118 : Off-line Tender"
     IDS_P020DESC119         "119 : Off-line Tender for Charge Posting"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC120         "120 : Off-line Tender for Authorization"
     IDS_P020DESC121         "121 : Pre-Authorization Total"
     IDS_P020DESC122         "122 : Combination Coupon"
@@ -848,10 +917,6 @@ BEGIN
     IDS_P020DESC126         "126 : Transaction Discount No. 4"
     IDS_P020DESC127         "127 : Transaction Discount No. 5"
     IDS_P020DESC128         "128 : Transaction Discount No. 6"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC129         "129 : Net Total"
     IDS_P020DESC130         "130 : Split"
     IDS_P020DESC131         "131 : Labor Cost Total"
@@ -859,6 +924,10 @@ BEGIN
     IDS_P020DESC133         "133 : Operator Interrupt (for Journal/KDS)"
     IDS_P020DESC134         "134 : Charge Tips No. 2"
     IDS_P020DESC135         "135 : Charge Tips No. 3"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC136         "136 : Waiting"
     IDS_P020DESC137         "137 : Continue"
     IDS_P020DESC138         "138 : Mnemonics"
@@ -868,10 +937,6 @@ BEGIN
     IDS_P020DESC142         "142 : Block No."
     IDS_P020DESC143         "143 : Date"
     IDS_P020DESC144         "144 : Foreign Total #3"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC145         "145 : Foreign Total #4"
     IDS_P020DESC146         "146 : Foreign Total #5"
     IDS_P020DESC147         "147 : Foreign Total #6"
@@ -879,6 +944,10 @@ BEGIN
     IDS_P020DESC149         "149 : Foreign Total #8"
     IDS_P020DESC150         "150 : Loan"
     IDS_P020DESC151         "151 : Pick-up"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC152         "152 : On Hand Total"
     IDS_P020DESC153         "153 : Over/Short"
     IDS_P020DESC154         "154 : Consumer Number"
@@ -888,10 +957,6 @@ BEGIN
     IDS_P020DESC158         "158 : Food Stamp Total"
     IDS_P020DESC159         "159 : Total #9"
     IDS_P020DESC160         "160 : Food Stamp Change"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC161         "161 : Food Stamp Credit"
     IDS_P020DESC162         "162 : FS Tax Exempt #1"
     IDS_P020DESC163         "163 : FS Tax Exempt #2"
@@ -899,6 +964,10 @@ BEGIN
     IDS_P020DESC165         "165 : UPC Coupon"
     IDS_P020DESC166         "166 : @/For Key"
     IDS_P020DESC167         "167 : HALO Override"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC168         "168 : Over Drawer Limit"
     IDS_P020DESC169         "169 : Tender 12"
     IDS_P020DESC170         "170 : Tender 13"
@@ -908,10 +977,6 @@ BEGIN
     IDS_P020DESC174         "174 : Tender 17"
     IDS_P020DESC175         "175 : Tender 18"
     IDS_P020DESC176         "176 : Tender 19"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC177         "177 : Tender 20"
     IDS_P020DESC178         "178 : Total 10"
     IDS_P020DESC179         "179 : Total 11"
@@ -919,6 +984,10 @@ BEGIN
     IDS_P020DESC181         "181 : Total 13"
     IDS_P020DESC182         "182 : Total 14"
     IDS_P020DESC183         "183 : Total 15"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC184         "184 : Total 16"
     IDS_P020DESC185         "185 : Total 17"
     IDS_P020DESC186         "186 : Total 18"
@@ -928,10 +997,6 @@ BEGIN
     IDS_P020DESC190         "190 : None/Done (OEP)"
     IDS_P020DESC191         "191 : Back (OEP)"
     IDS_P020DESC192         "192 : Number of Items"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC193         "193 : Merchant Copy "
     IDS_P020DESC194         "194 : Customer Copy"
     IDS_P020DESC195         "195 : Tip"
@@ -939,6 +1004,10 @@ BEGIN
     IDS_P020DESC197         "197 : Gift Receipt"
     IDS_P020DESC198         "198 : File Optimized"
     IDS_P020DESC199         "199 : Item Discount 3"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC200         "200 : Item Discount 4"
     IDS_P020DESC201         "201 : Item Discount 5"
     IDS_P020DESC202         "202 : Item Discount 6"
@@ -948,10 +1017,6 @@ BEGIN
     IDS_P020DESC206         "206 : Bonus 12"
     IDS_P020DESC207         "207 : Bonus 13"
     IDS_P020DESC208         "208 : Bonus 14"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC209         "209 : Bonus 15"
     IDS_P020DESC210         "210 : Bonus 16"
     IDS_P020DESC211         "211 : Bonus 17"
@@ -959,6 +1024,10 @@ BEGIN
     IDS_P020DESC213         "213 : Bonus 19"
     IDS_P020DESC214         "214 : Bonus 20"
     IDS_P020DESC215         "215 : Bonus 21"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC216         "216 : Bonus 22"
     IDS_P020DESC217         "217 : Bonus 23"
     IDS_P020DESC218         "218 : Bonus 24"
@@ -968,10 +1037,6 @@ BEGIN
     IDS_P020DESC222         "222 : Bonus 28"
     IDS_P020DESC223         "223 : Bonus 29"
     IDS_P020DESC224         "224 : Bonus 30"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC225         "225 : Bonus 31"
     IDS_P020DESC226         "226 : Bonus 32"
     IDS_P020DESC227         "227 : Bonus 33"
@@ -979,6 +1044,10 @@ BEGIN
     IDS_P020DESC229         "229 : Bonus 35"
     IDS_P020DESC230         "230 : Bonus 36"
     IDS_P020DESC231         "231 : Bonus 37"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC232         "232 : Bonus 38"
     IDS_P020DESC233         "233 : Bonus 39"
     IDS_P020DESC234         "234 : Bonus 40"
@@ -988,10 +1057,6 @@ BEGIN
     IDS_P020DESC238         "238 : Bonus 44"
     IDS_P020DESC239         "239 : Bonus 45"
     IDS_P020DESC240         "240 : Bonus 46"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC241         "241 : Bonus 47"
     IDS_P020DESC242         "242 : Bonus 48"
     IDS_P020DESC243         "243 : Bonus 49"
@@ -999,6 +1064,10 @@ BEGIN
     IDS_P020DESC245         "245 : Bonus 51"
     IDS_P020DESC246         "246 : Bonus 52"
     IDS_P020DESC247         "247 : Bonus 53"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC248         "248 : Bonus 54"
     IDS_P020DESC249         "249 : Bonus 55"
     IDS_P020DESC250         "250 : Bonus 56"
@@ -1008,10 +1077,6 @@ BEGIN
     IDS_P020DESC254         "254 : Bonus 60"
     IDS_P020DESC255         "255 : Bonus 61"
     IDS_P020DESC256         "256 : Bonus 62"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC257         "257 : Bonus 63"
     IDS_P020DESC258         "258 : Bonus 64"
     IDS_P020DESC259         "259 : Bonus 65"
@@ -1019,6 +1084,10 @@ BEGIN
     IDS_P020DESC261         "261 : Bonus 67"
     IDS_P020DESC262         "262 : Bonus 68"
     IDS_P020DESC263         "263 : Bonus 69"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC264         "264 : Bonus 70"
     IDS_P020DESC265         "265 : Bonus 71"
     IDS_P020DESC266         "266 : Bonus 72"
@@ -1028,10 +1097,6 @@ BEGIN
     IDS_P020DESC270         "270 : Bonus 76"
     IDS_P020DESC271         "271 : Bonus 77"
     IDS_P020DESC272         "272 : Bonus 78"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC273         "273 : Bonus 79"
     IDS_P020DESC274         "274 : Bonus 80"
     IDS_P020DESC275         "275 : Bonus 81"
@@ -1039,6 +1104,10 @@ BEGIN
     IDS_P020DESC277         "277 : Bonus 83"
     IDS_P020DESC278         "278 : Bonus 84"
     IDS_P020DESC279         "279 : Bonus 85"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC280         "280 : Bonus 86"
     IDS_P020DESC281         "281 : Bonus 87"
     IDS_P020DESC282         "282 : Bonus 88"
@@ -1048,30 +1117,26 @@ BEGIN
     IDS_P020DESC286         "286 : Bonus 92"
     IDS_P020DESC287         "287 : Bonus 93"
     IDS_P020DESC288         "288 : Bonus 94"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC289         "289 : Bonus 95"
     IDS_P020DESC290         "290 : Bonus 96"
     IDS_P020DESC291         "291 : Bonus 97"
     IDS_P020DESC292         "292 : Bonus 98"
     IDS_P020DESC293         "293 : Bonus 99"
     IDS_P020DESC294         "294 : Bonus 100"
-    IDS_P020DESC295         "295 : PPI Addt'l Settings"		// PPI Enhancements - CSMALL
+    IDS_P020DESC295         "295 : PPI Addt'l Settings"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC296         "296 : PPI Addt'l Values"
     IDS_P020DESC297         "297 : PPI After Qty Reached"
     IDS_P020DESC298         "298 : PPI Before Qty Reached"
     IDS_P020DESC299         "299 : PPI Min. Total Sale"
-    IDS_P020DESC300         "300 : Receipt ID"                 // TRN_TENT
+    IDS_P020DESC300         "300 : Receipt ID"
     IDS_P020DESC301         "301 : Order Declaration 1"
     IDS_P020DESC302         "302 : Order Declaration 2"
     IDS_P020DESC303         "303 : Order Declaration 3"
     IDS_P020DESC304         "304 : Order Declaration 4"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC305         "305 : Order Declaration 5"
     IDS_P020DESC306         "306 : Future Used"
     IDS_P020DESC307         "307 : Future Used"
@@ -1079,6 +1144,10 @@ BEGIN
     IDS_P020DESC309         "309 : Future Used"
     IDS_P020DESC310         "310 : Future Used"
     IDS_P020DESC311         "311 : Future Used"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC312         "312 : Future Used"
     IDS_P020DESC313         "313 : Future Used"
     IDS_P020DESC314         "314 : Future Used"
@@ -1088,10 +1157,6 @@ BEGIN
     IDS_P020DESC318         "318 : Future Used"
     IDS_P020DESC319         "319 : Future Used"
     IDS_P020DESC320         "320 : Future Used"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC321         "321 : Future Used"
     IDS_P020DESC322         "322 : Future Used"
     IDS_P020DESC323         "323 : Future Used"
@@ -1099,46 +1164,50 @@ BEGIN
     IDS_P020DESC325         "325 : Future Used"
     IDS_P020DESC326         "326 : Future Used"
     IDS_P020DESC327         "327 : Future Used"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC328         "328 : Future Used"
     IDS_P020DESC329         "329 : Future Used"
     IDS_P020DESC330         "330 : Future Used"
-    IDS_P020DESC331         "331 : Operator Sign-in"         // TRN_SIGNIN_ADR
-    IDS_P020DESC332         "332 : Operator Sign-out"        // TRN_SIGNOUT_ADR
-	IDS_P020DESC333         "333 : Trans Return #1 Return"    // Transaction return #1 mnemonic, TRN_TRETURN1_ADR, report MDC_RPTFIN46_ADR and MDC_RPTCAS50_ADR
-    IDS_P020DESC334         "334 : Trans Return #2 Exchange"  // Transaction return #2 mnemonic, TRN_TRETURN2_ADR, report MDC_RPTFIN46_ADR and MDC_RPTCAS50_ADR
-    IDS_P020DESC335         "335 : Trans Return #3 Refund"    // Transaction return #3 mnemonic, TRN_TRETURN3_ADR, report MDC_RPTFIN46_ADR and MDC_RPTCAS50_ADR
-	IDS_P020DESC336         "336 : Transaction Return, #1"    // Transaction Return key leadthrough, TRN_PRETURN1_ADR
+    IDS_P020DESC331         "331 : Operator Sign-in"
+    IDS_P020DESC332         "332 : Operator Sign-out"
+    IDS_P020DESC333         "333 : Trans Return #1 Return"
+    IDS_P020DESC334         "334 : Trans Return #2 Exchange"
+    IDS_P020DESC335         "335 : Trans Return #3 Refund"
+    IDS_P020DESC336         "336 : Transaction Return, #1"
+    IDS_P020DESC337         "337 : Transaction Return, #2"
+    IDS_P020DESC338         "338 : Transaction Return, #3"
+    IDS_P020DESC339         "339 : Local Currency Equiv."
+    IDS_P020DESC340         "340 : Enter GC number for return"
+    IDS_P020DESC341         "341 : Mnemonic, CARD TYPE"
+    IDS_P020DESC342         "342 : Mnemonic, CARD #"
+    IDS_P020DESC343         "343 : Mnemonic, EXP. DATE"
 END
 
-STRINGTABLE DISCARDABLE
+STRINGTABLE 
 BEGIN
-    IDS_P020DESC337         "337 : Transaction Return, #2"    // Transaction Return key leadthrough, TRN_PRETURN2_ADR
-    IDS_P020DESC338         "338 : Transaction Return, #3"    // Transaction Return key leadthrough, TRN_PRETURN3_ADR
-    IDS_P020DESC339         "339 : Local Currency Equiv."     // Tender amount equivalent mnemonic for specifing local currency equivalent to foreign currency, TRN_FT_EQUIVALENT
-    IDS_P020DESC340         "340 : Enter GC number for return" // TRN_GCNO_RETURNS
-    IDS_P020DESC341         "341 : Mnemonic, CARD TYPE"  // DSI Transaction mnemonic TRN_DSI_CARDTYPE
-    IDS_P020DESC342         "342 : Mnemonic, CARD #"     // DSI Transaction mnemonic TRN_DSI_CARDNUM
-    IDS_P020DESC343         "343 : Mnemonic, EXP. DATE"  // DSI Transaction mnemonic TRN_DSI_CARDEXP
-    IDS_P020DESC344         "344 : Mnemonic, AUTH CODE"  // DSI Transaction mnemonic TRN_DSI_AUTHCODE
-    IDS_P020DESC345         "345 : Mnemonic, REF NUM"    // DSI Transaction mnemonic TRN_DSI_REFNUM
-    IDS_P020DESC346         "346 : Mnemonic, AUTHORIZE"  // DSI Transaction mnemonic TRN_DSI_AUTHORIZE
-    IDS_P020DESC347         "347 : Mnemonic, BALANCE"    // DSI Transaction mnemonic TRN_DSI_BALANCE
-    IDS_P020DESC348         "348 : Mnemonic, METHOD"     // DSI Transaction mnemonic TRN_DSI_METHOD
-    IDS_P020DESC349         "349 : Mnemonic, TERMINAL ID"  // DSI Transaction mnemonic TRN_DSI_TERMINAL
-    IDS_P020DESC350         "350 : Transaction Type"       // DSI Transaction mnemonic TRN_DSI_TRANSTYPE
-    IDS_P020DESC351         "351 : Transaction Sale"       // DSI Transaction mnemonic TRN_DSI_TRANSSALE
-    IDS_P020DESC352         "352 : Print on Demand reprint"  // TRN_EJ_PODREPRINT
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
-    IDS_P020DESC353         "353 : Duplicate Copy"           // TRN_TNDR_PRT_DUP_COPY
+    IDS_P020DESC344         "344 : Mnemonic, AUTH CODE"
+    IDS_P020DESC345         "345 : Mnemonic, REF NUM"
+    IDS_P020DESC346         "346 : Mnemonic, AUTHORIZE"
+    IDS_P020DESC347         "347 : Mnemonic, BALANCE"
+    IDS_P020DESC348         "348 : Mnemonic, METHOD"
+    IDS_P020DESC349         "349 : Mnemonic, TERMINAL ID"
+    IDS_P020DESC350         "350 : Transaction Type"
+    IDS_P020DESC351         "351 : Transaction Sale"
+    IDS_P020DESC352         "352 : Print on Demand reprint"
+    IDS_P020DESC353         "353 : Duplicate Copy"
     IDS_P020DESC354         "354 : Future Used"
     IDS_P020DESC355         "355 : Future Used"
     IDS_P020DESC356         "356 : Future Used"
     IDS_P020DESC357         "357 : Future Used"
     IDS_P020DESC358         "358 : Future Used"
     IDS_P020DESC359         "359 : Future Used"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC360         "360 : Future Used"
     IDS_P020DESC361         "361 : Future Used"
     IDS_P020DESC362         "362 : Future Used"
@@ -1148,10 +1217,6 @@ BEGIN
     IDS_P020DESC366         "366 : Future Used"
     IDS_P020DESC367         "367 : Future Used"
     IDS_P020DESC368         "368 : Future Used"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC369         "369 : Future Used"
     IDS_P020DESC370         "370 : Future Used"
     IDS_P020DESC371         "371 : Future Used"
@@ -1159,6 +1224,10 @@ BEGIN
     IDS_P020DESC373         "373 : Future Used"
     IDS_P020DESC374         "374 : Future Used"
     IDS_P020DESC375         "375 : Future Used"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC376         "376 : Future Used"
     IDS_P020DESC377         "377 : Future Used"
     IDS_P020DESC378         "378 : Future Used"
@@ -1168,10 +1237,6 @@ BEGIN
     IDS_P020DESC382         "382 : Future Used"
     IDS_P020DESC383         "383 : Future Used"
     IDS_P020DESC384         "384 : Future Used"
-END
-
-STRINGTABLE DISCARDABLE
-BEGIN
     IDS_P020DESC385         "385 : Future Used"
     IDS_P020DESC386         "386 : Future Used"
     IDS_P020DESC387         "387 : Future Used"
@@ -1179,6 +1244,10 @@ BEGIN
     IDS_P020DESC389         "389 : Future Used"
     IDS_P020DESC390         "390 : Future Used"
     IDS_P020DESC391         "391 : Future Used"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_P020DESC392         "392 : Future Used"
     IDS_P020DESC393         "393 : Future Used"
     IDS_P020DESC394         "394 : Future Used"
