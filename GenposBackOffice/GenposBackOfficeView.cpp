@@ -187,8 +187,13 @@ void CGenposBackOfficeView::OnInitialUpdate()
 	// TODO: remove this code when final selection model code is written
 	m_pSelection = NULL;    // initialize selection
 
-	int  rectButtonWidth = 65;
+	int  rectButtonWidth = 85;
 	CRect  rectButton(10, 0, 10 + rectButtonWidth, 40);
+	cbuttonLanConnection.Create (_T("Lan Setting"), 0, rectButton, this, ID_VIEW_LANCONNECTION);
+	cbuttonLanConnection.ShowWindow (SW_SHOW);
+
+	rectButton.left += rectButtonWidth + 25;
+	rectButton.right += rectButtonWidth + 25;
 	cbuttonLogIn.Create (_T("Log In"), 0, rectButton, this, ID_TERMINAL_LOGINTO);
 	cbuttonLogIn.ShowWindow (SW_SHOW);
 

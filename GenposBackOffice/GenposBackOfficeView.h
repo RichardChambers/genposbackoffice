@@ -29,6 +29,7 @@ public:
 	CPoint  m_lineIncrement;
 
 	CButton   cbuttonLogIn;
+	CButton   cbuttonLanConnection;
 	CButton   cbuttonLogOut;
 	CButton   cbuttonFlexMem;
 	CButton   cbuttonSettingsRetrieve;
