@@ -29,6 +29,7 @@ public:
 	CString  m_csHostSession;   // either terminal host name or 
 	CString  m_csHostSessionPassword;
 	DWORD    m_dwHostSessionIpAddress;
+	BOOL     m_bUseIpAddress;
 	BOOL     m_bLanOpen;
 	BOOL     m_bLanLogInto;
 	BOOL     m_bKeyBoardLock;

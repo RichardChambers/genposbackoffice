@@ -58,6 +58,7 @@ END_MESSAGE_MAP()
 
 CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 	m_dwHostSessionIpAddress(0),
+	m_bUseIpAddress(0),
 	m_bLanOpen(FALSE), m_bLanLogInto(FALSE), m_bKeyBoardLock(FALSE),
 	m_sLanLastError(0),
 	totalRegFinCurDay(CTotal::TtlTypeCurDay),
@@ -109,12 +110,17 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 		TRACE1 ("  ** Serialize() Storing %s.\n", ar.m_strFileName);
 		ar << m_csHostName;
 		ar << m_csHostMemo;
+		ar << m_dwHostSessionIpAddress;
+		ar << m_bUseIpAddress;
 	}
 	else
 	{
 		TRACE1 ("  ** Serialize() Reading %s.\n", ar.m_strFileName);
 		ar >> m_csHostName;
+		TRACE1 ("                 m_csHostName %s.\n", m_csHostName);
 		ar >> m_csHostMemo;
+		ar >> m_dwHostSessionIpAddress;
+		ar >> m_bUseIpAddress;
 	}
 
 	paramFlexMem.Serialize (ar);
@@ -166,9 +172,14 @@ void CGenposBackOfficeDoc::OnViewLanconnection()
 
 	dialogLan.m_csHostName = m_csHostName;
 	dialogLan.m_csHostMemo = m_csHostMemo;
+	dialogLan.m_dwIpAddress = m_dwHostSessionIpAddress;
+	dialogLan.m_bUseIpAddress = m_bUseIpAddress;
 	if (dialogLan.DoModal() == IDOK) {
 		m_csHostName = dialogLan.m_csHostName;
 		m_csHostMemo = dialogLan.m_csHostMemo;
+		m_dwHostSessionIpAddress = dialogLan.m_dwIpAddress;
+		m_csHostSessionPassword = dialogLan.m_csHostPassword;
+		m_bUseIpAddress = dialogLan.m_bUseIpAddress;
 		SetModifiedFlag ();
 		UpdateAllViews (NULL);
 	}
@@ -188,11 +199,13 @@ void CGenposBackOfficeDoc::OnTerminalLoginto()
 	dialogLanLogin.m_csHostName = m_csHostName;
 	dialogLanLogin.m_csTermNo = m_csLastTermNo;
 	dialogLanLogin.m_dwIpAddress = m_dwHostSessionIpAddress;
+	dialogLanLogin.m_bUseIpAddress = m_bUseIpAddress;
 	if (dialogLanLogin.DoModal() == IDOK) {
 		m_csHostName = dialogLanLogin.m_csHostName;
 		m_csLastTermNo = dialogLanLogin.m_csTermNo;
 		m_csHostSession = dialogLanLogin.m_csHostSession;
 		m_dwHostSessionIpAddress = dialogLanLogin.m_dwIpAddress;
+		m_bUseIpAddress = dialogLanLogin.m_bUseIpAddress;
 		m_csHostSessionPassword = dialogLanLogin.m_csHostPassword;
 		if (m_bLanOpen) {
 			m_sLanLastError = ::PcifCloseEx(PCIF_FUNC_CLOSE_LAN, NULL);

@@ -25,5 +25,6 @@ public:
 	afx_msg void OnBnClickedCheckUseDhcp();
 	CString m_csHostPassword;
 	DWORD m_dwIpAddress;
+	BOOL  m_bUseIpAddress;
 	virtual BOOL OnInitDialog();
 };

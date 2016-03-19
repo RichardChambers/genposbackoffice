@@ -16,6 +16,7 @@ CDialogLanLogin::CDialogLanLogin(CWnd* pParent /*=NULL*/)
 	, m_csTermNo(_T("1"))
 	, m_csHostPassword(_T(""))
 	, m_dwIpAddress(0)
+	, m_bUseIpAddress(0)
 {
 
 }
@@ -28,6 +29,7 @@ void CDialogLanLogin::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT_HOSTNAME, m_csHostName);
+	DDV_MaxChars(pDX, m_csHostName, 16);
 	DDX_Text(pDX, IDC_EDIT_TERM_NO, m_csTermNo);
 	DDV_MaxChars(pDX, m_csTermNo, 2);
 	DDX_Text(pDX, IDC_EDIT_PASSWORD, m_csHostPassword);
@@ -36,7 +38,8 @@ void CDialogLanLogin::DoDataExchange(CDataExchange* pDX)
 
 	if (pDX->m_bSaveAndValidate) {
 		CButton *p = (CButton *)GetDlgItem (IDC_CHECK_USE_IP_ADDRESS);
-		if (p->GetCheck()) {
+		m_bUseIpAddress = p->GetCheck();
+		if (m_bUseIpAddress) {
 			BYTE f1, f2, f3, f4;
 			CIPAddressCtrl *p2 = (CIPAddressCtrl *)GetDlgItem (IDC_IPADDRESS1);
 			p2->GetAddress(f1, f2, f3, f4);
@@ -44,6 +47,9 @@ void CDialogLanLogin::DoDataExchange(CDataExchange* pDX)
 		} else {
 			m_csHostSession.Format (_T("%s-%s"), m_csHostName, m_csTermNo);
 		}
+	} else {
+		CButton *p = (CButton *)GetDlgItem (IDC_CHECK_USE_IP_ADDRESS);
+		p->SetCheck (m_bUseIpAddress);
 	}
 }
 

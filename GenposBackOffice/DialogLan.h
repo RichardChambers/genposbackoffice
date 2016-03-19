@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include "afxcmn.h"
 
 
 // CDialogLan dialog
@@ -20,6 +21,10 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString m_csHostName;
-	CString m_csHostMemo;
+	CString  m_csHostName;
+	CString  m_csHostMemo;
+	CString  m_csHostPassword;
+	DWORD    m_dwIpAddress;
+	BOOL     m_bUseIpAddress;
+	BOOL     m_bSavePassword;
 };
