@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "GenposBackOffice.h"
 #include "DialogTenderKeyEdit.h"
-#include "afxdialogex.h"
 
 
 // CDialogTenderKeyEdit dialog

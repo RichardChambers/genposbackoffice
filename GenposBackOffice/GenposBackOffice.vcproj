@@ -278,6 +278,10 @@
 					RelativePath=".\DialogPlu.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\DialogTenderKeyEdit.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Param"
@@ -462,6 +466,10 @@
 				</File>
 				<File
 					RelativePath=".\DialogPlu.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DialogTenderKeyEdit.h"
 					>
 				</File>
 			</Filter>
