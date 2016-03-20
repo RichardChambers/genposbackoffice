@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -79,7 +77,7 @@ IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR  16, 15
+IDR_MAINFRAME TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -100,7 +98,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU 
+IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -162,6 +160,7 @@ BEGIN
         MENUITEM "Coupon Edit ...",             ID_EDIT_COUPONEDIT
         MENUITEM "PLU Edit ...",                ID_EDIT_PLUEDIT
         MENUITEM "Mnemonic Edit ...",           ID_EDIT_MNEMONICEDIT
+        MENUITEM "Tender Key Edit ...",         ID_EDIT_TENDERKEYEDIT
     END
     POPUP "&Help"
     BEGIN
@@ -171,7 +170,7 @@ BEGIN
     END
 END
 
-IDR_CNTR_INPLACE MENU 
+IDR_CNTR_INPLACE MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -199,7 +198,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS 
+IDR_MAINFRAME ACCELERATORS
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
@@ -220,7 +219,7 @@ BEGIN
     VK_ESCAPE,      ID_CANCEL_EDIT_CNTR,    VIRTKEY, NOINVERT
 END
 
-IDR_CNTR_INPLACE ACCELERATORS 
+IDR_CNTR_INPLACE ACCELERATORS
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
@@ -323,8 +322,8 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "PLU Edit"
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,237,7,50,16
-    PUSHBUTTON      "Cancel",IDCANCEL,237,26,50,16
+    DEFPUSHBUTTON   "OK",IDOK,177,7,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,237,7,50,16
     LTEXT           "PLU No.:",IDC_STATIC,11,10,59,10
     LTEXT           "PLU Mnemonic:",IDC_STATIC,11,26,60,10
     EDITTEXT        IDC_EDIT_MNEMONIC,80,25,71,12,ES_AUTOHSCROLL
@@ -390,14 +389,14 @@ BEGIN
     CONTROL         "future ",IDC_TAB_CONTROL_EDIT_ST11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,105,166,9
 END
 
-IDD_DIALOGCASHIEREDIT DIALOGEX 0, 0, 300, 160
+IDD_DIALOGCASHIEREDIT DIALOGEX 0, 0, 306, 174
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Cashier Edit"
 FONT 10, "Microsoft Sans Serif", 0, 0, 0x0
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,150,7,42,14
-    PUSHBUTTON      "Cancel",IDCANCEL,221,7,41,14
-    EDITTEXT        IDC_EDIT_CASHIER_NAME,3,24,62,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,196,7,42,14
+    PUSHBUTTON      "Cancel",IDCANCEL,260,7,41,14
+    EDITTEXT        IDC_EDIT_CASHIER_NAME,9,24,62,12,ES_AUTOHSCROLL
     RTEXT           "Team No.",IDC_STATIC,3,55,71,11
     RTEXT           "Supervisor Id.",IDC_STATIC,3,43,72,11
     RTEXT           "Guest Check Start No.",IDC_STATIC,3,73,73,11
@@ -406,7 +405,7 @@ BEGIN
     EDITTEXT        IDC_EDIT_CASHIER_TEAMNO,84,54,34,12,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT_CASHIER_GCSTART,84,72,34,12,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT_CASHIER_GCEND,84,84,34,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_TAB_CONTROL_EDIT_STATUS,"SysTabControl32",0x0,124,26,168,130
+    CONTROL         "",IDC_TAB_CONTROL_EDIT_STATUS,"SysTabControl32",0x0,133,26,168,130
 END
 
 IDD_DIALOGCASHIEREDIT_TAB_ONE DIALOGEX 0, 10, 178, 120
@@ -477,6 +476,18 @@ BEGIN
     CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,257,242
 END
 
+IDD_DIALOGTENDEREDIT DIALOGEX 0, 0, 445, 213
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Tender Key Edit"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,293,7,65,22
+    PUSHBUTTON      "Cancel",IDCANCEL,380,7,58,22
+    CONTROL         "",IDC_TAB_CONTROL_EDIT_STATUS,"SysTabControl32",0x0,214,46,224,160
+    LTEXT           "Tender Mnemonic:",IDC_STATIC,9,32,80,12
+    EDITTEXT        IDC_EDIT_MNEMONIC,101,31,95,15,ES_AUTOHSCROLL
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -523,7 +534,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -583,9 +594,10 @@ BEGIN
 
     IDD_DIALOGCASHIEREDIT, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 179
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 301
         TOPMARGIN, 7
+        BOTTOMMARGIN, 172
     END
 
     IDD_DIALOGMNEMONIC, DIALOG
@@ -594,6 +606,14 @@ BEGIN
         RIGHTMARGIN, 318
         TOPMARGIN, 7
         BOTTOMMARGIN, 249
+    END
+
+    IDD_DIALOGTENDEREDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 438
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 206
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -604,14 +624,14 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
     IDP_FAILED_TO_CREATE    "Failed to create object.  Make sure the object is entered in the system registry."
     IDP_SOCKETS_INIT_FAILED "Windows sockets initialization failed."
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "GenposBackOffice\n\nGenposBackOffic\nGenposBackOffice Files (*.gpbo)\n.gpbo\nGenposBackOffice.Document\nGenposBackOffice.Document"
     IDS_TOTALCASHIER_CASHIER_NO "Cashier Number"
@@ -623,14 +643,14 @@ BEGIN
     IDS_TOTALCASHIER_CONSCOUPON "Consolidated Coupon"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_APP_TITLE       "GenposBackOffice"
     AFX_IDS_IDLEMESSAGE     "For Help, press F1"
     AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -640,7 +660,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -654,7 +674,7 @@ BEGIN
     ID_FILE_NEW_FRAME       "Create a new frame\nNew Frame"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
@@ -665,7 +685,7 @@ BEGIN
     ID_HELP                 "Display help for current task or command\nHelp"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -685,18 +705,18 @@ BEGIN
     ID_FILE_MRU_FILE16      "Open this document"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_EDIT_CLEAR           "Erase the selection\nErase"
     ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
@@ -713,20 +733,20 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
     ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
     ID_OLE_EDIT_CONVERT     "Convert object to different type\nConvert Object"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_OLE_VERB_FIRST       "Activate embedded or linked object"
     57873                   "Activate embedded or linked object"
@@ -734,7 +754,7 @@ BEGIN
     57875                   "Activate embedded or linked object"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -745,18 +765,18 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC001         "  1 : Period from"
     IDS_P020DESC002         "  2 : Period to"
@@ -767,7 +787,7 @@ BEGIN
     IDS_P020DESC007         "  7 : Taxable No.2 Total /VAT Applicable No.2"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC008         "  8 : Tax No.2 Total /VAT No.2"
     IDS_P020DESC009         "  9 : Tax Exempt No.2 Total"
@@ -787,7 +807,7 @@ BEGIN
     IDS_P020DESC023         " 23 : Transaction Void"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC024         " 24 : Consolidation Coupon"
     IDS_P020DESC025         " 25 : Motorized Item Discount"
@@ -807,7 +827,7 @@ BEGIN
     IDS_P020DESC039         " 39 : Tender No. 8 (Misc. No. 5)"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC040         " 40 : Foreign Total No. 1"
     IDS_P020DESC041         " 41 : Foreign Total No. 2"
@@ -827,7 +847,7 @@ BEGIN
     IDS_P020DESC055         " 55 : Add Check Total No. 3"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC056         " 56 : Charge Tips No. 1"
     IDS_P020DESC057         " 57 : Cancel Transaction"
@@ -847,7 +867,7 @@ BEGIN
     IDS_P020DESC071         " 71 : Bonus No. 4"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC072         " 72 : Bonus No. 5"
     IDS_P020DESC073         " 73 : Bonus No. 6"
@@ -867,7 +887,7 @@ BEGIN
     IDS_P020DESC087         " 87 : Previous Balance"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC088         " 88 : Check Paid"
     IDS_P020DESC089         " 89 : Error Correct"
@@ -886,7 +906,7 @@ BEGIN
     IDS_P020DESC103         "103 : Calculate Tips"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC104         "104 : Quantity"
     IDS_P020DESC105         "105 : Double Receipt ID"
@@ -906,7 +926,7 @@ BEGIN
     IDS_P020DESC119         "119 : Off-line Tender for Charge Posting"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC120         "120 : Off-line Tender for Authorization"
     IDS_P020DESC121         "121 : Pre-Authorization Total"
@@ -926,7 +946,7 @@ BEGIN
     IDS_P020DESC135         "135 : Charge Tips No. 3"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC136         "136 : Waiting"
     IDS_P020DESC137         "137 : Continue"
@@ -946,7 +966,7 @@ BEGIN
     IDS_P020DESC151         "151 : Pick-up"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC152         "152 : On Hand Total"
     IDS_P020DESC153         "153 : Over/Short"
@@ -966,7 +986,7 @@ BEGIN
     IDS_P020DESC167         "167 : HALO Override"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC168         "168 : Over Drawer Limit"
     IDS_P020DESC169         "169 : Tender 12"
@@ -986,7 +1006,7 @@ BEGIN
     IDS_P020DESC183         "183 : Total 15"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC184         "184 : Total 16"
     IDS_P020DESC185         "185 : Total 17"
@@ -1006,7 +1026,7 @@ BEGIN
     IDS_P020DESC199         "199 : Item Discount 3"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC200         "200 : Item Discount 4"
     IDS_P020DESC201         "201 : Item Discount 5"
@@ -1026,7 +1046,7 @@ BEGIN
     IDS_P020DESC215         "215 : Bonus 21"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC216         "216 : Bonus 22"
     IDS_P020DESC217         "217 : Bonus 23"
@@ -1046,7 +1066,7 @@ BEGIN
     IDS_P020DESC231         "231 : Bonus 37"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC232         "232 : Bonus 38"
     IDS_P020DESC233         "233 : Bonus 39"
@@ -1066,7 +1086,7 @@ BEGIN
     IDS_P020DESC247         "247 : Bonus 53"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC248         "248 : Bonus 54"
     IDS_P020DESC249         "249 : Bonus 55"
@@ -1086,7 +1106,7 @@ BEGIN
     IDS_P020DESC263         "263 : Bonus 69"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC264         "264 : Bonus 70"
     IDS_P020DESC265         "265 : Bonus 71"
@@ -1106,7 +1126,7 @@ BEGIN
     IDS_P020DESC279         "279 : Bonus 85"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC280         "280 : Bonus 86"
     IDS_P020DESC281         "281 : Bonus 87"
@@ -1126,7 +1146,7 @@ BEGIN
     IDS_P020DESC295         "295 : PPI Addt'l Settings"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC296         "296 : PPI Addt'l Values"
     IDS_P020DESC297         "297 : PPI After Qty Reached"
@@ -1146,7 +1166,7 @@ BEGIN
     IDS_P020DESC311         "311 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC312         "312 : Future Used"
     IDS_P020DESC313         "313 : Future Used"
@@ -1166,7 +1186,7 @@ BEGIN
     IDS_P020DESC327         "327 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC328         "328 : Future Used"
     IDS_P020DESC329         "329 : Future Used"
@@ -1186,7 +1206,7 @@ BEGIN
     IDS_P020DESC343         "343 : Mnemonic, EXP. DATE"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC344         "344 : Mnemonic, AUTH CODE"
     IDS_P020DESC345         "345 : Mnemonic, REF NUM"
@@ -1206,7 +1226,7 @@ BEGIN
     IDS_P020DESC359         "359 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC360         "360 : Future Used"
     IDS_P020DESC361         "361 : Future Used"
@@ -1226,7 +1246,7 @@ BEGIN
     IDS_P020DESC375         "375 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC376         "376 : Future Used"
     IDS_P020DESC377         "377 : Future Used"
@@ -1246,7 +1266,7 @@ BEGIN
     IDS_P020DESC391         "391 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P020DESC392         "392 : Future Used"
     IDS_P020DESC393         "393 : Future Used"
@@ -1259,7 +1279,7 @@ BEGIN
     IDS_P020DESC400         "400 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC001         "  1 : Not in File"
     IDS_P021DESC002         "  2 : File Full"
@@ -1278,7 +1298,7 @@ BEGIN
     IDS_P021DESC015         " 15 : Guest Check File can not be accessed"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC016         " 16 : Operator Number Unmatched"
     IDS_P021DESC017         " 17 : Same Check Number Already Exists in GCF"
@@ -1298,7 +1318,7 @@ BEGIN
     IDS_P021DESC031         " 31 : Request Report Code No. Entry"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC032         " 32 : Request Status Entry"
     IDS_P021DESC033         " 33 : Request Preset Price Entry"
@@ -1318,7 +1338,7 @@ BEGIN
     IDS_P021DESC047         " 47 : Enter Number of Person"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC048         " 48 : Enter Table Numer"
     IDS_P021DESC049         " 49 : Request Slip Insertion"
@@ -1338,7 +1358,7 @@ BEGIN
     IDS_P021DESC063         " 63 : Remote CRT Error"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC064         " 64 : Not Executed Time-In/Out Operation"
     IDS_P021DESC065         " 65 : Enter Room #"
@@ -1358,7 +1378,7 @@ BEGIN
     IDS_P021DESC079         " 79 : Charge Post busy"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC080         " 80 : Charge Post stop"
     IDS_P021DESC081         " 81 : Charge Post Off-line"
@@ -1378,7 +1398,7 @@ BEGIN
     IDS_P021DESC095         " 95 : Pause Message #8, Alpha#3"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC096         " 96 : Pause Message #9, Alpha#4"
     IDS_P021DESC097         " 97 : Pause Message #10, Alpha#5"
@@ -1398,7 +1418,7 @@ BEGIN
     IDS_P021DESC111         "111 : Welcome Message(Customer Display)"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC112         "112 : E/J Cluster File Read Error"
     IDS_P021DESC113         "113 : E/J Cluster File Reset Error"
@@ -1418,7 +1438,7 @@ BEGIN
     IDS_P021DESC127         "127 : Storage is near full"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC128         "128 : Storage is full"
     IDS_P021DESC129         "129 : Memory is full"
@@ -1438,7 +1458,7 @@ BEGIN
     IDS_P021DESC143         "143 : Invalid Supervisor Number"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC144         "144 : Sales Restricted Item"
     IDS_P021DESC145         "145 : Equipment Provisioning Error"
@@ -1458,7 +1478,7 @@ BEGIN
     IDS_P021DESC159         "159 : Tip Request"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC160         "160 : Enter PLU Group #"
     IDS_P021DESC161         "161 : Receipt ID"
@@ -1478,7 +1498,7 @@ BEGIN
     IDS_P021DESC175         "175 : Stored Transactions Error"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC176         "176 : Stored Transaction Limit"
     IDS_P021DESC177         "177 : Stored Total Limit"
@@ -1498,7 +1518,7 @@ BEGIN
     IDS_P021DESC191         "191 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC192         "192 : Future Used"
     IDS_P021DESC193         "193 : Future Used"
@@ -1518,7 +1538,7 @@ BEGIN
     IDS_P021DESC207         "207 : Future Used"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDS_P021DESC208         "208 : Future Used"
     IDS_P021DESC209         "209 : Future Used"
@@ -1535,7 +1555,7 @@ BEGIN
     IDS_P021DESC220         "220 : Future Used"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

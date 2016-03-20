@@ -29,6 +29,7 @@
 #define IDD_DIALOGMNEMONIC              141
 #define IDD_DIALOGEDITPLU_TAB_ONE       142
 #define IDD_DIALOGEDITPLU_TAB_TWO       143
+#define IDD_DIALOGTENDEREDIT            144
 #define IDC_EDIT_HOSTNAME               1000
 #define IDC_EDIT_HOSTMEMO               1001
 #define IDC_STATIC_HOSTNAME             1002
@@ -705,13 +706,14 @@
 #define ID_TERMINAL_EJRETRIEVE          32786
 #define ID_TERMINAL_EJRETRIEVERESET     32787
 #define ID_EDIT_MNEMONICEDIT            32788
+#define ID_EDIT_TENDERKEYEDIT           32789
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        144
-#define _APS_NEXT_COMMAND_VALUE         32789
+#define _APS_NEXT_RESOURCE_VALUE        145
+#define _APS_NEXT_COMMAND_VALUE         32790
 #define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

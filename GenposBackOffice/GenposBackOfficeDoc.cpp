@@ -11,6 +11,7 @@
 #include "DialogCoupon.h"
 #include "DialogPlu.h"
 #include "DialogMnemonic.h"
+#include "DialogTenderKeyEdit.h"
 
 #include <R20_PC2172.h>
 
@@ -126,6 +127,7 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, COleDocument)
 	ON_COMMAND(ID_EDIT_COUPONEDIT, &CGenposBackOfficeDoc::OnEditCouponedit)
 	ON_COMMAND(ID_EDIT_PLUEDIT, &CGenposBackOfficeDoc::OnEditPluedit)
 	ON_COMMAND(ID_EDIT_MNEMONICEDIT, &CGenposBackOfficeDoc::OnEditMnemonicedit)
+	ON_COMMAND(ID_EDIT_TENDERKEYEDIT, &CGenposBackOfficeDoc::OnEditTenderkeyedit)
 END_MESSAGE_MAP()
 
 
@@ -512,3 +514,10 @@ void CGenposBackOfficeDoc::OnEditMnemonicedit()
 	}
 }
 
+void CGenposBackOfficeDoc::OnEditTenderkeyedit()
+{
+	if (m_bLanOpen && m_bLanLogInto) {
+		CDialogTenderKeyEdit dialogTenderKeyEdit;
+		dialogTenderKeyEdit.DoModal ();
+	}
+}

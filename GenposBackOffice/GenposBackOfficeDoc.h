@@ -106,6 +106,7 @@ public:
 	afx_msg void OnEditCouponedit();
 	afx_msg void OnEditPluedit();
 	afx_msg void OnEditMnemonicedit();
+	afx_msg void OnEditTenderkeyedit();
 };
 
 

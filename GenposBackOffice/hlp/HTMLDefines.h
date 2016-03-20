@@ -19,6 +19,7 @@
 #define HID_TERMINAL_EJRETRIEVE                 0x18012
 #define HID_TERMINAL_EJRETRIEVERESET            0x18013
 #define HID_EDIT_MNEMONICEDIT                   0x18014
+#define HID_EDIT_TENDERKEYEDIT                  0x18015
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064
@@ -45,6 +46,7 @@
 #define HIDD_DIALOGMNEMONIC                     0x2008D
 #define HIDD_DIALOGEDITPLU_TAB_ONE              0x2008E
 #define HIDD_DIALOGEDITPLU_TAB_TWO              0x2008F
+#define HIDD_DIALOGTENDEREDIT                   0x20090
  
 // Frame Controls (IDW_*) 
 // This is a part of the Microsoft Foundation Classes C++ library.
