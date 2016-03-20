@@ -18,6 +18,81 @@
 #define new DEBUG_NEW
 #endif
 
+CLanConnectionData::CLanConnectionData () :
+		m_csHostName(L"")
+		, m_csLastTermNo(L"")
+		, m_csHostMemo(L"")
+		, m_csHostSession(L"")
+		, m_bSavePassword(0)
+		, m_csHostSessionPassword(L"")
+		, m_dwHostSessionIpAddress(0)
+		, m_bUseIpAddress(0)
+{
+}
+
+CLanConnectionData & CLanConnectionData::operator = (const CLanConnectionData & other)
+{
+	if (this != &other) {
+		m_csHostName = other.m_csHostName;
+		m_csLastTermNo = other.m_csLastTermNo;
+		m_csHostMemo = other.m_csHostMemo;
+		m_csHostSession = other.m_csHostSession;
+		m_bSavePassword = other.m_bSavePassword;
+		m_csHostSessionPassword = other.m_csHostSessionPassword;
+		m_dwHostSessionIpAddress = other.m_dwHostSessionIpAddress;
+		m_bUseIpAddress = other.m_bUseIpAddress;
+	}
+
+	return *this;
+}
+
+
+/*
+ *  CArchive & operator <<() - write (serialize) CLanConnectionData to an archive.
+ *
+ *  This function provides the mechanism for writing the data of a CLanConnectionData
+ *  object to an archive during serialization.
+ *
+ *  If the m_bSavePassword flag is set then write the actual password to the archive.
+ *  If the m_bSavePassword flag is not set then write an empty string to the archive.
+*/
+CArchive & operator << (CArchive & rhs, const CLanConnectionData & other)
+{
+	CString dummyPassword(L"");
+
+	rhs << other.m_csHostName;
+	rhs << other.m_csHostMemo;
+	rhs << other.m_bUseIpAddress;
+	rhs << other.m_dwHostSessionIpAddress;
+	rhs << other.m_bSavePassword;
+	if (other.m_bSavePassword) {
+		// we are to save the password into the archive so write it.
+		rhs << other.m_csHostSessionPassword;
+	} else {
+		// do not save the password in the archive so write the empty string instead.
+		rhs << dummyPassword;
+	}
+	return rhs;
+}
+
+/*
+ *  CArchive & operator >>() - read (serialize) CLanConnectionData from an archive.
+ *
+ *  This function provides the mechanism for reading the data of a CLanConnectionData
+ *  object previously written to an archive from the archive during serialization.
+ *
+*/
+CArchive & operator >> (CArchive & rhs, CLanConnectionData & other)
+{
+	rhs >> other.m_csHostName;
+	rhs >> other.m_csHostMemo;
+	rhs >> other.m_bUseIpAddress;
+	rhs >> other.m_dwHostSessionIpAddress;
+	rhs >> other.m_bSavePassword;
+	rhs >> other.m_csHostSessionPassword;
+	return rhs;
+}
+
 
 // CGenposBackOfficeDoc
 
@@ -57,8 +132,6 @@ END_MESSAGE_MAP()
 // CGenposBackOfficeDoc construction/destruction
 
 CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
-	m_dwHostSessionIpAddress(0),
-	m_bUseIpAddress(0),
 	m_bLanOpen(FALSE), m_bLanLogInto(FALSE), m_bKeyBoardLock(FALSE),
 	m_sLanLastError(0),
 	totalRegFinCurDay(CTotal::TtlTypeCurDay),
@@ -68,8 +141,8 @@ CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 	EnableCompoundFile();
 
 	// temporary default text
-	m_csHostName = _T("HostName");
-	m_csHostMemo = _T("host memo");
+	m_LanData.m_csHostName = _T("HostName");
+	m_LanData.m_csHostMemo = _T("host memo");
 	m_LanThread = dynamic_cast<CLanThread *>(AfxBeginThread(RUNTIME_CLASS(CLanThread), THREAD_PRIORITY_NORMAL, 0, 0));
 	m_LanInProgress = 0;
 }
@@ -108,19 +181,12 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 	if (ar.IsStoring())
 	{
 		TRACE1 ("  ** Serialize() Storing %s.\n", ar.m_strFileName);
-		ar << m_csHostName;
-		ar << m_csHostMemo;
-		ar << m_dwHostSessionIpAddress;
-		ar << m_bUseIpAddress;
+		ar << m_LanData;
 	}
 	else
 	{
 		TRACE1 ("  ** Serialize() Reading %s.\n", ar.m_strFileName);
-		ar >> m_csHostName;
-		TRACE1 ("                 m_csHostName %s.\n", m_csHostName);
-		ar >> m_csHostMemo;
-		ar >> m_dwHostSessionIpAddress;
-		ar >> m_bUseIpAddress;
+		ar >> m_LanData;
 	}
 
 	paramFlexMem.Serialize (ar);
@@ -170,16 +236,9 @@ void CGenposBackOfficeDoc::OnViewLanconnection()
 
 	CDialogLan dialogLan;
 
-	dialogLan.m_csHostName = m_csHostName;
-	dialogLan.m_csHostMemo = m_csHostMemo;
-	dialogLan.m_dwIpAddress = m_dwHostSessionIpAddress;
-	dialogLan.m_bUseIpAddress = m_bUseIpAddress;
+	dialogLan.m_LanData = m_LanData;
 	if (dialogLan.DoModal() == IDOK) {
-		m_csHostName = dialogLan.m_csHostName;
-		m_csHostMemo = dialogLan.m_csHostMemo;
-		m_dwHostSessionIpAddress = dialogLan.m_dwIpAddress;
-		m_csHostSessionPassword = dialogLan.m_csHostPassword;
-		m_bUseIpAddress = dialogLan.m_bUseIpAddress;
+		m_LanData = dialogLan.m_LanData;
 		SetModifiedFlag ();
 		UpdateAllViews (NULL);
 	}
@@ -196,17 +255,9 @@ void CGenposBackOfficeDoc::OnTerminalLoginto()
 
 	CDialogLanLogin dialogLanLogin;
 
-	dialogLanLogin.m_csHostName = m_csHostName;
-	dialogLanLogin.m_csTermNo = m_csLastTermNo;
-	dialogLanLogin.m_dwIpAddress = m_dwHostSessionIpAddress;
-	dialogLanLogin.m_bUseIpAddress = m_bUseIpAddress;
+	dialogLanLogin.m_LanData = m_LanData;
 	if (dialogLanLogin.DoModal() == IDOK) {
-		m_csHostName = dialogLanLogin.m_csHostName;
-		m_csLastTermNo = dialogLanLogin.m_csTermNo;
-		m_csHostSession = dialogLanLogin.m_csHostSession;
-		m_dwHostSessionIpAddress = dialogLanLogin.m_dwIpAddress;
-		m_bUseIpAddress = dialogLanLogin.m_bUseIpAddress;
-		m_csHostSessionPassword = dialogLanLogin.m_csHostPassword;
+		m_LanData = dialogLanLogin.m_LanData;
 		if (m_bLanOpen) {
 			m_sLanLastError = ::PcifCloseEx(PCIF_FUNC_CLOSE_LAN, NULL);
 			TRACE1 ("  ** OnTerminalLoginto   >> ::PcifCloseEx() = %d\n", m_sLanLastError );
@@ -219,7 +270,7 @@ void CGenposBackOfficeDoc::OnTerminalLoginto()
 		TRACE1 ("  ** OnTerminalLoginto   >> ::PcifOpenEx() = %d\n", m_sLanLastError );
 
 		if (m_bLanOpen) {
-			m_sLanLastError = ::IspHostLogOn( m_csHostSession, m_csHostSessionPassword );
+			m_sLanLastError = ::IspHostLogOn( m_LanData.m_csHostSession, m_LanData.m_csHostSessionPassword );
 			m_bLanLogInto = ( m_sLanLastError == PCIF_SUCCESS );
 			TRACE1 ("  ** OnTerminalLoginto   >> ::IspHostLogOn() = %d\n", m_sLanLastError );
 			if (m_bLanLogInto && paramFlexMem.m_bDataRead == 0) {

@@ -129,11 +129,11 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	}
 	pDC->DrawText (pDoc->m_currentRootFolder, currentLine, DT_LEFT | DT_VCENTER);
 	currentLine += incrementLine;
-	pDC->DrawText (pDoc->m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
+	pDC->DrawText (pDoc->m_LanData.m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
 	currentLine += incrementLine;
 	currentLine.bottom += 300;
 	currentLine.right  += 50;
-	pDC->DrawText (pDoc->m_csHostMemo, currentLine, DT_LEFT | DT_VCENTER | DT_WORDBREAK);
+	pDC->DrawText (pDoc->m_LanData.m_csHostMemo, currentLine, DT_LEFT | DT_VCENTER | DT_WORDBREAK);
 
 	currentLine.top += 300;
 	currentLine += incrementLine;

@@ -21,10 +21,5 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString  m_csHostName;
-	CString  m_csHostMemo;
-	CString  m_csHostPassword;
-	DWORD    m_dwIpAddress;
-	BOOL     m_bUseIpAddress;
-	BOOL     m_bSavePassword;
+	CLanConnectionData  m_LanData;
 };

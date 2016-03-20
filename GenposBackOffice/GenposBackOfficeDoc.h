@@ -14,6 +14,26 @@
 #include "ListerCoupon.h"
 #include "LanThread.h"
 
+class CLanConnectionData
+{
+public:
+	CLanConnectionData();
+	CString  m_csHostName;      // host name prefix for this cluster group without the dash (-) and terminal number
+	CString  m_csLastTermNo;    // last terminal number, used with m_csHostName to create DHCP target
+	CString  m_csHostMemo;      // memo information about this cluster group.
+	CString  m_csHostSession;   // either terminal host name or 
+	BOOL     m_bSavePassword;
+	CString  m_csHostSessionPassword;
+	DWORD    m_dwHostSessionIpAddress;
+	BOOL     m_bUseIpAddress;
+
+	CLanConnectionData & operator = (const CLanConnectionData & other);
+};
+
+// the CArchive operators for serializing the LAN Connection Data
+CArchive & operator << (CArchive & rhs, const CLanConnectionData & other);
+CArchive & operator >> (CArchive & rhs, CLanConnectionData & other);
+
 class CGenposBackOfficeDoc : public COleDocument
 {
 protected: // create from serialization only
@@ -22,14 +42,8 @@ protected: // create from serialization only
 
 // Attributes
 public:
-	CString  m_csHostName;      // host name prefix for this cluster group without the dash (-) and terminal number
-	CString  m_csLastTermNo;    // last terminal number, used with m_csHostName to create DHCP target
-	CString  m_csHostMemo;      // memo information about this cluster group.
+	CLanConnectionData  m_LanData;
 	CString  m_csHostFlexMem;   // information concerning last retrieval of flex mem settings.
-	CString  m_csHostSession;   // either terminal host name or 
-	CString  m_csHostSessionPassword;
-	DWORD    m_dwHostSessionIpAddress;
-	BOOL     m_bUseIpAddress;
 	BOOL     m_bLanOpen;
 	BOOL     m_bLanLogInto;
 	BOOL     m_bKeyBoardLock;

@@ -1,4 +1,6 @@
 #pragma once
+#include "afxwin.h"
+#include "afxcmn.h"
 
 
 // CDialogLanLogin dialog
@@ -19,12 +21,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CString m_csHostName;
-	CString m_csTermNo;
-	CString m_csHostSession;
+	CLanConnectionData  m_LanData;
 	afx_msg void OnBnClickedCheckUseDhcp();
-	CString m_csHostPassword;
-	DWORD m_dwIpAddress;
-	BOOL  m_bUseIpAddress;
 	virtual BOOL OnInitDialog();
 };
