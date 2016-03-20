@@ -47,7 +47,7 @@ public:
 	virtual sizes GetMnemonicSizes (void);
 
 private:
-	WCHAR abTransMnemonic[MAX_TRANSM_NO][20];
+	WCHAR abTransMnemonic[MAX_TRANSM_NO][PARA_TRANSMNEMO_LEN];
 
 };
 
@@ -67,6 +67,6 @@ public:
 	virtual sizes GetMnemonicSizes (void);
 
 private:
-	WCHAR abTransMnemonic[MAX_LEAD_NO][20];
+	WCHAR abTransMnemonic[MAX_LEAD_NO][PARA_LEADTHRU_LEN];
 
 };

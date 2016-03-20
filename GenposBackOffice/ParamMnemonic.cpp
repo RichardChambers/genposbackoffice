@@ -53,10 +53,10 @@ void CParamTransaction::ClearParam (void)
 unsigned short CParamTransaction::GetMnemonicValue (unsigned short *usAddress, CString &mnemonic)
 {
 	unsigned short  usRet = 0;
-	WCHAR  tempBuf[20 + 1] = {0};
+	WCHAR  tempBuf[PARA_TRANSMNEMO_LEN + 1] = {0};
 
 	if (*usAddress < MAX_TRANSM_NO) {
-		memcpy (tempBuf, abTransMnemonic[*usAddress], 20 * sizeof(WCHAR));
+		memcpy (tempBuf, abTransMnemonic[*usAddress], PARA_TRANSMNEMO_LEN * sizeof(WCHAR));
 		mnemonic = tempBuf;
 		*usAddress += 1;
 		usRet = 1;
@@ -66,10 +66,10 @@ unsigned short CParamTransaction::GetMnemonicValue (unsigned short *usAddress, C
 
 unsigned short CParamTransaction::SetMnemonicValue (unsigned short usAddress, const CString &mnemonic)
 {
-	WCHAR  tempBuf[20 + 1] = {0};
+	WCHAR  tempBuf[PARA_TRANSMNEMO_LEN + 1] = {0};
 
-	wcsncpy (tempBuf, mnemonic, 20);
-	memcpy (abTransMnemonic[usAddress], tempBuf, 20 * sizeof(WCHAR));
+	wcsncpy (tempBuf, mnemonic, PARA_TRANSMNEMO_LEN);
+	memcpy (abTransMnemonic[usAddress], tempBuf, PARA_TRANSMNEMO_LEN * sizeof(WCHAR));
 	return 0;
 }
 
@@ -87,7 +87,7 @@ unsigned short CParamTransaction::GetPromptText (unsigned short usAddress, LPWST
 
 CParamMnemonic::sizes CParamTransaction::GetMnemonicSizes (void)
 {
-	CParamMnemonic::sizes n = {MAX_TRANSM_NO, 20};
+	CParamMnemonic::sizes n = {MAX_TRANSM_NO, PARA_TRANSMNEMO_LEN};
 
 	return n;
 }
@@ -136,10 +136,10 @@ void CParamLeadThru::ClearParam (void)
 unsigned short CParamLeadThru::GetMnemonicValue (unsigned short *usAddress, CString &mnemonic)
 {
 	unsigned short usRet = 0;
-	WCHAR  tempBuf[20 + 1] = {0};
+	WCHAR  tempBuf[PARA_LEADTHRU_LEN + 1] = {0};
 
 	if (*usAddress < MAX_LEAD_NO) {
-		memcpy (tempBuf, abTransMnemonic[*usAddress], 20 * sizeof(WCHAR));
+		memcpy (tempBuf, abTransMnemonic[*usAddress], PARA_LEADTHRU_LEN * sizeof(WCHAR));
 		mnemonic = tempBuf;
 		*usAddress += 1;
 		usRet = 1;
@@ -149,10 +149,10 @@ unsigned short CParamLeadThru::GetMnemonicValue (unsigned short *usAddress, CStr
 
 unsigned short CParamLeadThru::SetMnemonicValue (unsigned short usAddress, const CString &mnemonic)
 {
-	WCHAR  tempBuf[20 + 1] = {0};
+	WCHAR  tempBuf[PARA_LEADTHRU_LEN + 1] = {0};
 
-	wcsncpy (tempBuf, mnemonic, 20);
-	memcpy (abTransMnemonic[usAddress], tempBuf, 20 * sizeof(WCHAR));
+	wcsncpy (tempBuf, mnemonic, PARA_LEADTHRU_LEN);
+	memcpy (abTransMnemonic[usAddress], tempBuf, PARA_LEADTHRU_LEN * sizeof(WCHAR));
 	return 0;
 }
 
@@ -170,7 +170,7 @@ unsigned short CParamLeadThru::GetPromptText (unsigned short usAddress, LPWSTR m
 
 CParamMnemonic::sizes CParamLeadThru::GetMnemonicSizes (void)
 {
-	CParamMnemonic::sizes n = {MAX_TRANSM_NO, 20};
+	CParamMnemonic::sizes n = {MAX_TRANSM_NO, PARA_LEADTHRU_LEN};
 
 	return n;
 }
