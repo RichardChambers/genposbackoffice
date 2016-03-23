@@ -27,7 +27,7 @@ public:
 	virtual short PushParam (void);
 	virtual void ClearParam(void) { memset (&m_paraPlu, 0, sizeof(m_paraPlu)); m_bDataRead = 0; }
 	ParamPluKey  GetPluKey (int i) { ParamPluKey j; j = *((ParamPluKey *)(m_paraPlu + i)); return j; }
-
+	void         ClearPluKey (void) { for (int i = 0; i < CLI_PLU_MAX_NO; i++) { memset (m_paraPlu[i].auchPluNo, 0, sizeof(m_paraPlu[i].auchPluNo)); } }
 public:
 #if     defined(WIN32) && _MSC_VER >= 800
 #pragma pack(push, 1)
