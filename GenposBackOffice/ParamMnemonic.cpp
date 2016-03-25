@@ -50,6 +50,42 @@ void CParamTransaction::ClearParam (void)
 	memset (abTransMnemonic, 0, sizeof( abTransMnemonic ));
 }
 
+void CParamTransaction::Serialize (CArchive &ar)
+{
+	if (ar.IsStoring())
+	{
+		int nMax = MAX_TRANSM_NO;
+		int nLen = PARA_TRANSMNEMO_LEN;
+
+		ar << CParamMnemonic::m_ulSignature;
+
+		ar << nMax;
+		ar << nLen;
+		for (int i = 0; i < nMax; i++) {
+			for (int j = 0; j < nLen; j++) {
+				ar << abTransMnemonic[i][j];
+			}
+		}
+	} else {
+		unsigned long ulSignature = 0;
+		int nMax = 0;
+		int nLen = 0;
+
+		ar >> ulSignature;
+		TRACE2(" Serialize Transaction - Read - ulSignature 0x%8.8x == 0x%8.8x\n", ulSignature, CParamMnemonic::m_ulSignature);
+
+		ar >> nMax;
+		ar >> nLen;
+		TRACE2(" Serialize Transaction - Read - nMax %d nLen %d\n", nMax, nLen);
+
+		for (int i = 0; i < nMax; i++) {
+			for (int j = 0; j < nLen; j++) {
+				ar >> abTransMnemonic[i][j];
+			}
+		}
+	}
+}
+
 unsigned short CParamTransaction::GetMnemonicValue (unsigned short *usAddress, CString &mnemonic)
 {
 	unsigned short  usRet = 0;
@@ -131,6 +167,42 @@ short CParamLeadThru::PushParam (void)
 void CParamLeadThru::ClearParam (void)
 {
 	memset (abTransMnemonic, 0, sizeof( abTransMnemonic ));
+}
+
+void CParamLeadThru::Serialize (CArchive &ar)
+{
+	if (ar.IsStoring())
+	{
+		int nMax = MAX_LEAD_NO;
+		int nLen = PARA_LEADTHRU_LEN;
+
+		ar << CParamMnemonic::m_ulSignature;
+
+		ar << nMax;
+		ar << nLen;
+		for (int i = 0; i < nMax; i++) {
+			for (int j = 0; j < nLen; j++) {
+				ar << abTransMnemonic[i][j];
+			}
+		}
+	} else {
+		unsigned long ulSignature = 0;
+		int nMax = 0;
+		int nLen = 0;
+
+		ar >> ulSignature;
+		TRACE2(" Serialize Leadthru - Read - ulSignature 0x%8.8x == 0x%8.8x\n", ulSignature, CParamMnemonic::m_ulSignature);
+
+		ar >> nMax;
+		ar >> nLen;
+		TRACE2(" Serialize Leadthru - Read - nMax %d nLen %d\n", nMax, nLen);
+
+		for (int i = 0; i < nMax; i++) {
+			for (int j = 0; j < nLen; j++) {
+				ar >> abTransMnemonic[i][j];
+			}
+		}
+	}
 }
 
 unsigned short CParamLeadThru::GetMnemonicValue (unsigned short *usAddress, CString &mnemonic)

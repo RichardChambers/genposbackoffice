@@ -65,6 +65,10 @@ public:
 	CListerPlu      listPlu;
 	CListerCoupon   listCoupon;
 
+	//                               Version:        Mmmvvbbb  M - Major, mm - minor, vv - version, bbb - build
+	static const unsigned long m_ulVersionNumber = 0x10000001;   //  1.0.0.001
+	static const unsigned long m_ulSignature = 0x1f2d3e4c;
+
 // Operations
 public:
 
@@ -108,5 +112,3 @@ public:
 	afx_msg void OnEditMnemonicedit();
 	afx_msg void OnEditTenderkeyedit();
 };
-
-

@@ -183,11 +183,26 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 	if (ar.IsStoring())
 	{
 		TRACE1 ("  ** Serialize() Storing %s.\n", ar.m_strFileName);
+		ar << m_ulSignature;
+		ar << m_ulVersionNumber;
+		TRACE1("                  Version: 0x%8.8x\n", m_ulVersionNumber);
+
 		ar << m_LanData;
 	}
 	else
 	{
+		unsigned long ulVersionNumber = 0;
+		unsigned long ulSignature = 0;
+
 		TRACE1 ("  ** Serialize() Reading %s.\n", ar.m_strFileName);
+		ar >> ulSignature;
+		TRACE2 ("                Signature: 0x%8.8x == 0x%8.8x\n", ulSignature, m_ulSignature);
+
+		if (ulSignature != m_ulSignature) return;
+
+		ar >> ulVersionNumber;
+		TRACE1("                  Version: 0x%8.8x\n", ulVersionNumber);
+
 		ar >> m_LanData;
 	}
 
@@ -196,6 +211,8 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 		paramFlexMem.SummaryToText (m_csHostFlexMem);
 	}
 
+	paramTrans.Serialize (ar);
+	paramLeadThru.Serialize (ar);
 	listCashier.CashierDataList.Serialize (ar);
 
 	int iCount = listCashier.CashierDataList.GetCount ();

@@ -11,11 +11,15 @@ public:
 		unsigned short usMaxLength;
 	};
 
+	static const unsigned long  m_ulSignature = 0x5f4c7b2a;  // bit pattern to check on CArchive data integrity
+
 	CParamMnemonic(void);
 	virtual ~CParamMnemonic(void);
 	virtual short PullParam (void) = 0;
 	virtual short PushParam (void) = 0;
 	virtual void ClearParam(void) = 0;
+
+	virtual void Serialize (CArchive &ar) = 0;
 
 	virtual unsigned short GetMnemonicValue (unsigned short *usAddress, CString &mnemonic) = 0;
 	virtual unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic) = 0;
@@ -40,6 +44,8 @@ public:
 	virtual short PushParam (void);
 	virtual void ClearParam(void);
 
+	virtual void Serialize (CArchive &ar);
+
 	virtual unsigned short GetMnemonicValue (unsigned short *usAddress, CString &mnemonic);
 	virtual unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic);
 
@@ -59,6 +65,8 @@ public:
 	virtual short PullParam (void);
 	virtual short PushParam (void);
 	virtual void ClearParam(void);
+
+	virtual void Serialize (CArchive &ar);
 
 	virtual unsigned short GetMnemonicValue (unsigned short *usAddress, CString &mnemonic);
 	virtual unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic);
