@@ -124,10 +124,6 @@ BEGIN
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "Paste &Special...",           ID_EDIT_PASTE_SPECIAL
-        MENUITEM SEPARATOR
-        MENUITEM "Insert &New Object...",       ID_OLE_INSERT_NEW
-        MENUITEM "Lin&ks...",                   ID_OLE_EDIT_LINKS
-        MENUITEM "<<OLE VERBS GO HERE>>",       ID_OLE_VERB_FIRST
     END
     POPUP "&View"
     BEGIN
@@ -645,6 +641,33 @@ END
 
 STRINGTABLE
 BEGIN
+    ID_VIEW_LANCONNECTION           "Display and edit Terminal connection settings"
+    ID_TERMINAL_LOGINTO             "Log into Terminal"
+    ID_TERMINAL_LOGOUT              "Logout from Terminal"
+    ID_TERMINAL_TOTALRETRIEVE       "Retrieve total operational data"
+    ID_TERMINAL_FLEXMRETRIEVE       "Retrieve flexible memory settings"
+    ID_TERMINAL_CASHIERRETRIEVE     "Retrieve cashier provisioning data"
+    ID_TERMINAL_COUPONRETRIEVE      "Retrieve coupon provisioning data"
+    ID_TERMINAL_PLURETRIEVE         "Retrieve PLU provisioning data"
+    ID_TERMINAL_LOCKKEYBOARD        "Lock Terminal Keyboard"
+    ID_TERMINAL_UNLOCKKEYBOARD      "Unlock Terminal Keyboard"
+    ID_TERMINAL_SETTINGSRETRIEVE    "Retrieve Terminal Settings"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT                         "Edit"
+    ID_EDIT_CASHIEREDIT             "Edit cashier provisioning data"
+    ID_EDIT_COUPONEDIT              "Edit coupon provisioning data"
+    ID_EDIT_PLUEDIT                 "Edit PLU provisioning data"
+    ID_TERMINAL_EJRETRIEVE          "Retrieve Electronic Journal operational data"
+    ID_TERMINAL_EJRETRIEVERESET     "Retrieve with reset Electronic Journal operational data"
+    ID_EDIT_MNEMONICEDIT            "Edit Mnemonic data"
+    ID_EDIT_TENDERKEYEDIT           "Edit tender key settings"
+END
+
+STRINGTABLE
+BEGIN
     AFX_IDS_APP_TITLE       "GenposBackOffice"
     AFX_IDS_IDLEMESSAGE     "For Help, press F1"
     AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
@@ -737,21 +760,6 @@ STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
-END
-
-STRINGTABLE
-BEGIN
-    ID_OLE_INSERT_NEW       "Insert new embedded object\nNew Object"
-    ID_OLE_EDIT_LINKS       "Edit linked objects\nEdit Links"
-    ID_OLE_EDIT_CONVERT     "Convert object to different type\nConvert Object"
-END
-
-STRINGTABLE
-BEGIN
-    ID_OLE_VERB_FIRST       "Activate embedded or linked object"
-    57873                   "Activate embedded or linked object"
-    57874                   "Activate embedded or linked object"
-    57875                   "Activate embedded or linked object"
 END
 
 STRINGTABLE

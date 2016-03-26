@@ -34,7 +34,7 @@ public:
 CArchive & operator << (CArchive & rhs, const CLanConnectionData & other);
 CArchive & operator >> (CArchive & rhs, CLanConnectionData & other);
 
-class CGenposBackOfficeDoc : public COleDocument
+class CGenposBackOfficeDoc : public CDocument
 {
 protected: // create from serialization only
 	CGenposBackOfficeDoc();

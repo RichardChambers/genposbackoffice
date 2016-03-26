@@ -13,16 +13,15 @@
 
 // CMainFrame
 
-IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
+IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWnd)
 
-BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
+BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_WM_CREATE()
-	ON_COMMAND(ID_FILE_CLOSE, &CMainFrame::OnFileClose)
 	// Global help commands
-	ON_COMMAND(ID_HELP_FINDER, &CFrameWnd::OnHelpFinder)
-	ON_COMMAND(ID_HELP, &CFrameWnd::OnHelp)
-	ON_COMMAND(ID_CONTEXT_HELP, &CFrameWnd::OnContextHelp)
-	ON_COMMAND(ID_DEFAULT_HELP, &CFrameWnd::OnHelpFinder)
+	ON_COMMAND(ID_HELP_FINDER, &CMDIFrameWnd::OnHelpFinder)
+	ON_COMMAND(ID_HELP, &CMDIFrameWnd::OnHelp)
+	ON_COMMAND(ID_CONTEXT_HELP, &CMDIFrameWnd::OnContextHelp)
+	ON_COMMAND(ID_DEFAULT_HELP, &CMDIFrameWnd::OnHelpFinder)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -48,7 +47,7 @@ CMainFrame::~CMainFrame()
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
+	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
@@ -77,7 +76,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	if( !CFrameWnd::PreCreateWindow(cs) )
+	if( !CMDIFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
 	// TODO: Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
@@ -103,34 +102,3 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 
 // CMainFrame message handlers
-
-
-
-BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext) 
-{
-	// base class does the real work
-
-	if (!CFrameWnd::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext))
-	{
-		return FALSE;
-	}
-
-	CWinApp* pApp = AfxGetApp();
-	if (pApp->m_pMainWnd == NULL)
-		pApp->m_pMainWnd = this;
-
-	// replace Exit option on File menu with Close for secondary windows
-	if (AfxGetApp()->m_pMainWnd != this)
-	{
-		CMenu *pMenu = GetMenu();
-		ASSERT(pMenu);
-		pMenu->ModifyMenu(ID_APP_EXIT, MF_BYCOMMAND | MF_STRING, ID_FILE_CLOSE, _T("&Close"));
-	}
-
-	return TRUE;
-}
-
-void CMainFrame::OnFileClose()
-{
-   DestroyWindow();
-}

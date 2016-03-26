@@ -3,6 +3,7 @@
 
 CParamMdc::CParamMdc(void)
 {
+	memset (abMDCData, 0, sizeof(abMDCData));
 }
 
 CParamMdc::~CParamMdc(void)

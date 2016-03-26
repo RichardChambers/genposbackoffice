@@ -97,17 +97,10 @@ CArchive & operator >> (CArchive & rhs, CLanConnectionData & other)
 
 // CGenposBackOfficeDoc
 
-IMPLEMENT_DYNCREATE(CGenposBackOfficeDoc, COleDocument)
+IMPLEMENT_DYNCREATE(CGenposBackOfficeDoc, CDocument)
 
-BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, COleDocument)
+BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, CDocument)
 	// Enable default OLE container implementation
-	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, &COleDocument::OnUpdatePasteMenu)
-	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE_LINK, &COleDocument::OnUpdatePasteLinkMenu)
-	ON_UPDATE_COMMAND_UI(ID_OLE_EDIT_CONVERT, &COleDocument::OnUpdateObjectVerbMenu)
-	ON_COMMAND(ID_OLE_EDIT_CONVERT, &COleDocument::OnEditConvert)
-	ON_UPDATE_COMMAND_UI(ID_OLE_EDIT_LINKS, &COleDocument::OnUpdateEditLinksMenu)
-	ON_COMMAND(ID_OLE_EDIT_LINKS, &COleDocument::OnEditLinks)
-	ON_UPDATE_COMMAND_UI_RANGE(ID_OLE_VERB_FIRST, ID_OLE_VERB_LAST, &COleDocument::OnUpdateObjectVerbMenu)
 	ON_COMMAND(ID_VIEW_LANCONNECTION, &CGenposBackOfficeDoc::OnViewLanconnection)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_LANCONNECTION, &CGenposBackOfficeDoc::OnUpdateViewLanconnection)
 	ON_COMMAND(ID_TERMINAL_LOGINTO, &CGenposBackOfficeDoc::OnTerminalLoginto)
@@ -139,9 +132,6 @@ CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 	totalRegFinCurDay(CTotal::TtlTypeCurDay),
 	totalCashierCurDay(CTotal::TtlTypeCurDay)
 {
-	// Use OLE compound files
-	EnableCompoundFile();
-
 	// temporary default text
 	m_LanData.m_csHostName = _T("HostName");
 	m_LanData.m_csHostMemo = _T("host memo");
@@ -157,7 +147,7 @@ BOOL CGenposBackOfficeDoc::OnNewDocument()
 {
 	TRACE2 ("** %S(%d): -- OnNewDocument() Entry.\n", __FILE__, __LINE__);
 
-	if (!COleDocument::OnNewDocument())
+	if (!CDocument::OnNewDocument())
 		return FALSE;
 
 	// TODO: add reinitialization code here
@@ -216,17 +206,6 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 	listCashier.CashierDataList.Serialize (ar);
 
 	int iCount = listCashier.CashierDataList.GetCount ();
-
-	// Calling the base class COleDocument enables serialization
-	//  of the container document's COleClientItem objects.
-	COleDocument::Serialize(ar);
-
-	if (!ar.IsStoring()) {
-		POSITION pos = GetStartPosition();
-		while (pos) {
-			CDocItem *doc = GetNextItem(pos);
-		}
-	}
 }
 
 
@@ -235,12 +214,12 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 #ifdef _DEBUG
 void CGenposBackOfficeDoc::AssertValid() const
 {
-	COleDocument::AssertValid();
+	CDocument::AssertValid();
 }
 
 void CGenposBackOfficeDoc::Dump(CDumpContext& dc) const
 {
-	COleDocument::Dump(dc);
+	CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
@@ -265,6 +244,7 @@ void CGenposBackOfficeDoc::OnViewLanconnection()
 
 void CGenposBackOfficeDoc::OnUpdateViewLanconnection(CCmdUI *pCmdUI)
 {
+	TRACE1 (" OnUpdateViewLanconnection() id 0x%4.4x index %d\n", pCmdUI->m_nID, pCmdUI->m_nIndex);
 	pCmdUI->Enable(1);
 }
 
@@ -425,7 +405,7 @@ void CGenposBackOfficeDoc::OnTerminalEJretrieve()
 
 BOOL CGenposBackOfficeDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	if (!COleDocument::OnOpenDocument(lpszPathName))
+	if (!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
 
 	// Use this file as the marker for where the document root folder begins.
@@ -497,38 +477,30 @@ void CGenposBackOfficeDoc::OnTerminalSettingsretrieve()
 
 void CGenposBackOfficeDoc::OnEditCashieredit()
 {
-	if (m_bLanOpen && m_bLanLogInto) {
-		CDialogCashier dialogCashier;
-		dialogCashier.SetListCashier (&listCashier);
-		dialogCashier.DoModal ();
-	}
+	CDialogCashier dialogCashier;
+	dialogCashier.SetListCashier (&listCashier);
+	dialogCashier.DoModal ();
 }
 
 void CGenposBackOfficeDoc::OnEditCouponedit()
 {
-	if (m_bLanOpen && m_bLanLogInto) {
-		CDialogCoupon dialogCoupon;
-		dialogCoupon.SetListCoupon (&listCoupon);
-		dialogCoupon.DoModal ();
-	}
+	CDialogCoupon dialogCoupon;
+	dialogCoupon.SetListCoupon (&listCoupon);
+	dialogCoupon.DoModal ();
 }
 
 void CGenposBackOfficeDoc::OnEditPluedit()
 {
-	if (m_bLanOpen && m_bLanLogInto) {
-		CDialogPlu dialogPlu;
-		dialogPlu.SetListPlu (&listPlu);
-		dialogPlu.DoModal ();
-	}
+	CDialogPlu dialogPlu;
+	dialogPlu.SetListPlu (&listPlu);
+	dialogPlu.DoModal ();
 }
 
 void CGenposBackOfficeDoc::OnEditMnemonicedit()
 {
-	if (m_bLanOpen && m_bLanLogInto) {
-		CDialogMnemonic dialogMnemonic(&paramTrans);
-//		dialogMnemonic.SetListPlu (&listPlu);
-		dialogMnemonic.DoModal ();
-	}
+	CDialogMnemonic dialogMnemonic(&paramTrans);
+//	dialogMnemonic.SetListPlu (&listPlu);
+	dialogMnemonic.DoModal ();
 }
 
 void CGenposBackOfficeDoc::OnEditTenderkeyedit()

@@ -3,6 +3,7 @@
 
 CParamFlexMem::CParamFlexMem(void)
 {
+	memset (m_paraFlexMem, 0, sizeof(m_paraFlexMem));
 }
 
 CParamFlexMem::~CParamFlexMem(void)

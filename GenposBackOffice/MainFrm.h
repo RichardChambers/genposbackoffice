@@ -4,12 +4,11 @@
 
 #pragma once
 
-class CMainFrame : public CFrameWnd
+class CMainFrame : public CMDIFrameWnd
 {
-	
-protected: // create from serialization only
+	DECLARE_DYNAMIC(CMainFrame)
+public:
 	CMainFrame();
-	DECLARE_DYNCREATE(CMainFrame)
 
 // Attributes
 public:
@@ -20,7 +19,6 @@ public:
 // Overrides
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
 
 // Implementation
 public:

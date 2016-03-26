@@ -14,6 +14,7 @@ CParamMnemonic::~CParamMnemonic(void)
 
 CParamTransaction::CParamTransaction(void)
 {
+	memset (abTransMnemonic, 0, sizeof(abTransMnemonic));
 }
 
 CParamTransaction::~CParamTransaction(void)
@@ -133,6 +134,7 @@ CParamMnemonic::sizes CParamTransaction::GetMnemonicSizes (void)
 
 CParamLeadThru::CParamLeadThru(void)
 {
+	memset (abTransMnemonic, 0, sizeof(abTransMnemonic));
 }
 
 CParamLeadThru::~CParamLeadThru(void)

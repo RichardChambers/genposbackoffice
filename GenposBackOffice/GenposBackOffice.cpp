@@ -5,6 +5,7 @@
 #include "GenposBackOffice.h"
 #include "MainFrm.h"
 
+#include "ChildFrm.h"
 #include "GenposBackOfficeDoc.h"
 #include "GenposBackOfficeView.h"
 
@@ -17,9 +18,8 @@
 
 BEGIN_MESSAGE_MAP(CGenposBackOfficeApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &CGenposBackOfficeApp::OnAppAbout)
-	ON_COMMAND(ID_FILE_NEW_FRAME, &CGenposBackOfficeApp::OnFileNewFrame)
-	ON_COMMAND(ID_FILE_NEW, &CGenposBackOfficeApp::OnFileNew)
 	// Standard file based document commands
+	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
@@ -86,23 +86,24 @@ BOOL CGenposBackOfficeApp::InitInstance()
 	pDocTemplate = new CMultiDocTemplate(
 		IDR_MAINFRAME,
 		RUNTIME_CLASS(CGenposBackOfficeDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
+		RUNTIME_CLASS(CChildFrame), // custom MDI child frame
 		RUNTIME_CLASS(CGenposBackOfficeView));
 	if (!pDocTemplate)
 		return FALSE;
-	pDocTemplate->SetContainerInfo(IDR_CNTR_INPLACE);
-	m_pDocTemplate = pDocTemplate;
 	AddDocTemplate(pDocTemplate);
 
-
-	// Enable DDE Execute open
-	EnableShellOpen();
-	RegisterShellFileTypes(TRUE);
+	// create main MDI Frame window
+	CMainFrame* pMainFrame = new CMainFrame;
+	if (!pMainFrame || !pMainFrame->LoadFrame(IDR_MAINFRAME))
+	{
+		delete pMainFrame;
+		return FALSE;
+	}
+	m_pMainWnd = pMainFrame;
 
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
-
 
 	// Dispatch commands specified on the command line.  Will return FALSE if
 	// app was launched with /RegServer, /Register, /Unregserver or /Unregister.
@@ -112,10 +113,6 @@ BOOL CGenposBackOfficeApp::InitInstance()
 	// The one and only window has been initialized, so show and update it
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
-	// call DragAcceptFiles only if there's a suffix
-	//  In an SDI app, this should occur after ProcessShellCommand
-	// Enable drag/drop open
-	m_pMainWnd->DragAcceptFiles();
 	return TRUE;
 }
 
@@ -161,76 +158,4 @@ void CGenposBackOfficeApp::OnAppAbout()
 
 // CGenposBackOfficeApp message handlers
 
-void CGenposBackOfficeApp::OnFileNewFrame() 
-{
-	ASSERT(m_pDocTemplate != NULL);
 
-	CDocument* pDoc = NULL;
-	CFrameWnd* pFrame = NULL;
-
-	// Create a new instance of the document referenced
-	// by the m_pDocTemplate member. 
-	pDoc = m_pDocTemplate->CreateNewDocument();
-	if (pDoc != NULL)
-	{
-		// If creation worked, use create a new frame for
-		// that document.
-		pFrame = m_pDocTemplate->CreateNewFrame(pDoc, NULL);
-		if (pFrame != NULL)
-		{
-			// Set the title, and initialize the document.
-			// If document initialization fails, clean-up
-			// the frame window and document.
-
-			m_pDocTemplate->SetDefaultTitle(pDoc);
-			if (!pDoc->OnNewDocument())
-			{
-				pFrame->DestroyWindow();
-				pFrame = NULL;
-			}
-			else
-			{
-				// Otherwise, update the frame
-				m_pDocTemplate->InitialUpdateFrame(pFrame, pDoc, TRUE);
-			}
-		}
-	}
-
-	// If we failed, clean up the document and show a
-	// message to the user.
-
-	if (pFrame == NULL || pDoc == NULL)
-	{
-		delete pDoc;
-		AfxMessageBox(AFX_IDP_FAILED_TO_CREATE_DOC);
-	}
-}
-
-void CGenposBackOfficeApp::OnFileNew() 
-{
-	CDocument* pDoc = NULL;
-	CFrameWnd* pFrame;
-	pFrame = DYNAMIC_DOWNCAST(CFrameWnd, CWnd::GetActiveWindow());
-	
-	if (pFrame != NULL)
-		pDoc = pFrame->GetActiveDocument();
-
-	if (pFrame == NULL || pDoc == NULL)
-	{
-		// if it's the first document, create as normal
-		CWinApp::OnFileNew();
-	}
-	else
-	{
-		// Otherwise, see if we have to save modified, then
-		// ask the document to reinitialize itself.
-		if (!pDoc->SaveModified())
-			return;
-
-		CDocTemplate* pTemplate = pDoc->GetDocTemplate();
-		ASSERT(pTemplate != NULL);
-
-		pTemplate->SetDefaultTitle(pDoc);
-		pDoc->OnNewDocument();
-	}
-}

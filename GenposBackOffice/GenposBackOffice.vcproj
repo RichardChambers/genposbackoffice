@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\pcif\Include"
+				AdditionalIncludeDirectories="..\pcif\Include;..\SqlLit3"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -68,9 +68,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="NCR2172Pif_20.lib NCR2172Stub_20.lib PifNetPc.lib"
+				AdditionalDependencies="NCR2172Pif_20.lib NCR2172Stub_20.lib PifNetPc.lib SqlLite3.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\pcif\Lib"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\pcif\Lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\pcif\Include"
+				AdditionalIncludeDirectories="..\pcif\Include;..\SqlLit3"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -154,7 +154,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="NCR2172Pif_20.lib NCR2172Stub_20.lib PifNetPc.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\pcif\Lib"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;;..\pcif\Lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -196,7 +196,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\CntrItem.cpp"
+				RelativePath=".\ChildFrm.cpp"
 				>
 			</File>
 			<File
@@ -375,6 +375,10 @@
 			>
 			<File
 				RelativePath=".\a_globals.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ChildFrm.h"
 				>
 			</File>
 			<File

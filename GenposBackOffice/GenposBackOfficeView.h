@@ -46,7 +46,6 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual BOOL IsSelected(const CObject* pDocItem) const;// Container support
 
 // Implementation
 public:
@@ -61,13 +60,7 @@ protected:
 // Generated message map functions
 protected:
 	afx_msg void OnDestroy();
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnInsertObject();
-	afx_msg void OnCancelEditCntr();
 	afx_msg void OnFilePrint();
-	afx_msg void OnLButtonDown(UINT msg, CPoint point);
-	afx_msg void OnLButtonDblClk(UINT msg, CPoint point);
 	DECLARE_MESSAGE_MAP()
 };
 

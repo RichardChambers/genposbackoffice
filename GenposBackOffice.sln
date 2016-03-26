@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenposBackOffice", "GenposBackOffice\GenposBackOffice.vcproj", "{E75178C2-597A-4A58-9338-41E49B30AA91}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2F019679-3FD5-4791-A952-60CC29C48DF0} = {2F019679-3FD5-4791-A952-60CC29C48DF0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SqlLite3", "SqlLite3\SqlLite3.vcproj", "{2F019679-3FD5-4791-A952-60CC29C48DF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,10 @@ Global
 		{E75178C2-597A-4A58-9338-41E49B30AA91}.Debug|Win32.Build.0 = Debug|Win32
 		{E75178C2-597A-4A58-9338-41E49B30AA91}.Release|Win32.ActiveCfg = Release|Win32
 		{E75178C2-597A-4A58-9338-41E49B30AA91}.Release|Win32.Build.0 = Release|Win32
+		{2F019679-3FD5-4791-A952-60CC29C48DF0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2F019679-3FD5-4791-A952-60CC29C48DF0}.Debug|Win32.Build.0 = Debug|Win32
+		{2F019679-3FD5-4791-A952-60CC29C48DF0}.Release|Win32.ActiveCfg = Release|Win32
+		{2F019679-3FD5-4791-A952-60CC29C48DF0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
