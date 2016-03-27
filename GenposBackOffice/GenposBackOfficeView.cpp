@@ -129,6 +129,8 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	}
 	pDC->DrawText (pDoc->m_currentRootFolder, currentLine, DT_LEFT | DT_VCENTER);
 	currentLine += incrementLine;
+	pDC->DrawText (pDoc->m_LanData.m_csDatabaseFileName, currentLine, DT_LEFT | DT_VCENTER);
+	currentLine += incrementLine;
 	pDC->DrawText (pDoc->m_LanData.m_csHostName, currentLine, DT_LEFT | DT_VCENTER);
 	currentLine += incrementLine;
 	currentLine.bottom += 300;

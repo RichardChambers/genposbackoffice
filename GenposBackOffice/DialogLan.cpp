@@ -29,6 +29,7 @@ void CDialogLan::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_PASSWORD, m_LanData.m_csHostSessionPassword);
 	DDV_MaxChars(pDX, m_LanData.m_csHostSessionPassword, 10);
 	DDX_IPAddress(pDX, IDC_IPADDRESS1, m_LanData.m_dwHostSessionIpAddress);
+	DDX_Text(pDX, IDC_EDIT_DATABASENAME, m_LanData.m_csDatabaseFileName);
 	DDX_Text(pDX, IDC_EDIT_HOSTMEMO, m_LanData.m_csHostMemo);
 
 	if (pDX->m_bSaveAndValidate) {

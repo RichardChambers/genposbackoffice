@@ -42,6 +42,7 @@ CLanConnectionData & CLanConnectionData::operator = (const CLanConnectionData & 
 		m_csHostSessionPassword = other.m_csHostSessionPassword;
 		m_dwHostSessionIpAddress = other.m_dwHostSessionIpAddress;
 		m_bUseIpAddress = other.m_bUseIpAddress;
+		m_csDatabaseFileName = other.m_csDatabaseFileName;
 	}
 
 	return *this;
@@ -73,6 +74,7 @@ CArchive & operator << (CArchive & rhs, const CLanConnectionData & other)
 		// do not save the password in the archive so write the empty string instead.
 		rhs << dummyPassword;
 	}
+	rhs << other.m_csDatabaseFileName;
 	return rhs;
 }
 
@@ -91,6 +93,7 @@ CArchive & operator >> (CArchive & rhs, CLanConnectionData & other)
 	rhs >> other.m_dwHostSessionIpAddress;
 	rhs >> other.m_bSavePassword;
 	rhs >> other.m_csHostSessionPassword;
+	rhs >> other.m_csDatabaseFileName;
 	return rhs;
 }
 
@@ -200,12 +203,6 @@ void CGenposBackOfficeDoc::Serialize(CArchive& ar)
 	if (!ar.IsStoring()) {
 		paramFlexMem.SummaryToText (m_csHostFlexMem);
 	}
-
-	paramTrans.Serialize (ar);
-	paramLeadThru.Serialize (ar);
-	listCashier.CashierDataList.Serialize (ar);
-
-	int iCount = listCashier.CashierDataList.GetCount ();
 }
 
 
@@ -244,7 +241,7 @@ void CGenposBackOfficeDoc::OnViewLanconnection()
 
 void CGenposBackOfficeDoc::OnUpdateViewLanconnection(CCmdUI *pCmdUI)
 {
-	TRACE1 (" OnUpdateViewLanconnection() id 0x%4.4x index %d\n", pCmdUI->m_nID, pCmdUI->m_nIndex);
+	TRACE2 (" OnUpdateViewLanconnection() id 0x%4.4x index %d\n", pCmdUI->m_nID, pCmdUI->m_nIndex);
 	pCmdUI->Enable(1);
 }
 
@@ -385,20 +382,31 @@ void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
 
 void CGenposBackOfficeDoc::OnTerminalEJretrieve()
 {
-	static  char filePath[512] = {0};
 
-	CFileDialog fileDialog(TRUE, L"*.txt");
-	if (fileDialog.DoModal () == IDOK) {
-		CString mFileName = fileDialog.GetFileName();
-		for (int i = 0; i < mFileName.GetLength(); i++) {
-			filePath[i] = mFileName.GetAt(i);
-		}
-		filePath[mFileName.GetLength()] = 0;
-		if (m_bLanOpen && m_bLanLogInto && m_LanInProgress == 0) {
-			m_LanInProgress = 1;
-			m_LanThread->PostThreadMessage (ID_TERMINAL_EJRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanInProgress);
-		} else if (m_LanInProgress != 0) {
-			AfxMessageBox (L"Retrieval of data from Terminal already started.");
+	if (m_LanInProgress != 0) {
+		AfxMessageBox (L"Retrieval of data from Terminal already started.");
+	} else {
+#if 1
+		CFileDialog fileDialog(TRUE, L"*.dbft");
+#else
+		CFileDialog fileDialog(TRUE, L"*.txt");
+#endif
+		if (fileDialog.DoModal () == IDOK) {
+			static  char filePath[512] = {0};
+
+			CString mFileName = fileDialog.GetFileName();
+			for (int i = 0; i < mFileName.GetLength(); i++) {
+				filePath[i] = mFileName.GetAt(i);
+			}
+			filePath[mFileName.GetLength()] = 0;
+			if (m_bLanOpen && m_bLanLogInto) {
+				m_LanInProgress = 1;
+#if 1
+				m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanInProgress);
+#else
+				m_LanThread->PostThreadMessage (ID_TERMINAL_EJRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanInProgress);
+#endif
+			}
 		}
 	}
 }

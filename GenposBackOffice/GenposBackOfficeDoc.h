@@ -26,6 +26,7 @@ public:
 	CString  m_csHostSessionPassword;
 	DWORD    m_dwHostSessionIpAddress;
 	BOOL     m_bUseIpAddress;
+	CString  m_csDatabaseFileName;
 
 	CLanConnectionData & operator = (const CLanConnectionData & other);
 };

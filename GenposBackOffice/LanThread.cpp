@@ -7,10 +7,13 @@
 
 #include "stdafx.h"
 #include "GenposBackOffice.h"
+#include "ParamPlu.h"
+#include "ListerCashier.h"
 #include "LanThread.h"
 
 #include <memory.h>
 #include "R20_PC2172.h"
+#include <sqlite3.h>
 
 /*
  *   The Electronic Journal of GenPOS is an electronic replica of a journal printer. The data that
@@ -116,20 +119,49 @@ int CLanThread::ExitInstance()
 
 BEGIN_MESSAGE_MAP(CLanThread, CWinThread)
 	ON_THREAD_MESSAGE(ID_TERMINAL_EJRETRIEVE, &CLanThread::OnTerminalEJretrieve)
+	ON_THREAD_MESSAGE(ID_TERMINAL_SETTINGSRETRIEVE, &CLanThread::OnTerminalSettingsretrieve)
 END_MESSAGE_MAP()
 
 
 // CLanThread message handlers
 
+/*
+ *    OnTerminalEJretrieve() - handle the ID_TERMINAL_EJRETRIEVE message
+ *
+ *    This function takes a path name and creates a copy of the Electronic Journal
+ *    from the terminal into a text file.
+ *
+*/
 void CLanThread::OnTerminalEJretrieve(WPARAM wParam,LPARAM lParam)
 {
 	// perform the Electronic Journal read putting it to a file.
 
 	m_ThreadBlock.m_InProgress = 1;
+
 	m_ThreadBlock.m_LastCommand = ID_TERMINAL_EJRETRIEVE;
 
 	// do the LAN activity and finish up.
 	ElectronicJournalRead ((char *)wParam, 0);
+
+	m_ThreadBlock.m_InProgress = 0;
+	*(LONG *)lParam = 0;
+}
+
+/*
+ *    OnTerminalSettingsretrieve() - handle the ID_TERMINAL_SETTINGSRETRIEVE message
+ *
+ *    This function takes a path name and creates a copy of the provisioning of
+ *    the terminal's provisioning information into a database file.
+ *
+*/
+void CLanThread::OnTerminalSettingsretrieve(WPARAM wParam,LPARAM lParam)
+{
+	// perform the Electronic Journal read putting it to a file.
+
+	m_ThreadBlock.m_InProgress = 1;
+
+	m_ThreadBlock.m_LastCommand = ID_TERMINAL_SETTINGSRETRIEVE;
+	RetrieveProvisioningData ((char *)wParam, 0);
 
 	m_ThreadBlock.m_InProgress = 0;
 	*(LONG *)lParam = 0;
@@ -163,5 +195,271 @@ bool CLanThread::ElectronicJournalRead (char *pFilePath, HWND hWndProgress)
 
 bool CLanThread::ElectronicJournalReadReset (char *pFilePath, HWND hWndProgress)
 {
+	return true;
+}
+
+static int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+	TRACE0("SQLite callback\n");
+	for(int i = 0; i < argc; i++){
+		TRACE2("   %s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+	}
+
+	TRACE0("\n");
+	return 0;
+}
+
+static int  RetrieveProvisioningData_Plu (sqlite3 *db)
+{
+	int   rc;
+	char  *zErrMsg = 0;
+	char  *aszSqlDrop = "drop table PluTable;";
+	// we use the PLU number as the key and the complete PLU data record from GenPOS
+	// is stored as a BLOB.
+	char  *aszSqlCreate = "create table PluTable (akey character(14) primary key not null, avalue blob);";
+	char  *aszSqlInsert = "insert into PluTable values (?, ?);";
+
+	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec()  \"%s\" %d\n", aszSqlDrop, rc);
+
+	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec()  \"%s\" %d\n", aszSqlCreate, rc);
+
+	// read from GenPOS and keep reading PLUs untile there are no more.
+	// for each PLU returned by GenPOS we will create a database record.
+	sqlite3_stmt  *insertStmt;
+	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
+	TRACE2("   sqlite3_prepare()  \"%s\" %d\n", aszSqlInsert, rc);
+
+	CParamPlu  PluData;
+	bool  bStart = true;
+	int   sCount = 0;
+	while ( (sCount = PluData.RetrieveNextSet(bStart)) > 0) {
+		bStart = false;
+		for (int i = 0; i < sCount; i++) {
+			char xKey[14] = {0};
+
+			// convert the PLU number, stored as wchar_t, to char to create the table key.
+			for (int j = 0; j < 14; j++) xKey[j] = (char)PluData.m_paraPlu[i].auchPluNo[j];
+
+			// bind the key to the first parameter of the insert, the key value
+			rc = sqlite3_bind_text (insertStmt, 1, xKey, 14, SQLITE_STATIC);
+			TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
+
+			// bind the PLU data to the second parameter of the insert, the data value
+			rc = sqlite3_bind_blob (insertStmt, 2, PluData.m_paraPlu + i, sizeof(PluData.m_paraPlu[0]), SQLITE_STATIC);
+			TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
+
+			// perform the actual insert with the modified prepared statement
+			rc = sqlite3_step (insertStmt);
+			TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
+
+			// reset the prepared statement so that we do our next set of binds.
+			rc = sqlite3_reset (insertStmt);
+			TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
+		}
+	}
+
+	// we are done with the prepared statement so release all the resources for it.
+	rc = sqlite3_finalize (insertStmt);
+	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+
+	return 1;
+}
+
+
+static int  RetrieveProvisioningData_Cashier (sqlite3 *db)
+{
+	int   rc;
+	char  *zErrMsg = 0;
+	char  *aszSqlDrop = "drop table CashierTable;";
+	// we use the PLU number as the key and the complete PLU data record from GenPOS
+	// is stored as a BLOB.
+	char  *aszSqlCreate = "create table CashierTable (akey character(10) primary key not null, avalue blob);";
+	char  *aszSqlInsert = "insert into CashierTable values (?, ?);";
+
+	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+
+	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+
+	// read from GenPOS and keep reading PLUs untile there are no more.
+	// for each PLU returned by GenPOS we will create a database record.
+	sqlite3_stmt  *insertStmt;
+	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
+	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
+
+	CListerCashier  cashierList;
+	cashierList.RetrieveList();
+
+	short sStatus = cashierList.GetFirstListItem();
+	while ( sStatus >= 0) {
+		CParamCashier::CASIF_ETK  dataBlob = {0};
+		char       xKey[14] = {0};
+
+		// convert the PLU number, stored as wchar_t, to char to create the table key.
+		sprintf (xKey, "%10.10d", cashierList.CashierData.m_paraCashier.ulCashierNo);
+		dataBlob.m_paraCashier = cashierList.CashierData.m_paraCashier;
+		dataBlob.m_jobETK = cashierList.CashierData.m_jobETK;
+
+		// bind the key to the first parameter of the insert, the key value
+		rc = sqlite3_bind_text (insertStmt, 1, xKey, 10, SQLITE_STATIC);
+		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
+
+		// bind the PLU data to the second parameter of the insert, the data value
+		rc = sqlite3_bind_blob (insertStmt, 2, &dataBlob, sizeof(dataBlob), SQLITE_STATIC);
+		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
+
+		// perform the actual insert with the modified prepared statement
+		rc = sqlite3_step (insertStmt);
+		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
+
+		// reset the prepared statement so that we do our next set of binds.
+		rc = sqlite3_reset (insertStmt);
+		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
+
+		sStatus = cashierList.GetNextListItem();
+	}
+
+	// we are done with the prepared statement so release all the resources for it.
+	rc = sqlite3_finalize (insertStmt);
+	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+
+	return 1;
+}
+
+static int  RetrieveProvisioningData_TransMnemo (sqlite3 *db)
+{
+	short   sLastError;
+	USHORT  usReadOffset = 0;
+	USHORT  usActualRead = 0;
+	int     rc;
+	char    *zErrMsg = 0;
+	char    *aszSqlDrop = "drop table TransMnemoTable;";
+	char    *aszSqlCreate = "create table TransMnemoTable (akey int primary key not null, avalue blob);";
+	char    *aszSqlInsert = "insert into TransMnemoTable values (?, ?);";
+
+	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+
+	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+
+	sqlite3_stmt  *insertStmt;
+	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
+	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
+
+	for (int iLoop = 0; iLoop < MAX_TRANSM_NO; iLoop++) {
+		wchar_t  abTransMnemonic[PARA_TRANSMNEMO_LEN] = {0};
+
+		sLastError = ::CliParaAllRead (CLASS_PARATRANSMNEMO, (UCHAR *)(&abTransMnemonic[0]), sizeof( abTransMnemonic ), usReadOffset, &usActualRead);
+
+		// bind the key to the first parameter of the insert, the key value
+		rc = sqlite3_bind_int (insertStmt, 1, iLoop + 1);
+		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
+
+		// bind the PLU data to the second parameter of the insert, the data value
+		rc = sqlite3_bind_blob (insertStmt, 2, &abTransMnemonic[0], sizeof(abTransMnemonic), SQLITE_STATIC);
+		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
+
+		// perform the actual insert with the modified prepared statement
+		rc = sqlite3_step (insertStmt);
+		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
+
+		// reset the prepared statement so that we do our next set of binds.
+		rc = sqlite3_reset (insertStmt);
+		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
+
+		usReadOffset += usActualRead;
+	}
+
+	// we are done with the prepared statement so release all the resources for it.
+	rc = sqlite3_finalize (insertStmt);
+	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+
+	return 1;
+}
+
+static int  RetrieveProvisioningData_LeadthruMnemo (sqlite3 *db)
+{
+	short   sLastError;
+	USHORT  usReadOffset = 0;
+	USHORT  usActualRead = 0;
+	int     rc;
+	char    *zErrMsg = 0;
+	char    *aszSqlDrop = "drop table LeadthruMnemoTable;";
+	char    *aszSqlCreate = "create table LeadthruMnemoTable (akey int primary key not null, avalue blob);";
+	char    *aszSqlInsert = "insert into LeadthruMnemoTable values (?, ?);";
+
+	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+
+	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+
+	sqlite3_stmt  *insertStmt;
+	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
+	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
+
+	for (int iLoop = 0; iLoop < MAX_LEAD_NO; iLoop++) {
+		wchar_t  abTransMnemonic[PARA_LEADTHRU_LEN] = {0};
+
+		sLastError = ::CliParaAllRead (CLASS_PARALEADTHRU, (UCHAR *)(&abTransMnemonic[0]), sizeof( abTransMnemonic ), usReadOffset, &usActualRead);
+
+		// bind the key to the first parameter of the insert, the key value
+		rc = sqlite3_bind_int (insertStmt, 1, iLoop + 1);
+		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
+
+		// bind the PLU data to the second parameter of the insert, the data value
+		rc = sqlite3_bind_blob (insertStmt, 2, &abTransMnemonic[0], sizeof(abTransMnemonic), SQLITE_STATIC);
+		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
+
+		// perform the actual insert with the modified prepared statement
+		rc = sqlite3_step (insertStmt);
+		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
+
+		// reset the prepared statement so that we do our next set of binds.
+		rc = sqlite3_reset (insertStmt);
+		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
+
+		usReadOffset += usActualRead;
+	}
+
+	// we are done with the prepared statement so release all the resources for it.
+	rc = sqlite3_finalize (insertStmt);
+	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+
+	return 1;
+}
+
+/*
+ *    RetrieveProvisioningData() - handle the ID_TERMINAL_SETTINGSRETRIEVE message
+ *
+ *    This function takes a path name and creates a copy of the provisioning of
+ *    the terminal's provisioning information into a database file.
+ *
+*/
+bool CLanThread::RetrieveProvisioningData (char *pFilePath, HWND hWndProgress)
+{
+	sqlite3 *db;
+
+	// truncate the file.
+	FILE *fp = fopen (pFilePath, "w");
+	fclose (fp);
+
+	int rc = sqlite3_open(pFilePath, &db);
+	if( rc != SQLITE_OK ) {
+		TRACE1("  ERROR sqlite3_open() %d\n", rc);
+		return true;
+	}
+
+	RetrieveProvisioningData_Plu (db);
+	RetrieveProvisioningData_Cashier (db);
+	RetrieveProvisioningData_TransMnemo (db);
+	RetrieveProvisioningData_LeadthruMnemo (db);
+
+	// close the SQLite file as we are done making database changes.
+	sqlite3_close(db);
 	return true;
 }

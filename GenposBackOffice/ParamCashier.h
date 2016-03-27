@@ -21,4 +21,9 @@ public:
 	CASIF    m_paraCashier;
 	ETK_JOB  m_jobETK;
 	WCHAR    m_auchETKName[ ETK_MAX_NAME_SIZE + 1 ];
+
+	struct CASIF_ETK {
+		CASIF    m_paraCashier;
+		ETK_JOB  m_jobETK;
+	};
 };

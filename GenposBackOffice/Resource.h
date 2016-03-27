@@ -48,6 +48,7 @@
 #define IDC_LIST1                       1011
 #define IDC_LIST2                       1012
 #define IDC_CHECK_SAVE_PW               1013
+#define IDC_EDIT_DATABASENAME           1014
 #define IDC_EDIT_CASHIER_NAME           1107
 #define IDC_EDIT_CASHIER_SUPNO          1108
 #define IDC_EDIT_CASHIER_TEAMNO         1109

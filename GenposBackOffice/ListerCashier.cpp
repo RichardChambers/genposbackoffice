@@ -37,7 +37,7 @@ short   CListerCashier::GetCurrentListItem (void)
 	}
 
 	bCashierData = (sRet == 0);
-	return -1;
+	return sRet;
 }
 
 short   CListerCashier::GetNextListItem (void)

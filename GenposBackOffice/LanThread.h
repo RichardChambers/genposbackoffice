@@ -28,10 +28,12 @@ public:
 	virtual int ExitInstance();
 
 	afx_msg void OnTerminalEJretrieve(WPARAM wParam,LPARAM lParam);
+	afx_msg void OnTerminalSettingsretrieve(WPARAM wParam,LPARAM lParam);
 
 protected:
 	bool ElectronicJournalRead (char *pFilePath, HWND hWndProgress);
 	bool ElectronicJournalReadReset (char *pFilePath, HWND hWndProgress);
+	bool RetrieveProvisioningData (char *pFilePath, HWND hWndProgress);
 
 	DECLARE_MESSAGE_MAP()
 };
