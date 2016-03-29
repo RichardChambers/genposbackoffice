@@ -19,6 +19,8 @@
 #define new DEBUG_NEW
 #endif
 
+//-------------------------------------------------------------------------------------
+
 CLanConnectionData::CLanConnectionData () :
 		m_csHostName(L"")
 		, m_csLastTermNo(L"")
@@ -97,6 +99,7 @@ CArchive & operator >> (CArchive & rhs, CLanConnectionData & other)
 	return rhs;
 }
 
+//-------------------------------------------------------------------------------------
 
 // CGenposBackOfficeDoc
 
@@ -144,6 +147,16 @@ CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 
 CGenposBackOfficeDoc::~CGenposBackOfficeDoc()
 {
+}
+
+void CGenposBackOfficeDoc::DispatchToAllViews(UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    POSITION pos = GetFirstViewPosition();
+    while (pos != NULL)
+    {
+        CView* pView = GetNextView(pos);
+        pView->PostMessage(msg, wParam, lParam);
+    }
 }
 
 BOOL CGenposBackOfficeDoc::OnNewDocument()
@@ -400,6 +413,7 @@ void CGenposBackOfficeDoc::OnTerminalEJretrieve()
 			}
 			filePath[mFileName.GetLength()] = 0;
 			if (m_bLanOpen && m_bLanLogInto) {
+				DispatchToAllViews (WM_LANPROGRESS, 0, 0);
 				m_LanInProgress = 1;
 #if 1
 				m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanInProgress);

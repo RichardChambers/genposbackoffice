@@ -72,6 +72,7 @@ public:
 
 // Operations
 public:
+	void DispatchToAllViews(UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Overrides
 public:
