@@ -22,14 +22,13 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CGenposBackOfficeView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_MESSAGE(WM_LANPROGRESS, &CGenposBackOfficeView::OnViewLanconnectionProgress)
 END_MESSAGE_MAP()
 
 // CGenposBackOfficeView construction/destruction
 
 CGenposBackOfficeView::CGenposBackOfficeView() : m_firstTextLine (10, 50, 350, 75), m_lineIncrement(0, 25)
 {
-	m_pSelection = NULL;
-
 	LOGFONT lf = {0};
 	// request a 12-pixel-height font
 	// request a face name "Arial"
@@ -140,36 +139,12 @@ void CGenposBackOfficeView::OnDraw(CDC* pDC)
 	currentLine.top += 300;
 	currentLine += incrementLine;
 
-	// Draw the selection at an arbitrary position.  This code should be
-	//  removed once your real drawing code is implemented.  This position
-	//  corresponds exactly to the rectangle returned by CGenposBackOfficeCntrItem,
-	//  to give the effect of in-place editing.
-
-	// TODO: remove this code when final draw code is complete.
-	if (m_pSelection != NULL)
-	{
-		CSize size;
-		CRect rect(currentLine);
-		rect.bottom += 20;
-		
-		if (SUCCEEDED(m_pSelection->GetExtent(&size, m_pSelection->m_nDrawAspect)))
-		{
-			pDC->HIMETRICtoLP(&size);
-			rect.right = size.cx + 10;
-			rect.bottom = size.cy + 10;
-		}
-		m_pSelection->Draw(pDC, rect);
-	}
-
 	pDC->SelectObject(def_font);
 }
 
 void CGenposBackOfficeView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
-
-	// TODO: remove this code when final selection model code is written
-	m_pSelection = NULL;    // initialize selection
 
 	int  rectButtonWidth = 85;
 	CRect  rectButton(10, 0, 10 + rectButtonWidth, 40);
@@ -198,6 +173,12 @@ void CGenposBackOfficeView::OnInitialUpdate()
 	cbuttonSettingsRetrieve.Create (_T("Retrieve"), 0, rectButton, this, ID_TERMINAL_SETTINGSRETRIEVE);
 	cbuttonSettingsRetrieve.ShowWindow (SW_SHOW);
 	cbuttonSettingsRetrieve.EnableWindow (0);
+
+	rectButton.left += rectButtonWidth + 5;
+	rectButton.right += rectButtonWidth + 5;
+	cstaticProgress.Create (L"xx", 0, rectButton, this, 0);
+	cstaticProgress.ShowWindow (SW_SHOW);
+	cstaticProgress.EnableWindow (0);
 }
 
 
@@ -205,6 +186,8 @@ void CGenposBackOfficeView::OnInitialUpdate()
 
 BOOL CGenposBackOfficeView::OnPreparePrinting(CPrintInfo* pInfo)
 {
+	SendMessage (WM_LANPROGRESS, 0, 0);
+
 	// default preparation
 	return DoPreparePrinting(pInfo);
 }
@@ -257,3 +240,11 @@ CGenposBackOfficeDoc* CGenposBackOfficeView::GetDocument() const // non-debug ve
 
 
 // CGenposBackOfficeView message handlers
+
+
+LRESULT  CGenposBackOfficeView::OnViewLanconnectionProgress(WPARAM wParam, LPARAM lParam)
+{
+	// TODO: Add your command handler code here
+	cstaticProgress.SendMessage (WM_LANPROGRESS, wParam, lParam);
+	return 0;
+}

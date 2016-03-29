@@ -4,7 +4,7 @@
 
 #pragma once
 
-class CGenposBackOfficeCntrItem;
+#include "ProgressWnd.h"
 
 class CGenposBackOfficeView : public CView
 {
@@ -15,14 +15,6 @@ protected: // create from serialization only
 // Attributes
 public:
 	CGenposBackOfficeDoc* GetDocument() const;
-	// m_pSelection holds the selection to the current CGenposBackOfficeCntrItem.
-	// For many applications, such a member variable isn't adequate to
-	//  represent a selection, such as a multiple selection or a selection
-	//  of objects that are not CGenposBackOfficeCntrItem objects.  This selection
-	//  mechanism is provided just to help you get started
-
-	// TODO: replace this selection mechanism with one appropriate to your app
-	CGenposBackOfficeCntrItem* m_pSelection;
 
 	CFont   m_ViewFont;
 	CRect   m_firstTextLine;
@@ -33,6 +25,7 @@ public:
 	CButton   cbuttonLogOut;
 	CButton   cbuttonFlexMem;
 	CButton   cbuttonSettingsRetrieve;
+    CProgressWnd   cstaticProgress;
 
 // Operations
 public:
@@ -57,11 +50,15 @@ public:
 
 protected:
 
+	CProgressWnd     m_ProgressThread;
+
 // Generated message map functions
 protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnFilePrint();
 	DECLARE_MESSAGE_MAP()
+public:
+	LRESULT  OnViewLanconnectionProgress(WPARAM wParam, LPARAM lParam);
 };
 
 #ifndef _DEBUG  // debug version in GenposBackOfficeView.cpp
