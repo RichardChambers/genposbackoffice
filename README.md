@@ -11,10 +11,10 @@ The source code for this application requires the following components to compil
  - GenPOS PCIF Third Party Toolkit from GenPOS Rel 2.2.1
  - SQLite3 source which is included in the genposbackoffice Github as a directory tree
  
- The purpose of the genposbackoffice remote application is to provide a user friendly application
- to perform basic OAMP actions with a GenPOS terminal cluster from a remote location. These actions
- include:
-  - making a back up copy of the provisioning in a terminal cluster
-  - modifying the provisioning in a terminal cluster
-  - performing operation actions such as End of Day
-  - pull operation data such as totals from a terminal cluster
+The purpose of the genposbackoffice remote application is to provide a user friendly application
+to perform basic OAMP actions with a GenPOS terminal cluster from a remote location. These actions
+include:
+ - making a back up copy of the provisioning in a terminal cluster
+ - modifying the provisioning in a terminal cluster
+ - performing operation actions such as End of Day
+ - pull operation data such as totals from a terminal cluster
