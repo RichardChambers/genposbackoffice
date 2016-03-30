@@ -132,9 +132,16 @@ END_MESSAGE_MAP()
  *    from the terminal into a text file.
  *
 */
-void CLanThread::OnTerminalEJretrieve(WPARAM wParam,LPARAM lParam)
+void CLanThread::OnTerminalEJretrieve (WPARAM wParam, LPARAM lParam)
 {
 	// perform the Electronic Journal read putting it to a file.
+	LanBlock *j = (LanBlock *)lParam;
+
+	if (j) {
+		j->m_InProgress = 1;
+		j->m_LastCommand = ID_TERMINAL_EJRETRIEVE;
+		j->func (j->obj, WM_LANPROGRESS, 0, 0);   // DispatchToAllViewsFunc()
+	}
 
 	m_ThreadBlock.m_InProgress = 1;
 
@@ -144,7 +151,11 @@ void CLanThread::OnTerminalEJretrieve(WPARAM wParam,LPARAM lParam)
 	ElectronicJournalRead ((char *)wParam, 0);
 
 	m_ThreadBlock.m_InProgress = 0;
-	*(LONG *)lParam = 0;
+
+	if (j) {
+		j->m_InProgress = 0;
+		j->func (j->obj, WM_LANPROGRESS, 0, 0);   // DispatchToAllViewsFunc()
+	}
 }
 
 /*
@@ -154,17 +165,28 @@ void CLanThread::OnTerminalEJretrieve(WPARAM wParam,LPARAM lParam)
  *    the terminal's provisioning information into a database file.
  *
 */
-void CLanThread::OnTerminalSettingsretrieve(WPARAM wParam,LPARAM lParam)
+void CLanThread::OnTerminalSettingsretrieve (WPARAM wParam, LPARAM lParam)
 {
-	// perform the Electronic Journal read putting it to a file.
-
 	m_ThreadBlock.m_InProgress = 1;
+
+	// perform the retrieval of the terminal settings read putting it to a file.
+	LanBlock *j = (LanBlock *)lParam;
+
+	if (j) {
+		j->m_InProgress = 1;
+		j->m_LastCommand = ID_TERMINAL_SETTINGSRETRIEVE;
+		j->func (j->obj, WM_LANPROGRESS, 0, 0);   // DispatchToAllViewsFunc()
+	}
 
 	m_ThreadBlock.m_LastCommand = ID_TERMINAL_SETTINGSRETRIEVE;
 	RetrieveProvisioningData ((char *)wParam, 0);
 
+	if (j) {
+		j->m_InProgress = 0;
+		j->func (j->obj, WM_LANPROGRESS, 0, 0);   // DispatchToAllViewsFunc()
+	}
+
 	m_ThreadBlock.m_InProgress = 0;
-	*(LONG *)lParam = 0;
 }
 
 bool CLanThread::ElectronicJournalRead (char *pFilePath, HWND hWndProgress)

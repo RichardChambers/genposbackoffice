@@ -141,14 +141,20 @@ CGenposBackOfficeDoc::CGenposBackOfficeDoc() :
 	// temporary default text
 	m_LanData.m_csHostName = _T("HostName");
 	m_LanData.m_csHostMemo = _T("host memo");
+
+	// initialize the LAN control block which is provided to the LAN thread for manipulating the
+	// CProgressWnd control we use to keep the user informed that a LAN action is in progress.
+	// then start up the LAN communication thread which is used for actions that take some time.
+	CLanThread::LanBlock myBlock = {0, 0, &CGenposBackOfficeDoc::DispatchToAllViewsFunc, this};
+	m_LanBlock = myBlock;
 	m_LanThread = dynamic_cast<CLanThread *>(AfxBeginThread(RUNTIME_CLASS(CLanThread), THREAD_PRIORITY_NORMAL, 0, 0));
-	m_LanInProgress = 0;
 }
 
 CGenposBackOfficeDoc::~CGenposBackOfficeDoc()
 {
 }
 
+// Send a WM_USER type Windows message to all views that are registered with this document.
 void CGenposBackOfficeDoc::DispatchToAllViews(UINT msg, WPARAM wParam, LPARAM lParam)
 {
     POSITION pos = GetFirstViewPosition();
@@ -158,6 +164,25 @@ void CGenposBackOfficeDoc::DispatchToAllViews(UINT msg, WPARAM wParam, LPARAM lP
         pView->PostMessage(msg, wParam, lParam);
     }
 }
+
+// DispatchToAllViewsFunc() is a static function version of the class method DispatchToAllViews()
+// which is called specifying the actual object where as DispatchToAllViews() knows the object.
+// We use this in order to work around being unable to obtain a function pointer to an object method.
+// We instead use a static, class method, and provide the address of the object so that we can
+// create a C API compatible function pointer.
+//
+// This is needed in order to pass a function pointer another thread using a message.
+// See method CGenposBackOfficeDoc::OnTerminalEJretrieve() for an example of use.
+//
+// This function is used something along the lines of the following:
+//    CLanThread::LanBlock myBlock = {0, 0, &CGenposBackOfficeDoc::DispatchToAllViewsFunc, this};
+//    m_LanBlock = myBlock;   // make a copy in a member variable so that it will be around for a while
+//    m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
+void CGenposBackOfficeDoc::DispatchToAllViewsFunc (void *p, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	((CGenposBackOfficeDoc *)p)->DispatchToAllViews (msg, wParam, lParam);
+}
+
 
 BOOL CGenposBackOfficeDoc::OnNewDocument()
 {
@@ -174,7 +199,6 @@ BOOL CGenposBackOfficeDoc::OnNewDocument()
 
 	return TRUE;
 }
-
 
 
 
@@ -396,7 +420,7 @@ void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
 void CGenposBackOfficeDoc::OnTerminalEJretrieve()
 {
 
-	if (m_LanInProgress != 0) {
+	if (m_LanBlock.m_InProgress != 0) {
 		AfxMessageBox (L"Retrieval of data from Terminal already started.");
 	} else {
 #if 1
@@ -413,12 +437,12 @@ void CGenposBackOfficeDoc::OnTerminalEJretrieve()
 			}
 			filePath[mFileName.GetLength()] = 0;
 			if (m_bLanOpen && m_bLanLogInto) {
-				DispatchToAllViews (WM_LANPROGRESS, 0, 0);
-				m_LanInProgress = 1;
+
+				m_LanBlock.m_InProgress = 1;
 #if 1
-				m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanInProgress);
+				m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
 #else
-				m_LanThread->PostThreadMessage (ID_TERMINAL_EJRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanInProgress);
+				m_LanThread->PostThreadMessage (ID_TERMINAL_EJRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
 #endif
 			}
 		}

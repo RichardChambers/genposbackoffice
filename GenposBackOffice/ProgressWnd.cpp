@@ -17,13 +17,13 @@
 		virtual ~CProgressThread();
 
 	public:
-		struct LanBlock {
+		struct ProgressBlock {
 			int  m_LastCommand;
 			int  m_InProgress;
 			CWnd *m_CWnd;
 		};
 
-		LanBlock m_ThreadBlock;
+		ProgressBlock m_ProgressBlock;
 
 	public:
 		virtual BOOL InitInstance();
@@ -61,8 +61,6 @@ int CProgressThread::ExitInstance()
 }
 
 BEGIN_MESSAGE_MAP(CProgressThread, CWinThread)
-//	ON_THREAD_MESSAGE(ID_TERMINAL_EJRETRIEVE, &CProgressThread::OnProgressStart)
-//	ON_THREAD_MESSAGE(ID_TERMINAL_SETTINGSRETRIEVE, &CProgressThread::OnProgressStop)
 END_MESSAGE_MAP()
 
 
@@ -72,10 +70,10 @@ int CProgressThread::Run()
 	while (1) {
 		Sleep(500);
 		++i;
-		if (m_ThreadBlock.m_CWnd) {
+		if (m_ProgressBlock.m_CWnd) {
 			CString  myText;
 			myText.Format (L"T %d", i);
-			m_ThreadBlock.m_CWnd->SetWindowText(myText);
+			m_ProgressBlock.m_CWnd->SetWindowText(myText);
 		}
 	}
 
@@ -91,10 +89,9 @@ IMPLEMENT_DYNAMIC(CProgressWnd, CStatic)
 CProgressWnd::CProgressWnd()
 {
 	m_ProgressThread = dynamic_cast<CProgressThread *>(AfxBeginThread(RUNTIME_CLASS(CProgressThread), THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED));
-	m_ProgressThread->m_ThreadBlock.m_CWnd = this;
-	m_ProgressThread->m_ThreadBlock.m_LastCommand = 0;
-	m_ProgressThread->m_ThreadBlock.m_InProgress = 0;
-
+	m_ProgressThread->m_ProgressBlock.m_CWnd = this;
+	m_ProgressThread->m_ProgressBlock.m_LastCommand = 0;
+	m_ProgressThread->m_ProgressBlock.m_InProgress = 0;
 }
 
 CProgressWnd::~CProgressWnd()
@@ -110,12 +107,12 @@ END_MESSAGE_MAP()
 LRESULT  CProgressWnd::OnProgressStartStop(WPARAM wParam, LPARAM lParam)
 {
 	if (m_ProgressThread) {
-		m_ProgressThread->m_ThreadBlock.m_LastCommand = 0;
-		if (m_ProgressThread->m_ThreadBlock.m_InProgress) {
+		m_ProgressThread->m_ProgressBlock.m_LastCommand = 0;
+		if (m_ProgressThread->m_ProgressBlock.m_InProgress) {
 			m_ProgressThread->SuspendThread();
-			m_ProgressThread->m_ThreadBlock.m_InProgress = 1 - m_ProgressThread->m_ThreadBlock.m_InProgress;
+			m_ProgressThread->m_ProgressBlock.m_InProgress = 1 - m_ProgressThread->m_ProgressBlock.m_InProgress;
 		} else {
-			m_ProgressThread->m_ThreadBlock.m_InProgress = 1 - m_ProgressThread->m_ThreadBlock.m_InProgress;
+			m_ProgressThread->m_ProgressBlock.m_InProgress = 1 - m_ProgressThread->m_ProgressBlock.m_InProgress;
 			m_ProgressThread->ResumeThread();
 		}
 	}

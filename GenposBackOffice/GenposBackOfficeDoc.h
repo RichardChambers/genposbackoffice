@@ -53,7 +53,7 @@ public:
 	CString  m_currentRootFolder;  // root folder for the current data set
 
 	CLanThread     *m_LanThread;
-	LONG            m_LanInProgress;
+	CLanThread::LanBlock m_LanBlock;
 
 	CTotalRegFin   totalRegFinCurDay;
 	CTotalCashier  totalCashierCurDay;
@@ -66,6 +66,7 @@ public:
 	CListerPlu      listPlu;
 	CListerCoupon   listCoupon;
 
+
 	//                               Version:        Mmmvvbbb  M - Major, mm - minor, vv - version, bbb - build
 	static const unsigned long m_ulVersionNumber = 0x10000001;   //  1.0.0.001
 	static const unsigned long m_ulSignature = 0x1f2d3e4c;
@@ -73,6 +74,7 @@ public:
 // Operations
 public:
 	void DispatchToAllViews(UINT msg, WPARAM wParam, LPARAM lParam);
+	static void DispatchToAllViewsFunc (void *p, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Overrides
 public:

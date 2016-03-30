@@ -17,8 +17,10 @@ protected:
 
 public:
 	struct LanBlock {
-		int  m_LastCommand;
-		int  m_InProgress;
+		int  m_LastCommand;         // last command or current command being processed
+		int  m_InProgress;          // 1 if LAN action currently in progress
+		void (*func)(void *obj, UINT msg, WPARAM wParam, LPARAM lParam);  // progress function
+		void  *obj;                 // address of object that is target of progress function
 	};
 
 	LanBlock m_ThreadBlock;
