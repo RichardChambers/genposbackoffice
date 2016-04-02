@@ -11,6 +11,10 @@ The source code for this application requires the following components to compil
  - GenPOS PCIF Third Party Toolkit from GenPOS Rel 2.2.1
  - SQLite3 source which is included in the genposbackoffice Github as a directory tree
  
+The installer file is generated using the NSIS nullsoft Scriptable Install System. The NSIS script
+compiler is available from http://nsis.sourceforge.net/Download and must be installed before
+the NSIS script, GenposBackOffice.nsi, can be compiled to produce the installer.
+
 The purpose of the genposbackoffice remote application is to provide a user friendly application
 to perform basic OAMP actions with a GenPOS terminal cluster from a remote location. These actions
 include:
