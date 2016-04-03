@@ -6,6 +6,7 @@ CParamMnemonic::CParamMnemonic(void) :
 {
 }
 
+
 CParamMnemonic::~CParamMnemonic(void)
 {
 }
@@ -21,30 +22,38 @@ CParamTransaction::~CParamTransaction(void)
 {
 }
 
+short CParamTransaction::PullParam (unsigned short usAddress)
+{
+	USHORT  usReadLen = PARA_TRANSMNEMO_LEN * sizeof(abTransMnemonic[0]);
+	USHORT  usActualRead = 0;
+	USHORT  usReadOffset = (usAddress - 1) * usReadLen;
+
+	m_sLastError = ::CliParaAllRead (CLASS_PARATRANSMNEMO, (UCHAR *)(&abTransMnemonic[0]), usReadLen, usReadOffset, &usActualRead);
+	m_bDataRead = 1;
+	return m_sLastError;
+}
+
 short CParamTransaction::PullParam (void)
 {
-	USHORT  usReadOffset = 0;
+	return PullParam (1);
+}
+
+short CParamTransaction::PushParam (unsigned short usAddress)
+{
+	USHORT  usReadOffset = (usAddress - 1) * PARA_TRANSMNEMO_LEN;
+	USHORT  usReadLen = PARA_TRANSMNEMO_LEN * sizeof(abTransMnemonic[0]);
 	USHORT  usActualRead = 0;
 
-	for (int iLoop = 0; iLoop < MAX_TRANSM_NO; iLoop++) {
-		m_sLastError = ::CliParaAllRead (CLASS_PARATRANSMNEMO, (UCHAR *)(&abTransMnemonic[iLoop][0]), sizeof( abTransMnemonic[iLoop] ), usReadOffset, &usActualRead);
-		usReadOffset += usActualRead;
-	}
+	m_sLastError = ::CliParaAllWrite (CLASS_PARATRANSMNEMO, (UCHAR *)(&abTransMnemonic[0]), usReadLen, usReadOffset, &usActualRead);
 	m_bDataRead = 1;
 	return m_sLastError;
 }
 
 short CParamTransaction::PushParam (void)
 {
-	USHORT  usWriteOffset = 0;
-	USHORT  usActualWrite = 0;
-
-	for (int iLoop = 0; iLoop < MAX_TRANSM_NO; iLoop++) {
-		m_sLastError = ::CliParaAllWrite (CLASS_PARATRANSMNEMO, (UCHAR *)(&abTransMnemonic[iLoop][0]), sizeof( abTransMnemonic[iLoop] ), usWriteOffset, &usActualWrite);
-		usWriteOffset += usActualWrite;
-	}
-	return m_sLastError;
+	return PullParam (1);
 }
+
 
 void CParamTransaction::ClearParam (void)
 {
@@ -63,9 +72,7 @@ void CParamTransaction::Serialize (CArchive &ar)
 		ar << nMax;
 		ar << nLen;
 		for (int i = 0; i < nMax; i++) {
-			for (int j = 0; j < nLen; j++) {
-				ar << abTransMnemonic[i][j];
-			}
+			ar << abTransMnemonic[i];
 		}
 	} else {
 		unsigned long ulSignature = 0;
@@ -80,33 +87,22 @@ void CParamTransaction::Serialize (CArchive &ar)
 		TRACE2(" Serialize Transaction - Read - nMax %d nLen %d\n", nMax, nLen);
 
 		for (int i = 0; i < nMax; i++) {
-			for (int j = 0; j < nLen; j++) {
-				ar >> abTransMnemonic[i][j];
-			}
+			ar >> abTransMnemonic[i];
 		}
 	}
 }
 
-unsigned short CParamTransaction::GetMnemonicValue (unsigned short *usAddress, CString &mnemonic)
+unsigned short CParamTransaction::GetMnemonicValue (CString & mnemonic)
 {
-	unsigned short  usRet = 0;
-	WCHAR  tempBuf[PARA_TRANSMNEMO_LEN + 1] = {0};
-
-	if (*usAddress < MAX_TRANSM_NO) {
-		memcpy (tempBuf, abTransMnemonic[*usAddress], PARA_TRANSMNEMO_LEN * sizeof(WCHAR));
-		mnemonic = tempBuf;
-		*usAddress += 1;
-		usRet = 1;
-	}
+	unsigned short  usRet = 1;
+	mnemonic = abTransMnemonic;
 	return usRet;
 }
 
-unsigned short CParamTransaction::SetMnemonicValue (unsigned short usAddress, const CString &mnemonic)
+unsigned short CParamTransaction::SetMnemonicValue (const CString &mnemonic)
 {
-	WCHAR  tempBuf[PARA_TRANSMNEMO_LEN + 1] = {0};
-
-	wcsncpy (tempBuf, mnemonic, PARA_TRANSMNEMO_LEN);
-	memcpy (abTransMnemonic[usAddress], tempBuf, PARA_TRANSMNEMO_LEN * sizeof(WCHAR));
+	memset (abTransMnemonic, 0, sizeof(abTransMnemonic));
+	wcsncpy (abTransMnemonic, mnemonic, PARA_TRANSMNEMO_LEN);
 	return 0;
 }
 
@@ -115,18 +111,16 @@ unsigned short CParamTransaction::GetPromptText (unsigned short usAddress, LPWST
 	unsigned short usRet = 0;
 
 	if (usAddress < MAX_TRANSM_NO) {
-		LoadString (GetModuleHandle(NULL), usAddress + IDS_MNEMONIC_TRANSM_NO + 1, mnemonic, 68);
+		LoadString (GetModuleHandle(NULL), usAddress + IDS_MNEMONIC_TRANSM_NO, mnemonic, 68);
 		usRet = 1;
 	}
 
 	return usRet;
 }
 
-CParamMnemonic::sizes CParamTransaction::GetMnemonicSizes (void)
+CParamMnemonic::MnemoSizes CParamTransaction::GetMnemonicSizes (void)
 {
-	CParamMnemonic::sizes n = {MAX_TRANSM_NO, PARA_TRANSMNEMO_LEN};
-
-	return n;
+	return 	CParamMnemonic::MnemoSizes (CLASS_PARALEADTHRU, MAX_TRANSM_NO, PARA_LEADTHRU_LEN, IDS_MNEMONIC_TRANSM_NO);
 }
 
 
@@ -141,29 +135,38 @@ CParamLeadThru::~CParamLeadThru(void)
 {
 }
 
+
+short CParamLeadThru::PullParam (unsigned short usAddress)
+{
+	USHORT  usReadLen = PARA_LEADTHRU_LEN * sizeof(abTransMnemonic[0]);
+	USHORT  usActualRead = 0;
+	USHORT  usReadOffset = (usAddress - 1) * usReadLen;
+
+	m_sLastError = ::CliParaAllRead (CLASS_PARALEADTHRU, (UCHAR *)(&abTransMnemonic[0]), usReadLen, usReadOffset, &usActualRead);
+	m_bDataRead = 1;
+	return m_sLastError;
+}
+
 short CParamLeadThru::PullParam (void)
 {
-	USHORT  usReadOffset = 0;
+	return PullParam (1);
+}
+
+
+short CParamLeadThru::PushParam (unsigned short usAddress)
+{
+	USHORT  usReadOffset = (usAddress - 1) * PARA_LEADTHRU_LEN;
+	USHORT  usReadLen = PARA_LEADTHRU_LEN * sizeof(abTransMnemonic[0]);
 	USHORT  usActualRead = 0;
 
-	for (int iLoop = 0; iLoop < MAX_LEAD_NO; iLoop++) {
-		m_sLastError = ::CliParaAllRead (CLASS_PARALEADTHRU, (UCHAR *)(&abTransMnemonic[iLoop][0]), sizeof( abTransMnemonic[iLoop] ), usReadOffset, &usActualRead);
-		usReadOffset += usActualRead;
-	}
+	m_sLastError = ::CliParaAllWrite (CLASS_PARALEADTHRU, (UCHAR *)(&abTransMnemonic[0]), usReadLen, usReadOffset, &usActualRead);
 	m_bDataRead = 1;
 	return m_sLastError;
 }
 
 short CParamLeadThru::PushParam (void)
 {
-	USHORT  usWriteOffset = 0;
-	USHORT  usActualWrite = 0;
-
-	for (int iLoop = 0; iLoop < MAX_LEAD_NO; iLoop++) {
-		m_sLastError = ::CliParaAllWrite (CLASS_PARALEADTHRU, (UCHAR *)(&abTransMnemonic[iLoop][0]), sizeof( abTransMnemonic[iLoop] ), usWriteOffset, &usActualWrite);
-		usWriteOffset += usActualWrite;
-	}
-	return m_sLastError;
+	return PushParam (1);
 }
 
 void CParamLeadThru::ClearParam (void)
@@ -183,9 +186,7 @@ void CParamLeadThru::Serialize (CArchive &ar)
 		ar << nMax;
 		ar << nLen;
 		for (int i = 0; i < nMax; i++) {
-			for (int j = 0; j < nLen; j++) {
-				ar << abTransMnemonic[i][j];
-			}
+			ar << abTransMnemonic[i];
 		}
 	} else {
 		unsigned long ulSignature = 0;
@@ -200,33 +201,22 @@ void CParamLeadThru::Serialize (CArchive &ar)
 		TRACE2(" Serialize Leadthru - Read - nMax %d nLen %d\n", nMax, nLen);
 
 		for (int i = 0; i < nMax; i++) {
-			for (int j = 0; j < nLen; j++) {
-				ar >> abTransMnemonic[i][j];
-			}
+			ar >> abTransMnemonic[i];
 		}
 	}
 }
 
-unsigned short CParamLeadThru::GetMnemonicValue (unsigned short *usAddress, CString &mnemonic)
+unsigned short CParamLeadThru::GetMnemonicValue (CString &mnemonic)
 {
-	unsigned short usRet = 0;
-	WCHAR  tempBuf[PARA_LEADTHRU_LEN + 1] = {0};
-
-	if (*usAddress < MAX_LEAD_NO) {
-		memcpy (tempBuf, abTransMnemonic[*usAddress], PARA_LEADTHRU_LEN * sizeof(WCHAR));
-		mnemonic = tempBuf;
-		*usAddress += 1;
-		usRet = 1;
-	}
+	unsigned short usRet = 1;
+	mnemonic = abTransMnemonic;
 	return usRet;
 }
 
-unsigned short CParamLeadThru::SetMnemonicValue (unsigned short usAddress, const CString &mnemonic)
+unsigned short CParamLeadThru::SetMnemonicValue (const CString &mnemonic)
 {
-	WCHAR  tempBuf[PARA_LEADTHRU_LEN + 1] = {0};
-
-	wcsncpy (tempBuf, mnemonic, PARA_LEADTHRU_LEN);
-	memcpy (abTransMnemonic[usAddress], tempBuf, PARA_LEADTHRU_LEN * sizeof(WCHAR));
+	memset (abTransMnemonic, 0, sizeof(abTransMnemonic));
+	wcsncpy (abTransMnemonic, mnemonic, PARA_LEADTHRU_LEN);
 	return 0;
 }
 
@@ -235,16 +225,14 @@ unsigned short CParamLeadThru::GetPromptText (unsigned short usAddress, LPWSTR m
 	unsigned short usRet = 0;
 
 	if (usAddress < MAX_LEAD_NO) {
-		LoadString (GetModuleHandle(NULL), usAddress + IDS_MNEMONIC_LEADTHRU + 1, mnemonic, 68);
+		LoadString (GetModuleHandle(NULL), usAddress + IDS_MNEMONIC_LEADTHRU, mnemonic, 68);
 		usRet = 1;
 	}
 
 	return usRet;
 }
 
-CParamMnemonic::sizes CParamLeadThru::GetMnemonicSizes (void)
+CParamMnemonic::MnemoSizes CParamLeadThru::GetMnemonicSizes (void)
 {
-	CParamMnemonic::sizes n = {MAX_TRANSM_NO, PARA_LEADTHRU_LEN};
-
-	return n;
+	return 	CParamMnemonic::MnemoSizes (CLASS_PARALEADTHRU, MAX_LEAD_NO, PARA_LEADTHRU_LEN, IDS_MNEMONIC_LEADTHRU);
 }

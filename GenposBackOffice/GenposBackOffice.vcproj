@@ -220,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ProgressWnd.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -363,6 +367,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ListerMnemonic.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\ListerPlu.cpp"
 					>
 				</File>
@@ -403,6 +411,10 @@
 			</File>
 			<File
 				RelativePath=".\MainFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ProgressWnd.h"
 				>
 			</File>
 			<File
@@ -554,6 +566,10 @@
 				</File>
 				<File
 					RelativePath=".\ListerCoupon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ListerMnemonic.h"
 					>
 				</File>
 				<File

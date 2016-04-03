@@ -8,6 +8,7 @@
 #include "stdafx.h"
 #include "GenposBackOffice.h"
 #include "ParamPlu.h"
+#include "ParamMajorDept.h"
 #include "ListerCashier.h"
 #include "LanThread.h"
 
@@ -342,6 +343,63 @@ static int  RetrieveProvisioningData_Cashier (sqlite3 *db)
 		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
 
 		sStatus = cashierList.GetNextListItem();
+	}
+
+	// we are done with the prepared statement so release all the resources for it.
+	rc = sqlite3_finalize (insertStmt);
+	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+
+	return 1;
+}
+
+
+static int  RetrieveProvisioningData_Department (sqlite3 *db)
+{
+	int   rc;
+	char  *zErrMsg = 0;
+	char  *aszSqlDrop = "drop table DeptTable;";
+	// we use the PLU number as the key and the complete PLU data record from GenPOS
+	// is stored as a BLOB.
+	char  *aszSqlCreate = "create table DeptTable (akey int primary key not null, avalue blob);";
+	char  *aszSqlInsert = "insert into DeptTable values (?, ?);";
+
+	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+
+	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+
+	// read from GenPOS and keep reading PLUs untile there are no more.
+	// for each PLU returned by GenPOS we will create a database record.
+	sqlite3_stmt  *insertStmt;
+	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
+	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
+
+//	CListerCashier  cashierList;
+//	cashierList.RetrieveList();
+
+	CParamMinorDept  minorDept;
+
+//	short sStatus = cashierList.GetFirstListItem();
+	short sStatus = 0;
+	while ( sStatus >= 0) {
+		// bind the key to the first parameter of the insert, the key value
+		rc = sqlite3_bind_int (insertStmt, 1, minorDept.m_paraDept.usDeptNo);
+		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
+
+		// bind the PLU data to the second parameter of the insert, the data value
+		rc = sqlite3_bind_blob (insertStmt, 2, &minorDept.m_paraDept, sizeof(minorDept.m_paraDept), SQLITE_STATIC);
+		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
+
+		// perform the actual insert with the modified prepared statement
+		rc = sqlite3_step (insertStmt);
+		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
+
+		// reset the prepared statement so that we do our next set of binds.
+		rc = sqlite3_reset (insertStmt);
+		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
+
+//		sStatus = cashierList.GetNextListItem();
 	}
 
 	// we are done with the prepared statement so release all the resources for it.

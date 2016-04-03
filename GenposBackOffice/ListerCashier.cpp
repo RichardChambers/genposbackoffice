@@ -28,6 +28,20 @@ short   CListerCashier::RetrieveList (void)
 	return m_sLastError;
 }
 
+short   CListerCashier::RetrieveList (sqlite3 *db)
+{
+	m_sLastError = ::SerCasAllIdRead( sizeof(CashierNoList), CashierNoList );
+	if (m_sLastError > 0) {
+		CashierDataCount = m_sLastError;
+		CashierTotalCount = m_sLastError;
+	} else {
+		CashierDataCount = 0;
+		CashierTotalCount = 0;
+	}
+
+	return m_sLastError;
+}
+
 short   CListerCashier::GetCurrentListItem (void)
 {
 	short  sRet = -1;

@@ -12,6 +12,7 @@
 #include "ListerCashier.h"
 #include "ListerPlu.h"
 #include "ListerCoupon.h"
+#include "ListerMnemonic.h"
 #include "LanThread.h"
 
 class CLanConnectionData
@@ -59,8 +60,8 @@ public:
 	CTotalCashier  totalCashierCurDay;
 	CParamFlexMem  paramFlexMem;
 	CParamMdc      paramMdc;
-	CParamTransaction  paramTrans;
-	CParamLeadThru     paramLeadThru;
+	CListerTransaction  listTrans;
+	CListerLeadThru     listLeadThru;
 
 	CListerCashier  listCashier;
 	CListerPlu      listPlu;
@@ -113,6 +114,7 @@ public:
 	afx_msg void OnEditCashieredit();
 	afx_msg void OnEditCouponedit();
 	afx_msg void OnEditPluedit();
-	afx_msg void OnEditMnemonicedit();
+	afx_msg void OnEditTransMnemonicedit();
+	afx_msg void OnEditLeadThruMnemonicedit();
 	afx_msg void OnEditTenderkeyedit();
 };

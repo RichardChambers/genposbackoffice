@@ -1,5 +1,18 @@
-// ProgressWnd.cpp : implementation file
+/*
+ * Copyright Richard Chambers, 2016
+*/
+
+// ProgressWnd.cpp : implementation file for CProgressWnd
 //
+// This class implements a progress control with its own animation
+// in order to provide feedback to the user that some action is in
+// progress which will take some time.
+//
+// This control is primarily used by the LAN functionality when performing a
+// time consuming task such as transferring provisioning data from/to a terminal.
+//
+// The progress control animations is controlled by sending the control a user
+// defined message along with any operands needed.
 
 #include "stdafx.h"
 #include "GenposBackOffice.h"
@@ -7,36 +20,38 @@
 
 
 // CProgressThread
+// Thread that is used to modify the appearance of the progress control
+// when animation is started. The thread periodically modifies the appearance
+// of the control in order to inform the user an operation is in progress.
 
-	class CProgressThread : public CWinThread
-	{
-		DECLARE_DYNCREATE(CProgressThread)
+class CProgressThread : public CWinThread
+{
+	DECLARE_DYNCREATE(CProgressThread)
 
-	protected:
-		CProgressThread();           // protected constructor used by dynamic creation
-		virtual ~CProgressThread();
+protected:
+	CProgressThread();           // protected constructor used by dynamic creation
+	virtual ~CProgressThread();
 
-	public:
-		struct ProgressBlock {
-			int  m_LastCommand;
-			int  m_InProgress;
-			CWnd *m_CWnd;
-		};
-
-		ProgressBlock m_ProgressBlock;
-
-	public:
-		virtual BOOL InitInstance();
-		virtual int ExitInstance();
-		virtual int Run();
-
-		afx_msg void OnProgressStart(WPARAM wParam,LPARAM lParam);
-		afx_msg void OnProgressStop(WPARAM wParam,LPARAM lParam);
-
-	protected:
-
-		DECLARE_MESSAGE_MAP()
+public:
+	struct ProgressBlock {
+		int  m_LastCommand;
+		int  m_InProgress;
+		CWnd *m_CWnd;
 	};
+
+	ProgressBlock m_ProgressBlock;
+
+public:
+	virtual BOOL InitInstance();
+	virtual int ExitInstance();
+	virtual int Run();
+
+	afx_msg void OnProgressStart(WPARAM wParam,LPARAM lParam);
+	afx_msg void OnProgressStop(WPARAM wParam,LPARAM lParam);
+
+protected:
+	DECLARE_MESSAGE_MAP()
+};
 
 
 IMPLEMENT_DYNCREATE(CProgressThread, CWinThread)

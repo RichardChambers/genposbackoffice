@@ -13,6 +13,8 @@
 
 #pragma once
 
+#include <sqlite3.h>
+
 #include "R20_PC2172.h"
 
 #include "a_globals.h"
@@ -24,6 +26,7 @@ public:
 	virtual ~CLister(void);
 
 	virtual  short    RetrieveList (void) = 0;
+	virtual  short    RetrieveList (sqlite3 *db) = 0;
 	virtual  CLister  *getListObjectPtr (void) = 0;
 
 	// functions for iterating over the list of parameter objects of a particular type.

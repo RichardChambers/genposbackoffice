@@ -55,6 +55,7 @@ public:
 
 	CTotal(CTotal::TtlClass major = 0, CTotal::TtlType type = CTotal::TtlTypeNone);
 	virtual ~CTotal(void);
+
 	virtual TtlClassStruct *getTotalStructPtr (void) = 0;
 	virtual short getTotalStructLine (short &sPos, CString &csLine, TtlLineType lineType) = 0;
 	virtual short getTotalStructLine (int idsPos, CString &csLine, CTotal::TtlLineType lineType) = 0;

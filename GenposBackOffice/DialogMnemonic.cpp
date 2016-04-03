@@ -19,7 +19,7 @@ CDialogMnemonic::CDialogMnemonic(CWnd* pParent /*=NULL*/)
 
 }
 
-CDialogMnemonic::CDialogMnemonic(CParamMnemonic *para, CWnd* pParent /*=NULL*/)
+CDialogMnemonic::CDialogMnemonic(CListerMnemonic *para, CWnd* pParent /*=NULL*/)
 	: CDialog(CDialogMnemonic::IDD, pParent), m_MnemonicList(para)
 {
 
@@ -57,10 +57,10 @@ void CDialogMnemonic::DoDataExchange(CDataExchange* pDX)
 
 		WCHAR   wcsPrompt[128];
 		CString csMnemonic;
-		unsigned short usAddress = 0;
+		unsigned short usAddress = 1;
 
-		for (CParamMnemonic *p = m_MnemonicList; p && p->GetPromptText (usAddress, wcsPrompt); ) {
-			p->GetMnemonicValue (&usAddress, csMnemonic);
+		for (CListerMnemonic *p = m_MnemonicList; p && p->GetPromptText (usAddress, wcsPrompt); ) {
+			p->GetMnemonicValue (usAddress, csMnemonic);
 			lvItem.mask = LVIF_TEXT;
 			lvItem.iItem = 0;
 			lvItem.iSubItem = 0;
@@ -68,6 +68,7 @@ void CDialogMnemonic::DoDataExchange(CDataExchange* pDX)
 			nItem = m_listctrl.InsertItem(&lvItem);
 
 			m_listctrl.SetItemText(nItem, 1, csMnemonic);
+			usAddress++;
 		}
 	}
 }

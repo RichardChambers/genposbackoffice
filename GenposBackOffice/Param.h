@@ -32,6 +32,9 @@ public:
 	virtual short PullParam (void) = 0;
 	virtual short PushParam (void) = 0;
 	virtual void ClearParam (void) = 0;
+	virtual char * GetSqliteKey (int i) = 0;
+	virtual void * GetSqliteBlob (int i) = 0;
+	virtual int  GetSqliteBlobSize (int i) = 0;
 
 public:
 	short     m_sLastError;

@@ -6,13 +6,16 @@ class CParamCashier : public CParam
 public:
 	CParamCashier(void);
 	CParamCashier(CashierId cashierNo);
-	virtual ~CParamCashier(void);
+	~CParamCashier(void);
 
-	virtual short PullParam (void);
-	virtual short PullParam (CashierId cashierNo);
-	virtual short PushParam (void);
-	virtual void ClearParam(void) { memset (&m_paraCashier, 0, sizeof(m_paraCashier)); memset (&m_jobETK, 0, sizeof(m_jobETK)); m_bDataRead = 0; }
-	virtual CashierId setParamCashier (CashierId cashierNo) { CashierId oldCashier = m_paraCashier.ulCashierNo; m_paraCashier.ulCashierNo = cashierNo; return oldCashier; }
+	short PullParam (void);
+	short PullParam (CashierId cashierNo);
+	short PushParam (void);
+	void ClearParam(void) { memset (&m_paraCashier, 0, sizeof(m_paraCashier)); memset (&m_jobETK, 0, sizeof(m_jobETK)); m_bDataRead = 0; }
+	CashierId setParamCashier (CashierId cashierNo) { CashierId oldCashier = m_paraCashier.ulCashierNo; m_paraCashier.ulCashierNo = cashierNo; return oldCashier; }
+	char * GetSqliteKey (int i) { return NULL; }
+	void * GetSqliteBlob (int i) { return NULL; }
+	int  GetSqliteBlobSize (int i) { return 0; }
 
 public:
 	short    m_sLastErrorCas;

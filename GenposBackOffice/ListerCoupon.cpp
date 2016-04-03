@@ -24,6 +24,15 @@ short   CListerCoupon::RetrieveList (void)
 	return m_sLastError;
 }
 
+short   CListerCoupon::RetrieveList (sqlite3 *db)
+{
+	m_sLastError = 1;
+	CouponTotalIndex = CouponDataIndex = 0;
+	CouponTotalCount = CouponDataCount = 1;
+
+	return m_sLastError;
+}
+
 short   CListerCoupon::GetCurrentListItem (void)
 {
 	short  sRet = -1;

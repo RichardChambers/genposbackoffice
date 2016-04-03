@@ -7,18 +7,19 @@ class CListerCashier : public CLister
 {
 public:
 	CListerCashier(void);
-	virtual ~CListerCashier(void);
+	~CListerCashier(void);
 
-	virtual  short   RetrieveList (void);
-	virtual  CLister *getListObjectPtr (void) { return this; }
-	virtual  short   GetCurrentListItem (void);
-	virtual  short   GetNextListItem (void);
-	virtual  short   GetFirstListItem (void);
-	virtual  short    GetCurrentListTotal(void);
-	virtual  short    GetNextListTotal (void);
-	virtual  short    GetFirstListTotal (void);
-	virtual  short    GetCurrentListItemTotal (void);
-	virtual  short    GetCurrentListTotalItem (void);
+	short   RetrieveList (void);
+	short   RetrieveList (sqlite3 *db);
+	CLister *getListObjectPtr (void) { return this; }
+	short   GetCurrentListItem (void);
+	short   GetNextListItem (void);
+	short   GetFirstListItem (void);
+	short    GetCurrentListTotal(void);
+	short    GetNextListTotal (void);
+	short    GetFirstListTotal (void);
+	short    GetCurrentListItemTotal (void);
+	short    GetCurrentListTotalItem (void);
 
 	short  BuildCashierArray (void);
 

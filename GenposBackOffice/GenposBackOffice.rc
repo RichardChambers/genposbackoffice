@@ -157,7 +157,10 @@ BEGIN
         MENUITEM "Cashier Edit ...",            ID_EDIT_CASHIEREDIT
         MENUITEM "Coupon Edit ...",             ID_EDIT_COUPONEDIT
         MENUITEM "PLU Edit ...",                ID_EDIT_PLUEDIT
-        MENUITEM "Mnemonic Edit ...",           ID_EDIT_MNEMONICEDIT
+        MENUITEM SEPARATOR
+        MENUITEM "Transaction Mnemonic Edit ...",     ID_EDIT_TRANSMNEMONICEDIT
+        MENUITEM "Lead Thru Mnemonic Edit ...",       ID_EDIT_LEADTHRUMNEMONICEDIT
+        MENUITEM SEPARATOR
         MENUITEM "Tender Key Edit ...",         ID_EDIT_TENDERKEYEDIT
     END
     POPUP "&Help"
@@ -665,9 +668,9 @@ BEGIN
     ID_EDIT_COUPONEDIT      "Edit coupon provisioning data"
     ID_EDIT_PLUEDIT         "Edit PLU provisioning data"
     ID_TERMINAL_EJRETRIEVE  "Retrieve Electronic Journal operational data"
-    ID_TERMINAL_EJRETRIEVERESET 
-                            "Retrieve with reset Electronic Journal operational data"
-    ID_EDIT_MNEMONICEDIT    "Edit Mnemonic data"
+    ID_TERMINAL_EJRETRIEVERESET   "Retrieve with reset Electronic Journal operational data"
+    ID_EDIT_TRANSMNEMONICEDIT     "Edit Transaction Mnemonic data"
+    ID_EDIT_LEADTHRUMNEMONICEDIT  "Edit Lead ThruMnemonic data"
     ID_EDIT_TENDERKEYEDIT   "Edit tender key settings"
 END
 

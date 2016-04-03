@@ -125,7 +125,8 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, CDocument)
 	ON_COMMAND(ID_EDIT_CASHIEREDIT, &CGenposBackOfficeDoc::OnEditCashieredit)
 	ON_COMMAND(ID_EDIT_COUPONEDIT, &CGenposBackOfficeDoc::OnEditCouponedit)
 	ON_COMMAND(ID_EDIT_PLUEDIT, &CGenposBackOfficeDoc::OnEditPluedit)
-	ON_COMMAND(ID_EDIT_MNEMONICEDIT, &CGenposBackOfficeDoc::OnEditMnemonicedit)
+	ON_COMMAND(ID_EDIT_TRANSMNEMONICEDIT, &CGenposBackOfficeDoc::OnEditTransMnemonicedit)
+	ON_COMMAND(ID_EDIT_LEADTHRUMNEMONICEDIT, &CGenposBackOfficeDoc::OnEditLeadThruMnemonicedit)
 	ON_COMMAND(ID_EDIT_TENDERKEYEDIT, &CGenposBackOfficeDoc::OnEditTenderkeyedit)
 END_MESSAGE_MAP()
 
@@ -509,8 +510,9 @@ void CGenposBackOfficeDoc::OnTerminalSettingsretrieve()
 		paramFlexMem.PullParam ();
 		paramFlexMem.SummaryToText (m_csHostFlexMem);
 		paramMdc.PullParam ();
-		paramTrans.PullParam ();
-		paramLeadThru.PullParam ();
+
+		listTrans.RetrieveList ();
+		listLeadThru.RetrieveList ();
 
 		listPlu.RetrieveList ();
 		listCoupon.RetrieveList ();
@@ -542,13 +544,17 @@ void CGenposBackOfficeDoc::OnEditPluedit()
 	dialogPlu.DoModal ();
 }
 
-void CGenposBackOfficeDoc::OnEditMnemonicedit()
+void CGenposBackOfficeDoc::OnEditTransMnemonicedit()
 {
-	CDialogMnemonic dialogMnemonic(&paramTrans);
-//	dialogMnemonic.SetListPlu (&listPlu);
+	CDialogMnemonic dialogMnemonic(&listTrans);
 	dialogMnemonic.DoModal ();
 }
 
+void CGenposBackOfficeDoc::OnEditLeadThruMnemonicedit()
+{
+	CDialogMnemonic dialogMnemonic(&listLeadThru);
+	dialogMnemonic.DoModal ();
+}
 void CGenposBackOfficeDoc::OnEditTenderkeyedit()
 {
 	if (m_bLanOpen && m_bLanLogInto) {
