@@ -463,10 +463,10 @@ BOOL CGenposBackOfficeDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	// folder where the file is located as that is the root folder for where all
 	// of the data files are stored.
 	m_currentRootFolder = lpszPathName;
-	const TCHAR  *tcsText = lpszPathName + _tcslen(lpszPathName);
+	const wchar_t  *tcsText = lpszPathName + wcslen (lpszPathName);
 
 	for ( ; tcsText >= lpszPathName; ) {
-		if (*tcsText == _T('\\') || *tcsText == _T('/')) {
+		if (*tcsText == L'\\' || *tcsText == L'/') {
 			break;
 		}
 		tcsText--;

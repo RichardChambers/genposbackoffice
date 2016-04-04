@@ -31,13 +31,13 @@ short CParamFlexMem::PushParam (void)
 
 short CParamFlexMem::SummaryToText (CString &csMemo)
 {
-	TCHAR *pFormat = _T("Guest Check System:\n\t%s \nMax # of Guest Checks\t\t\t%8d\t \n\tMax # of Items in G.C.\t\t%8d\t \n\tMax # of Items in Transaction\t%8d\n \nMax # of Departments\t\t\t%8d \n\tPTD - %d \nMax # of PLU\t\t\t\t%8d \n\tPTD - %d \nMax # of Operators\t\t\t%8d \n\tPTD - %d \nMax # of Coupons\t\t\t%8d \n\tPTD - %d \nMax # of EJ\t\t\t\t%8d \n\tO/R - %d \nMax # of Employees\t\t\t%8d \nMax # of Control Strings\t\t\t%8d \nMax # of PPI\t\t\t\t%8d \nProgrammable Report Size\t\t%8d");
-	TCHAR *szGCSys, *pGcSystem [] = {
-		_T("Pre-GuestCheck Buffering"),
-		_T("Pre-GuestCheck UnBuffering"),
-		_T("Post GuestCheck Buffering"),
-		_T("Store/Recall Buffering"),
-		_T("")
+	wchar_t *pFormat = L"Guest Check System:\n\t%s \nMax # of Guest Checks\t\t\t%8d\t \n\tMax # of Items in G.C.\t\t%8d\t \n\tMax # of Items in Transaction\t%8d\n \nMax # of Departments\t\t\t%8d \n\tPTD - %d \nMax # of PLU\t\t\t\t%8d \n\tPTD - %d \nMax # of Operators\t\t\t%8d \n\tPTD - %d \nMax # of Coupons\t\t\t%8d \n\tPTD - %d \nMax # of EJ\t\t\t\t%8d \n\tO/R - %d \nMax # of Employees\t\t\t%8d \nMax # of Control Strings\t\t\t%8d \nMax # of PPI\t\t\t\t%8d \nProgrammable Report Size\t\t%8d";
+	wchar_t *szGCSys, *pGcSystem [] = {
+		L"Pre-GuestCheck Buffering",
+		L"Pre-GuestCheck UnBuffering",
+		L"Post GuestCheck Buffering",
+		L"Store/Recall Buffering",
+		L""
 	};
 
 	int  nGcSysMax = sizeof(pGcSystem)/sizeof(pGcSystem[0]);

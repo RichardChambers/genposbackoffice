@@ -26,8 +26,8 @@ CDialogEditPlu::CDialogEditPlu(CParamPlu &myPlu)
 	: CDialog(CDialogEditPlu::IDD, NULL)
 {
 	m_paramPlu = myPlu;
-	TCHAR  tcsMnemonic[21] = {0};
-	_tcsncpy (tcsMnemonic, m_paramPlu.m_paraPlu[0].ParaPlu.auchPluName, 20);
+	wchar_t  tcsMnemonic[OP_PLU_NAME_SIZE + 1] = {0};
+	wcsncpy (tcsMnemonic, m_paramPlu.m_paraPlu[0].ParaPlu.auchPluName, OP_PLU_NAME_SIZE);
 	m_displayMnemonic = tcsMnemonic;
 
 	m_TabItem[1].mask = TCIF_TEXT;
@@ -76,12 +76,12 @@ void CDialogEditPlu::DoDataExchange(CDataExchange* pDX)
 
 #if 0
 	if (pDX->m_bSaveAndValidate) {
-		_tcsncpy (m_paramPlu.m_paraPlu[0].ParaPlu.auchPluName, m_displayMnemonic, 20);
+		wcsncpy (m_paramPlu.m_paraPlu[0].ParaPlu.auchPluName, m_displayMnemonic, OP_PLU_NAME_SIZE);
 	}
 #else
 	//  blocking out the edit dialog still needs work.
 	if (pDX->m_bSaveAndValidate) {
-		_tcsncpy (m_paramPlu.m_paraPlu[0].ParaPlu.auchPluName, m_displayMnemonic, 20);
+		wcsncpy (m_paramPlu.m_paraPlu[0].ParaPlu.auchPluName, m_displayMnemonic, OP_PLU_NAME_SIZE);
 		for (int i = 0; i < sizeof(m_TabItemOneStatus)/sizeof(m_TabItemOneStatus[0]); i++) {
 			int iTab = m_TabItemOneStatus[i].sTabItem;
 			int iDlg = m_TabItemOneStatus[i].iDlgItem;

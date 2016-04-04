@@ -33,7 +33,7 @@ CGenposBackOfficeView::CGenposBackOfficeView() : m_firstTextLine (10, 50, 350, 7
 	// request a 12-pixel-height font
 	// request a face name "Arial"
 	lf.lfHeight = 18;
-	_tcsncpy_s(lf.lfFaceName, LF_FACESIZE, _T("Arial"), 7);
+	wcsncpy (lf.lfFaceName, L"Arial", 7);
 
 	// create the font 
 	VERIFY(m_ViewFont.CreateFontIndirect(&lf));

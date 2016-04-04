@@ -202,7 +202,8 @@ bool CLanThread::ElectronicJournalRead (char *pFilePath, HWND hWndProgress)
 	ElectronicJournalRecord  EJ_RecData;
 
 	if (pFilePath) {
-		FILE *fp = fopen (pFilePath, "w+");
+		FILE *fp;
+		fopen_s (&fp, pFilePath, "w+");
 		while (EJ_RecData.ReadRecord()) {
 			usCount++;
 			int iEnd = (EJ_RecData.m_ejtHeader.usCVLI - sizeof(EJT_HEADER)) / 2;
@@ -316,7 +317,7 @@ static int  RetrieveProvisioningData_Cashier (sqlite3 *db)
 		char       xKey[14] = {0};
 
 		// convert the PLU number, stored as wchar_t, to char to create the table key.
-		sprintf (xKey, "%10.10d", cashierList.CashierData.m_paraCashier.ulCashierNo);
+		sprintf_s (xKey, 14, "%10.10d", cashierList.CashierData.m_paraCashier.ulCashierNo);
 		dataBlob.m_paraCashier = cashierList.CashierData.m_paraCashier;
 		dataBlob.m_jobETK = cashierList.CashierData.m_jobETK;
 
@@ -447,7 +448,8 @@ bool CLanThread::RetrieveProvisioningData (char *pFilePath, HWND hWndProgress)
 	sqlite3 *db;
 
 	// truncate the file.
-	FILE *fp = fopen (pFilePath, "w");
+	FILE *fp;
+	fopen_s (&fp, pFilePath, "w");
 	fclose (fp);
 
 	int rc = sqlite3_open(pFilePath, &db);
