@@ -34,8 +34,10 @@ public:
 	CListerTransaction(void);
 	~CListerTransaction(void);
 
-	 short    RetrieveList (void);
-	 short    RetrieveList (sqlite3 *db);
+	 short    RetrieveList (void);                     // build list by retrieving from GenPOS
+	 short    RetrieveList (sqlite3 *db);              // build list by retrieving from the specified database
+	 short    RetrieveAndStoreAndList (sqlite3 *db);   // retrieve from GenPOS and store into the specified database and build list
+
 	 CLister *getListObjectPtr (void) { return this; }
 	 short    GetCurrentListItem (void);
 	 short    GetNextListItem (void);
@@ -50,6 +52,17 @@ public:
 	unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic);
 
 	unsigned short GetPromptText (unsigned short usAddress, LPWSTR mnemonic);
+
+
+	static short    RetrieveAndStoreOnly (sqlite3 *db);   // retrieve from GenPOS and store into the specified database only
+
+public:
+	static char const * const aszSqlDrop;
+	static char const * const aszSqlCreate;
+	static char const * const aszSqlInsert;
+	static char const * const aszSqlUpdate;
+	static char const * const aszSqlDelete;
+	static char const * const aszSqlSelect;
 
 private:
 	CParamTransaction abTransMnemonic[MAX_TRANSM_NO];
@@ -78,6 +91,17 @@ public:
 	unsigned short SetMnemonicValue (unsigned short usAddress, const CString &mnemonic);
 
 	unsigned short GetPromptText (unsigned short usAddress, LPWSTR mnemonic);
+
+	// class static operations directly on SQLite3 database
+	static short  RetrieveAndStoreOnly (sqlite3 *db);   // retrieve from GenPOS and store into the specified database only
+
+public:
+	static char const * const aszSqlDrop;
+	static char const * const aszSqlCreate;
+	static char const * const aszSqlInsert;
+	static char const * const aszSqlUpdate;
+	static char const * const aszSqlDelete;
+	static char const * const aszSqlSelect;
 
 private:
 	CParamLeadThru abTransMnemonic[MAX_LEAD_NO];

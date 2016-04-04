@@ -1,6 +1,13 @@
 #include "StdAfx.h"
 #include "ListerCashier.h"
 
+char const * const CListerCashier::aszSqlDrop = "drop table CashierTable;";
+char const * const CListerCashier::aszSqlCreate = "create table CashierTable (akey character(10) primary key not null, avalue blob);";
+char const * const CListerCashier::aszSqlInsert = "insert into CashierTable values (?1, ?2);";
+char const * const CListerCashier::aszSqlUpdate = "update CashierTable set avalue = ?2 where akey == ?1;";
+char const * const CListerCashier::aszSqlDelete = "delete from CashierTable where akey == ?1;";
+char const * const CListerCashier::aszSqlSelect = "select avalue from CashierTable where akey == ?1;";
+
 CListerCashier::CListerCashier(void) :
 	bCashierData(FALSE),
 	CashierDataCount(0), CashierDataIndex(0),

@@ -24,6 +24,14 @@ public:
 	short  BuildCashierArray (void);
 
 public:
+	static char const * const aszSqlDrop;
+	static char const * const aszSqlCreate;
+	static char const * const aszSqlInsert;
+	static char const * const aszSqlUpdate;
+	static char const * const aszSqlDelete;
+	static char const * const aszSqlSelect;
+
+public:
 	BOOL      bCashierData;
 	short     CashierDataCount;
 	short     CashierDataIndex;

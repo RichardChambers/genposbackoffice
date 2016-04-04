@@ -1,6 +1,14 @@
 #include "StdAfx.h"
 #include "ListerCoupon.h"
 
+char const * const CListerCoupon::aszSqlDrop = "drop table CouponTable;";
+char const * const CListerCoupon::aszSqlCreate = "create table CouponTable (akey int primary key not null, avalue blob);";
+char const * const CListerCoupon::aszSqlInsert = "insert into CouponTable values (?1, ?2);";
+char const * const CListerCoupon::aszSqlUpdate = "update CouponTable set avalue = ?2 where akey == ?1;";
+char const * const CListerCoupon::aszSqlDelete = "delete from CouponTable where akey == ?1;";
+char const * const CListerCoupon::aszSqlSelect = "select avalue from CouponTable where akey == ?1;";
+
+
 CListerCoupon::CListerCoupon(void) :
 	bCouponData(FALSE),
 	CouponDataCount(0), CouponDataIndex(0),

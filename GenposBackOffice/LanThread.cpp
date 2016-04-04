@@ -7,9 +7,11 @@
 
 #include "stdafx.h"
 #include "GenposBackOffice.h"
-#include "ParamPlu.h"
+#include "ListerPlu.h"
+#include "ListerCoupon.h"
 #include "ParamMajorDept.h"
 #include "ListerCashier.h"
+#include "ListerMnemonic.h"
 #include "LanThread.h"
 
 #include <memory.h>
@@ -236,23 +238,20 @@ static int  RetrieveProvisioningData_Plu (sqlite3 *db)
 {
 	int   rc;
 	char  *zErrMsg = 0;
-	char  *aszSqlDrop = "drop table PluTable;";
 	// we use the PLU number as the key and the complete PLU data record from GenPOS
 	// is stored as a BLOB.
-	char  *aszSqlCreate = "create table PluTable (akey character(14) primary key not null, avalue blob);";
-	char  *aszSqlInsert = "insert into PluTable values (?, ?);";
 
-	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec()  \"%s\" %d\n", aszSqlDrop, rc);
+	rc = sqlite3_exec(db, CListerPlu::aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec()  \"%s\" %d\n", CListerPlu::aszSqlDrop, rc);
 
-	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec()  \"%s\" %d\n", aszSqlCreate, rc);
+	rc = sqlite3_exec(db, CListerPlu::aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec()  \"%s\" %d\n", CListerPlu::aszSqlCreate, rc);
 
 	// read from GenPOS and keep reading PLUs untile there are no more.
 	// for each PLU returned by GenPOS we will create a database record.
 	sqlite3_stmt  *insertStmt;
-	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare()  \"%s\" %d\n", aszSqlInsert, rc);
+	rc = sqlite3_prepare(db, CListerPlu::aszSqlInsert, -1, &insertStmt, NULL);
+	TRACE2("   sqlite3_prepare()  \"%s\" %d\n", CListerPlu::aszSqlInsert, rc);
 
 	CParamPlu  PluData;
 	bool  bStart = true;
@@ -295,23 +294,18 @@ static int  RetrieveProvisioningData_Cashier (sqlite3 *db)
 {
 	int   rc;
 	char  *zErrMsg = 0;
-	char  *aszSqlDrop = "drop table CashierTable;";
-	// we use the PLU number as the key and the complete PLU data record from GenPOS
-	// is stored as a BLOB.
-	char  *aszSqlCreate = "create table CashierTable (akey character(10) primary key not null, avalue blob);";
-	char  *aszSqlInsert = "insert into CashierTable values (?, ?);";
 
-	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+	rc = sqlite3_exec(db, CListerCashier::aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerCashier::aszSqlDrop, rc);
 
-	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+	rc = sqlite3_exec(db, CListerCashier::aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerCashier::aszSqlCreate, rc);
 
 	// read from GenPOS and keep reading PLUs untile there are no more.
 	// for each PLU returned by GenPOS we will create a database record.
 	sqlite3_stmt  *insertStmt;
-	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
+	rc = sqlite3_prepare(db, CListerCashier::aszSqlInsert, -1, &insertStmt, NULL);
+	TRACE2("   sqlite3_prepare() \"%s\" %d\n", CListerCashier::aszSqlInsert, rc);
 
 	CListerCashier  cashierList;
 	cashierList.RetrieveList();
@@ -411,104 +405,32 @@ static int  RetrieveProvisioningData_Department (sqlite3 *db)
 
 static int  RetrieveProvisioningData_TransMnemo (sqlite3 *db)
 {
-	short   sLastError;
-	USHORT  usReadOffset = 0;
-	USHORT  usActualRead = 0;
 	int     rc;
 	char    *zErrMsg = 0;
-	char    *aszSqlDrop = "drop table TransMnemoTable;";
-	char    *aszSqlCreate = "create table TransMnemoTable (akey int primary key not null, avalue blob);";
-	char    *aszSqlInsert = "insert into TransMnemoTable values (?, ?);";
 
-	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+	rc = sqlite3_exec(db, CListerTransaction::aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerTransaction::aszSqlDrop, rc);
 
-	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+	rc = sqlite3_exec(db, CListerTransaction::aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerTransaction::aszSqlCreate, rc);
 
-	sqlite3_stmt  *insertStmt;
-	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
-
-	for (int iLoop = 0; iLoop < MAX_TRANSM_NO; iLoop++) {
-		wchar_t  abTransMnemonic[PARA_TRANSMNEMO_LEN] = {0};
-
-		sLastError = ::CliParaAllRead (CLASS_PARATRANSMNEMO, (UCHAR *)(&abTransMnemonic[0]), sizeof( abTransMnemonic ), usReadOffset, &usActualRead);
-
-		// bind the key to the first parameter of the insert, the key value
-		rc = sqlite3_bind_int (insertStmt, 1, iLoop + 1);
-		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
-
-		// bind the PLU data to the second parameter of the insert, the data value
-		rc = sqlite3_bind_blob (insertStmt, 2, &abTransMnemonic[0], sizeof(abTransMnemonic), SQLITE_STATIC);
-		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
-
-		// perform the actual insert with the modified prepared statement
-		rc = sqlite3_step (insertStmt);
-		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
-
-		// reset the prepared statement so that we do our next set of binds.
-		rc = sqlite3_reset (insertStmt);
-		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
-
-		usReadOffset += usActualRead;
-	}
-
-	// we are done with the prepared statement so release all the resources for it.
-	rc = sqlite3_finalize (insertStmt);
-	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+	CListerTransaction::RetrieveAndStoreOnly (db);
 
 	return 1;
 }
 
 static int  RetrieveProvisioningData_LeadthruMnemo (sqlite3 *db)
 {
-	short   sLastError;
-	USHORT  usReadOffset = 0;
-	USHORT  usActualRead = 0;
 	int     rc;
 	char    *zErrMsg = 0;
-	char    *aszSqlDrop = "drop table LeadthruMnemoTable;";
-	char    *aszSqlCreate = "create table LeadthruMnemoTable (akey int primary key not null, avalue blob);";
-	char    *aszSqlInsert = "insert into LeadthruMnemoTable values (?, ?);";
 
-	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+	rc = sqlite3_exec(db, CListerLeadThru::aszSqlDrop, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerLeadThru::aszSqlDrop, rc);
 
-	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+	rc = sqlite3_exec(db, CListerLeadThru::aszSqlCreate, NULL, 0, &zErrMsg);
+	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerLeadThru::aszSqlCreate, rc);
 
-	sqlite3_stmt  *insertStmt;
-	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
-
-	for (int iLoop = 0; iLoop < MAX_LEAD_NO; iLoop++) {
-		wchar_t  abTransMnemonic[PARA_LEADTHRU_LEN] = {0};
-
-		sLastError = ::CliParaAllRead (CLASS_PARALEADTHRU, (UCHAR *)(&abTransMnemonic[0]), sizeof( abTransMnemonic ), usReadOffset, &usActualRead);
-
-		// bind the key to the first parameter of the insert, the key value
-		rc = sqlite3_bind_int (insertStmt, 1, iLoop + 1);
-		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
-
-		// bind the PLU data to the second parameter of the insert, the data value
-		rc = sqlite3_bind_blob (insertStmt, 2, &abTransMnemonic[0], sizeof(abTransMnemonic), SQLITE_STATIC);
-		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
-
-		// perform the actual insert with the modified prepared statement
-		rc = sqlite3_step (insertStmt);
-		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
-
-		// reset the prepared statement so that we do our next set of binds.
-		rc = sqlite3_reset (insertStmt);
-		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
-
-		usReadOffset += usActualRead;
-	}
-
-	// we are done with the prepared statement so release all the resources for it.
-	rc = sqlite3_finalize (insertStmt);
-	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+	CListerLeadThru::RetrieveAndStoreOnly (db);
 
 	return 1;
 }

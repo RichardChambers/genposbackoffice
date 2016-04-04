@@ -1,6 +1,14 @@
 #include "StdAfx.h"
 #include "ListerPlu.h"
 
+char const * const CListerPlu::aszSqlDrop = "drop table PluTable;";
+char const * const CListerPlu::aszSqlCreate = "create table PluTable (akey character(14) primary key not null, avalue blob);";
+char const * const CListerPlu::aszSqlInsert = "insert into PluTable values (?1, ?2);";
+char const * const CListerPlu::aszSqlUpdate = "update PluTable set avalue = ?2 where akey == ?1;";
+char const * const CListerPlu::aszSqlDelete = "delete from PluTable where akey == ?1;";
+char const * const CListerPlu::aszSqlSelect = "select avalue from PluTable where akey == ?1;";
+
+
 CListerPlu::CListerPlu(void) :
 	bPluData(FALSE),
 	PluDataCount(0), PluDataIndex(0)
