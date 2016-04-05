@@ -146,37 +146,51 @@ void CGenposBackOfficeView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 
-	int  rectButtonWidth = 85;
-	CRect  rectButton(10, 0, 10 + rectButtonWidth, 40);
+	int  rectButtonWidth = 90;
+	int  rectButtonHeight = 40;
+
+	CRect  rectButton(10, 0, 10 + rectButtonWidth, rectButtonHeight);
+
 	cbuttonLanConnection.Create (_T("Lan Setting"), 0, rectButton, this, ID_VIEW_LANCONNECTION);
 	cbuttonLanConnection.ShowWindow (SW_SHOW);
 
-	rectButton.left += rectButtonWidth + 25;
-	rectButton.right += rectButtonWidth + 25;
+	rectButton.left = 350;
+
+	rectButton.right = rectButton.left + rectButtonWidth;
 	cbuttonLogIn.Create (_T("Log In"), 0, rectButton, this, ID_TERMINAL_LOGINTO);
 	cbuttonLogIn.ShowWindow (SW_SHOW);
 
-	rectButton.left += rectButtonWidth + 5;
-	rectButton.right += rectButtonWidth + 5;
-	cbuttonLogOut.Create (_T("Log Out"), 0, rectButton, this, ID_TERMINAL_LOGOUT);
-	cbuttonLogOut.ShowWindow (SW_SHOW);
-	cbuttonLogOut.EnableWindow (0);
+	rectButton.top += rectButtonHeight + 10;
+	rectButton.bottom += rectButtonHeight + 10;
 
-	rectButton.left = 350;
-	rectButton.right = rectButton.left + rectButtonWidth;
 	cbuttonFlexMem.Create (_T("Flex Mem"), 0, rectButton, this, ID_TERMINAL_FLEXMRETRIEVE);
 	cbuttonFlexMem.ShowWindow (SW_SHOW);
 	cbuttonFlexMem.EnableWindow (0);
 
+	rectButton.top -= rectButtonHeight + 10;
+	rectButton.bottom -= rectButtonHeight + 10;
+
 	rectButton.left += rectButtonWidth + 5;
 	rectButton.right += rectButtonWidth + 5;
+
+	cbuttonLogOut.Create (_T("Log Out"), 0, rectButton, this, ID_TERMINAL_LOGOUT);
+	cbuttonLogOut.ShowWindow (SW_SHOW);
+	cbuttonLogOut.EnableWindow (0);
+
+	rectButton.top += rectButtonHeight + 10;
+	rectButton.bottom += rectButtonHeight + 10;
+
 	cbuttonSettingsRetrieve.Create (_T("Retrieve"), 0, rectButton, this, ID_TERMINAL_SETTINGSRETRIEVE);
 	cbuttonSettingsRetrieve.ShowWindow (SW_SHOW);
 	cbuttonSettingsRetrieve.EnableWindow (0);
 
 	rectButton.left += rectButtonWidth + 5;
 	rectButton.right += rectButtonWidth + 5;
-	cstaticProgress.Create (L"xx", 0, rectButton, this, 0);
+	cstaticProgress.Create (L"LAN", SS_BITMAP | SS_CENTERIMAGE, rectButton, this, 0);
+
+	m_firstTextLine.top = rectButton.bottom + 20;
+	m_firstTextLine.bottom = m_firstTextLine.top + 25;
+
 	cstaticProgress.ShowWindow (SW_SHOW);
 	cstaticProgress.EnableWindow (0);
 }
