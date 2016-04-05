@@ -453,7 +453,7 @@ bool CLanThread::RetrieveProvisioningData (char *pFilePath, LanBlock *pLanBlock)
 	fclose (fp);
 
 	int rc = sqlite3_open(pFilePath, &db);
-	TRACE1("CLanThread::RetrieveProvisioningData: sqlite3_open() %S rc %d\n", pFilePath, rc);
+	TRACE2("CLanThread::RetrieveProvisioningData: sqlite3_open() %S rc %d\n", pFilePath, rc);
 	if( rc != SQLITE_OK ) {
 		TRACE1("  ERROR sqlite3_open() %d\n", rc);
 		return true;
