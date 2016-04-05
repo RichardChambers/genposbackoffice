@@ -41,6 +41,10 @@ public:
 
 	ProgressBlock m_ProgressBlock;
 
+	CBitmap CBmpRunning1;
+	CBitmap CBmpRunning2;
+	CBitmap CBmpOff;
+
 public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
@@ -66,6 +70,9 @@ CProgressThread::~CProgressThread()
 
 BOOL CProgressThread::InitInstance()
 {
+	CBmpRunning1.LoadBitmap (IDB_BITMAP_LANRUNNING1);  // Loads one of the default Windows bitmaps
+	CBmpRunning2.LoadBitmap (IDB_BITMAP_LANRUNNING2);  // Loads one of the default Windows bitmaps
+	CBmpOff.LoadBitmap (IDB_BITMAP_LAN_OFF);  // Loads one of the default Windows bitmaps
 	return TRUE;
 }
 
@@ -81,14 +88,23 @@ END_MESSAGE_MAP()
 
 int CProgressThread::Run()
 {
+
 	int i = 0;
+	int j = 0;
 	while (1) {
 		Sleep(500);
 		++i;
 		if (m_ProgressBlock.m_CWnd) {
+			if (j)
+				m_ProgressBlock.m_CWnd->SendMessage (STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)HBITMAP(CBmpRunning1)); 
+			else
+				m_ProgressBlock.m_CWnd->SendMessage (STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)HBITMAP(CBmpRunning2)); 
+			j = 1 - j;
 			CString  myText;
 			myText.Format (L"T %d", i);
 			m_ProgressBlock.m_CWnd->SetWindowText(myText);
+		} else {
+			i = 0;
 		}
 	}
 
@@ -126,7 +142,9 @@ LRESULT  CProgressWnd::OnProgressStartStop(WPARAM wParam, LPARAM lParam)
 		if (m_ProgressThread->m_ProgressBlock.m_InProgress) {
 			m_ProgressThread->SuspendThread();
 			m_ProgressThread->m_ProgressBlock.m_InProgress = 1 - m_ProgressThread->m_ProgressBlock.m_InProgress;
+			SendMessage (STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)HBITMAP(m_ProgressThread->CBmpOff)); 
 		} else {
+			SendMessage (STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)HBITMAP(m_ProgressThread->CBmpOff)); 
 			m_ProgressThread->m_ProgressBlock.m_InProgress = 1 - m_ProgressThread->m_ProgressBlock.m_InProgress;
 			m_ProgressThread->ResumeThread();
 		}
