@@ -66,7 +66,7 @@ bool ElectronicJournalRecord::ReadRecord(void)
 			ULONG  ulReadOffset = m_ulReadOffset;
 
 			m_ejtHeader = *(EJT_HEADER *)m_auchEJBuffer;  // get copy of the record header.
-			TRACE3("    EJT_HEADER - signature 0x%4.4x, usCVLI %d consec %d \n", m_ejtHeader.usReserve, m_ejtHeader.usCVLI, m_ejtHeader.usConsecutive);
+			TRACE3("    EJT_HEADER - signature 0x%4.4x, usCVLI %d consec %d \n", m_ejtHeader.usEjSignature, m_ejtHeader.usCVLI, m_ejtHeader.usConsecutive);
 			m_usBufferOffset = sizeof(EJT_HEADER);       // point to beginning of the text string in record.
 			m_ulReadOffset += m_ejtHeader.usCVLI;         // update our relative offset to beginning of next piece
 			m_pText = (wchar_t*)(m_auchEJBuffer + m_usBufferOffset);
