@@ -423,30 +423,41 @@ void CGenposBackOfficeDoc::OnTerminalEJretrieve()
 
 	if (m_LanBlock.m_InProgress != 0) {
 		AfxMessageBox (L"Retrieval of data from Terminal already started.");
+	} else if (! m_bLanOpen) {
+		AfxMessageBox (L"You must first Log In to a terminal.");
+	} else if (!m_bLanLogInto) {
+
 	} else {
+		static  char filePath[512] = {0};
+
+		SetCurrentDirectory (m_currentRootFolder);
 #if 1
-		CFileDialog fileDialog(TRUE, L"*.dbft");
+		if (m_LanData.m_csDatabaseFileName.IsEmpty()) {
+			CFileDialog fileDialog(TRUE);
+			if (fileDialog.DoModal () != IDOK) {
+				return;
+			}
+			m_LanData.m_csDatabaseFileName = fileDialog.GetFileName();
+		}
+
+		for (int i = 0; i < m_LanData.m_csDatabaseFileName.GetLength(); i++) {
+			filePath[i] = m_LanData.m_csDatabaseFileName.GetAt(i);
+		}
+		filePath[m_LanData.m_csDatabaseFileName.GetLength()] = 0;
+		m_LanBlock.m_InProgress = 1;
+		m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
 #else
 		CFileDialog fileDialog(TRUE, L"*.txt");
-#endif
 		if (fileDialog.DoModal () == IDOK) {
-			static  char filePath[512] = {0};
 
 			CString mFileName = fileDialog.GetFileName();
 			for (int i = 0; i < mFileName.GetLength(); i++) {
 				filePath[i] = mFileName.GetAt(i);
 			}
 			filePath[mFileName.GetLength()] = 0;
-			if (m_bLanOpen && m_bLanLogInto) {
-
-				m_LanBlock.m_InProgress = 1;
-#if 1
-				m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
-#else
-				m_LanThread->PostThreadMessage (ID_TERMINAL_EJRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
-#endif
-			}
+			m_LanThread->PostThreadMessage (ID_TERMINAL_EJRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
 		}
+#endif
 	}
 }
 
