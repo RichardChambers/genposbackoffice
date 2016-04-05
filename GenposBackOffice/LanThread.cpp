@@ -151,7 +151,7 @@ void CLanThread::OnTerminalEJretrieve (WPARAM wParam, LPARAM lParam)
 	m_ThreadBlock.m_LastCommand = ID_TERMINAL_EJRETRIEVE;
 
 	// do the LAN activity and finish up.
-	ElectronicJournalRead ((char *)wParam, 0);
+	ElectronicJournalRead ((char *)wParam, j);
 
 	m_ThreadBlock.m_InProgress = 0;
 
@@ -182,7 +182,7 @@ void CLanThread::OnTerminalSettingsretrieve (WPARAM wParam, LPARAM lParam)
 	}
 
 	m_ThreadBlock.m_LastCommand = ID_TERMINAL_SETTINGSRETRIEVE;
-	RetrieveProvisioningData ((char *)wParam, 0);
+	RetrieveProvisioningData ((char *)wParam, j);
 
 	if (j) {
 		j->m_InProgress = 0;
@@ -192,7 +192,7 @@ void CLanThread::OnTerminalSettingsretrieve (WPARAM wParam, LPARAM lParam)
 	m_ThreadBlock.m_InProgress = 0;
 }
 
-bool CLanThread::ElectronicJournalRead (char *pFilePath, HWND hWndProgress)
+bool CLanThread::ElectronicJournalRead (char *pFilePath, LanBlock *pLanBlock)
 {
 	SHORT  sResult = ::SerEJNoOfTrans();  // check Electronic Journal status and get number of blocks.
 	USHORT  usCount = 0;
@@ -219,7 +219,7 @@ bool CLanThread::ElectronicJournalRead (char *pFilePath, HWND hWndProgress)
 	return true;
 }
 
-bool CLanThread::ElectronicJournalReadReset (char *pFilePath, HWND hWndProgress)
+bool CLanThread::ElectronicJournalReadReset (char *pFilePath, LanBlock *pLanBlock)
 {
 	return true;
 }
@@ -243,16 +243,16 @@ static int  RetrieveProvisioningData_Plu (sqlite3 *db)
 	// is stored as a BLOB.
 
 	rc = sqlite3_exec(db, CListerPlu::aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec()  \"%s\" %d\n", CListerPlu::aszSqlDrop, rc);
+	TRACE2("   sqlite3_exec()  \"%S\" %d\n", CListerPlu::aszSqlDrop, rc);
 
 	rc = sqlite3_exec(db, CListerPlu::aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec()  \"%s\" %d\n", CListerPlu::aszSqlCreate, rc);
+	TRACE2("   sqlite3_exec()  \"%S\" %d\n", CListerPlu::aszSqlCreate, rc);
 
 	// read from GenPOS and keep reading PLUs untile there are no more.
 	// for each PLU returned by GenPOS we will create a database record.
 	sqlite3_stmt  *insertStmt;
 	rc = sqlite3_prepare(db, CListerPlu::aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare()  \"%s\" %d\n", CListerPlu::aszSqlInsert, rc);
+	TRACE2("   sqlite3_prepare()  \"%S\" %d\n", CListerPlu::aszSqlInsert, rc);
 
 	CParamPlu  PluData;
 	bool  bStart = true;
@@ -297,16 +297,16 @@ static int  RetrieveProvisioningData_Cashier (sqlite3 *db)
 	char  *zErrMsg = 0;
 
 	rc = sqlite3_exec(db, CListerCashier::aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerCashier::aszSqlDrop, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", CListerCashier::aszSqlDrop, rc);
 
 	rc = sqlite3_exec(db, CListerCashier::aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerCashier::aszSqlCreate, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", CListerCashier::aszSqlCreate, rc);
 
 	// read from GenPOS and keep reading PLUs untile there are no more.
 	// for each PLU returned by GenPOS we will create a database record.
 	sqlite3_stmt  *insertStmt;
 	rc = sqlite3_prepare(db, CListerCashier::aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare() \"%s\" %d\n", CListerCashier::aszSqlInsert, rc);
+	TRACE2("   sqlite3_prepare() \"%S\" %d\n", CListerCashier::aszSqlInsert, rc);
 
 	CListerCashier  cashierList;
 	cashierList.RetrieveList();
@@ -359,16 +359,16 @@ static int  RetrieveProvisioningData_Department (sqlite3 *db)
 	char  *aszSqlInsert = "insert into DeptTable values (?, ?);";
 
 	rc = sqlite3_exec(db, aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlDrop, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", aszSqlDrop, rc);
 
 	rc = sqlite3_exec(db, aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", aszSqlCreate, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", aszSqlCreate, rc);
 
 	// read from GenPOS and keep reading PLUs untile there are no more.
 	// for each PLU returned by GenPOS we will create a database record.
 	sqlite3_stmt  *insertStmt;
 	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
+	TRACE2("   sqlite3_prepare() \"%S\" %d\n", aszSqlInsert, rc);
 
 //	CListerCashier  cashierList;
 //	cashierList.RetrieveList();
@@ -410,10 +410,10 @@ static int  RetrieveProvisioningData_TransMnemo (sqlite3 *db)
 	char    *zErrMsg = 0;
 
 	rc = sqlite3_exec(db, CListerTransaction::aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerTransaction::aszSqlDrop, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", CListerTransaction::aszSqlDrop, rc);
 
 	rc = sqlite3_exec(db, CListerTransaction::aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerTransaction::aszSqlCreate, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", CListerTransaction::aszSqlCreate, rc);
 
 	CListerTransaction::RetrieveAndStoreOnly (db);
 
@@ -426,10 +426,10 @@ static int  RetrieveProvisioningData_LeadthruMnemo (sqlite3 *db)
 	char    *zErrMsg = 0;
 
 	rc = sqlite3_exec(db, CListerLeadThru::aszSqlDrop, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerLeadThru::aszSqlDrop, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", CListerLeadThru::aszSqlDrop, rc);
 
 	rc = sqlite3_exec(db, CListerLeadThru::aszSqlCreate, NULL, 0, &zErrMsg);
-	TRACE2("   sqlite3_exec() \"%s\" %d\n", CListerLeadThru::aszSqlCreate, rc);
+	TRACE2("   sqlite3_exec() \"%S\" %d\n", CListerLeadThru::aszSqlCreate, rc);
 
 	CListerLeadThru::RetrieveAndStoreOnly (db);
 
@@ -443,7 +443,7 @@ static int  RetrieveProvisioningData_LeadthruMnemo (sqlite3 *db)
  *    the terminal's provisioning information into a database file.
  *
 */
-bool CLanThread::RetrieveProvisioningData (char *pFilePath, HWND hWndProgress)
+bool CLanThread::RetrieveProvisioningData (char *pFilePath, LanBlock *pLanBlock)
 {
 	sqlite3 *db;
 
@@ -453,17 +453,23 @@ bool CLanThread::RetrieveProvisioningData (char *pFilePath, HWND hWndProgress)
 	fclose (fp);
 
 	int rc = sqlite3_open(pFilePath, &db);
+	TRACE1("CLanThread::RetrieveProvisioningData: sqlite3_open() %S rc %d\n", pFilePath, rc);
 	if( rc != SQLITE_OK ) {
 		TRACE1("  ERROR sqlite3_open() %d\n", rc);
 		return true;
 	}
 
+	TRACE0("  RetrieveProvisioningData_Plu()\n");
 	RetrieveProvisioningData_Plu (db);
+	TRACE0("  RetrieveProvisioningData_Cashier()\n");
 	RetrieveProvisioningData_Cashier (db);
+	TRACE0("  RetrieveProvisioningData_TransMnemo()\n");
 	RetrieveProvisioningData_TransMnemo (db);
+	TRACE0("  RetrieveProvisioningData_LeadthruMnemo()\n");
 	RetrieveProvisioningData_LeadthruMnemo (db);
 
 	// close the SQLite file as we are done making database changes.
 	sqlite3_close(db);
+	TRACE0("CLanThread::RetrieveProvisioningData: sqlite3_close() and return.\n");
 	return true;
 }

@@ -33,9 +33,9 @@ public:
 	afx_msg void OnTerminalSettingsretrieve(WPARAM wParam,LPARAM lParam);
 
 protected:
-	bool ElectronicJournalRead (char *pFilePath, HWND hWndProgress);
-	bool ElectronicJournalReadReset (char *pFilePath, HWND hWndProgress);
-	bool RetrieveProvisioningData (char *pFilePath, HWND hWndProgress);
+	bool ElectronicJournalRead (char *pFilePath, LanBlock *pLanBlock);
+	bool ElectronicJournalReadReset (char *pFilePath, LanBlock *pLanBlock);
+	bool RetrieveProvisioningData (char *pFilePath, LanBlock *pLanBlock);
 
 	DECLARE_MESSAGE_MAP()
 };
