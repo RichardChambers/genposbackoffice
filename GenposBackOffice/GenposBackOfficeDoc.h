@@ -111,6 +111,7 @@ public:
 	afx_msg void OnTerminalLockkeyboard();
 	afx_msg void OnTerminalUnlockkeyboard();
 	afx_msg void OnTerminalSettingsretrieve();
+	afx_msg void OnDatabaseSettingsretrieve();
 	afx_msg void OnEditCashieredit();
 	afx_msg void OnEditCouponedit();
 	afx_msg void OnEditPluedit();

@@ -122,6 +122,7 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, CDocument)
 	ON_COMMAND(ID_TERMINAL_LOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalLockkeyboard)
 	ON_COMMAND(ID_TERMINAL_UNLOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalUnlockkeyboard)
 	ON_COMMAND(ID_TERMINAL_SETTINGSRETRIEVE, &CGenposBackOfficeDoc::OnTerminalSettingsretrieve)
+	ON_COMMAND(ID_DATABASE_SETTINGSRETRIEVE, &CGenposBackOfficeDoc::OnDatabaseSettingsretrieve)
 	ON_COMMAND(ID_EDIT_CASHIEREDIT, &CGenposBackOfficeDoc::OnEditCashieredit)
 	ON_COMMAND(ID_EDIT_COUPONEDIT, &CGenposBackOfficeDoc::OnEditCouponedit)
 	ON_COMMAND(ID_EDIT_PLUEDIT, &CGenposBackOfficeDoc::OnEditPluedit)
@@ -509,16 +510,6 @@ void CGenposBackOfficeDoc::OnTerminalSettingsretrieve()
 
 		paramFlexMem.PullParam ();
 		paramFlexMem.SummaryToText (m_csHostFlexMem);
-		paramMdc.PullParam ();
-
-#if 0
-		listTrans.RetrieveList ();
-		listLeadThru.RetrieveList ();
-
-		listPlu.RetrieveList ();
-		listCoupon.RetrieveList ();
-		listCashier.BuildCashierArray ();
-#endif
 
 		if (m_LanData.m_csDatabaseFileName.IsEmpty()) {
 			CFileDialog fileDialog(TRUE);
@@ -537,6 +528,46 @@ void CGenposBackOfficeDoc::OnTerminalSettingsretrieve()
 
 		SetModifiedFlag ();
 		UpdateAllViews (NULL);
+	}
+}
+
+// retrieve the data from the current SQLite3 database file.
+void CGenposBackOfficeDoc::OnDatabaseSettingsretrieve()
+{
+	if (m_LanBlock.m_InProgress != 0) {
+		AfxMessageBox (L"Retrieval of data from Terminal in progress.");
+	} else {
+		static  char filePath[512] = {0};
+
+		SetCurrentDirectory (m_currentRootFolder);
+
+		if (m_LanData.m_csDatabaseFileName.IsEmpty()) {
+			CFileDialog fileDialog(TRUE);
+			if (fileDialog.DoModal () != IDOK) {
+				return;
+			}
+			m_LanData.m_csDatabaseFileName = fileDialog.GetFileName();
+		}
+
+		for (int i = 0; i < m_LanData.m_csDatabaseFileName.GetLength(); i++) {
+			filePath[i] = m_LanData.m_csDatabaseFileName.GetAt(i);
+		}
+		filePath[m_LanData.m_csDatabaseFileName.GetLength()] = 0;
+
+		sqlite3 *db;
+
+		int rc = sqlite3_open(filePath, &db);
+		TRACE2("CGenposBackOfficeDoc::RetrieveProvisioningData: sqlite3_open() %S rc %d\n", filePath, rc);
+		if( rc != SQLITE_OK ) {
+			TRACE1("  ERROR sqlite3_open() %d\n", rc);
+			return;
+		}
+		listTrans.RetrieveList (db);
+		listLeadThru.RetrieveList (db);
+
+		// close the SQLite file as we are done making database changes.
+		sqlite3_close(db);
+		TRACE0("CLanThread::RetrieveProvisioningData: sqlite3_close() and return.\n");
 	}
 }
 

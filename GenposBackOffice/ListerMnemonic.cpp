@@ -265,37 +265,36 @@ CListerLeadThru::~CListerLeadThru(void)
  short    CListerLeadThru::RetrieveList (sqlite3 *db)
  {
 	int     rc;
-	sqlite3_stmt  *insertStmt;
+	sqlite3_stmt  *selectStmt;
 
-	rc = sqlite3_prepare(db, aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlInsert, rc);
+	rc = sqlite3_prepare(db, aszSqlSelect, -1, &selectStmt, NULL);
+	TRACE2("   sqlite3_prepare() \"%s\" %d\n", aszSqlSelect, rc);
 
 	for (int iLoop = 0; iLoop < MAX_LEAD_NO; iLoop++) {
 
-		short sLastError = abTransMnemonic[iLoop].PullParam(iLoop + 1);
-
-		// bind the key to the first parameter of the insert, the key value
-		rc = sqlite3_bind_int (insertStmt, 1, iLoop + 1);
+		// bind the key to the first parameter of the select, the key value
+		rc = sqlite3_bind_int (selectStmt, 1, iLoop + 1);
 		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
 
-		// bind the PLU data to the second parameter of the insert, the data value
-		rc = sqlite3_bind_blob (insertStmt, 2, abTransMnemonic[iLoop].GetSqliteBlob(0), abTransMnemonic[iLoop].GetSqliteBlobSize(0), SQLITE_STATIC);
-		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
+		// perform the actual select with the modified prepared statement
+		rc = sqlite3_step (selectStmt);
+		TRACE2("   sqlite3_step() step select (%d is SQLITE_ROW) %d\n", SQLITE_ROW, rc);
 
-		// perform the actual insert with the modified prepared statement
-		rc = sqlite3_step (insertStmt);
-		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
+		if (rc == SQLITE_ROW) {
+			const void *pBlob = sqlite3_column_blob (selectStmt, 0);
+			memcpy (abTransMnemonic[iLoop].GetSqliteBlob(0), pBlob, abTransMnemonic[iLoop].GetSqliteBlobSize(0));
+		}
 
 		// reset the prepared statement so that we do our next set of binds.
-		rc = sqlite3_reset (insertStmt);
+		rc = sqlite3_reset (selectStmt);
 		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
 	}
 
 	// we are done with the prepared statement so release all the resources for it.
-	rc = sqlite3_finalize (insertStmt);
+	rc = sqlite3_finalize (selectStmt);
 	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
 
-	return 1;
+	return 0;
  }
 
 

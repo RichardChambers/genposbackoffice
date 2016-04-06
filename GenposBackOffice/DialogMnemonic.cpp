@@ -62,7 +62,7 @@ void CDialogMnemonic::DoDataExchange(CDataExchange* pDX)
 		for (CListerMnemonic *p = m_MnemonicList; p && p->GetPromptText (usAddress, wcsPrompt); ) {
 			p->GetMnemonicValue (usAddress, csMnemonic);
 			lvItem.mask = LVIF_TEXT;
-			lvItem.iItem = 0;
+			lvItem.iItem = usAddress;
 			lvItem.iSubItem = 0;
 			lvItem.pszText = wcsPrompt;
 			nItem = m_listctrl.InsertItem(&lvItem);
