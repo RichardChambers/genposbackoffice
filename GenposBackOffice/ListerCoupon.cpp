@@ -23,14 +23,6 @@ CListerCoupon::~CListerCoupon(void)
 {
 }
 
-short   CListerCoupon::RetrieveList (void)
-{
-	m_sLastError = 1;
-	CouponTotalIndex = CouponDataIndex = 0;
-	CouponTotalCount = CouponDataCount = 1;
-
-	return m_sLastError;
-}
 
 short   CListerCoupon::RetrieveList (sqlite3 *db)
 {

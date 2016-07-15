@@ -25,7 +25,6 @@ public:
 	CLister(void);
 	virtual ~CLister(void);
 
-	virtual  short    RetrieveList (void) = 0;
 	virtual  short    RetrieveList (sqlite3 *db) = 0;
 	virtual  CLister  *getListObjectPtr (void) = 0;
 

@@ -9,8 +9,8 @@ public:
 	CListerCashier(void);
 	~CListerCashier(void);
 
-	short   RetrieveList (void);
 	short   RetrieveList (sqlite3 *db);
+	static short   RetrieveAndStoreOnly (sqlite3 *db);
 	CLister *getListObjectPtr (void) { return this; }
 	short   GetCurrentListItem (void);
 	short   GetNextListItem (void);
@@ -21,7 +21,6 @@ public:
 	short    GetCurrentListItemTotal (void);
 	short    GetCurrentListTotalItem (void);
 
-	short  BuildCashierArray (void);
 
 public:
 	static char const * const aszSqlDrop;

@@ -31,15 +31,6 @@ CListerTransaction::~CListerTransaction(void)
  *  This function does not do any kind of persistent storage of the data retrieved.
  *  The data retrieves is merely kept in the memory resident area.
 */
-short    CListerTransaction::RetrieveList (void)
-{
-	for (int iLoop = 0; iLoop < MAX_TRANSM_NO; iLoop++) {
-		short sLastError = abTransMnemonic[iLoop].PullParam(iLoop + 1);
-	}
-
-	return 0;
-}
-
 short    CListerTransaction::RetrieveList (sqlite3 *db)
 {
 	int     rc;
@@ -253,14 +244,6 @@ CListerLeadThru::~CListerLeadThru(void)
 {
 }
 
- short    CListerLeadThru::RetrieveList (void)
- {
-	for (int iLoop = 0; iLoop < MAX_LEAD_NO; iLoop++) {
-		short sLastError = abTransMnemonic[iLoop].PullParam(iLoop + 1);
-	}
-
-	return 0;
- }
 
  short    CListerLeadThru::RetrieveList (sqlite3 *db)
  {
