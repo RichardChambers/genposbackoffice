@@ -222,3 +222,6 @@ pip-log.txt
 .mr.developer.cfg
 GenposBackOffice/Debug/BuildLog.htm
 GenposBackOffice/hlp/GenposBackOffice.chm
+*.ncb
+*.suo
+GenposBackOffice.ncb
