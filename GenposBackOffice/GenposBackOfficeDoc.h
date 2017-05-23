@@ -19,6 +19,7 @@ class CLanConnectionData
 {
 public:
 	CLanConnectionData();
+	~CLanConnectionData();
 	CString  m_csHostName;      // host name prefix for this cluster group without the dash (-) and terminal number
 	CString  m_csLastTermNo;    // last terminal number, used with m_csHostName to create DHCP target
 	CString  m_csHostMemo;      // memo information about this cluster group.
@@ -27,9 +28,13 @@ public:
 	CString  m_csHostSessionPassword;
 	DWORD    m_dwHostSessionIpAddress;
 	BOOL     m_bUseIpAddress;
-	CString  m_csDatabaseFileName;
+	CString  m_csSqlite3dbFileName;
+	sqlite3  *m_hSqlite3db;
 
 	CLanConnectionData & operator = (const CLanConnectionData & other);
+
+	int OpenSqlite3db (wchar_t *csFileName = 0);
+	void CloseSqlite3db (void);
 };
 
 // the CArchive operators for serializing the LAN Connection Data
@@ -103,14 +108,12 @@ public:
 	afx_msg void OnTerminalTotalretrieve();
 	afx_msg void OnTerminalEndOfDay();
 	afx_msg void OnTerminalFlexmretrieve();
-	afx_msg void OnTerminalCashierretrieve();
-	afx_msg void OnTerminalCouponretrieve();
 	afx_msg void OnTerminalEJretrieve();
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
-	afx_msg void OnTerminalPluretrieve();
 	afx_msg void OnTerminalLockkeyboard();
 	afx_msg void OnTerminalUnlockkeyboard();
 	afx_msg void OnTerminalSettingsretrieve();
+	afx_msg void OnDatabaseSettingsretrieve();
 	afx_msg void OnEditCashieredit();
 	afx_msg void OnEditCouponedit();
 	afx_msg void OnEditPluedit();

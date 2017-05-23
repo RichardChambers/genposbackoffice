@@ -9,7 +9,6 @@ public:
 	CListerMnemonic(void);
 	virtual ~CListerMnemonic(void);
 
-	virtual  short    RetrieveList (void) = 0;
 	virtual  short    RetrieveList (sqlite3 *db) = 0;
 	virtual  CLister *getListObjectPtr (void) = 0;
 	virtual  short    GetCurrentListItem (void) = 0;
@@ -34,7 +33,6 @@ public:
 	CListerTransaction(void);
 	~CListerTransaction(void);
 
-	 short    RetrieveList (void);                     // build list by retrieving from GenPOS
 	 short    RetrieveList (sqlite3 *db);              // build list by retrieving from the specified database
 	 short    RetrieveAndStoreAndList (sqlite3 *db);   // retrieve from GenPOS and store into the specified database and build list
 
@@ -75,7 +73,6 @@ public:
 	CListerLeadThru(void);
 	~CListerLeadThru(void);
 
-	 short    RetrieveList (void);
 	 short    RetrieveList (sqlite3 *db);
 	 CLister *getListObjectPtr (void) { return this; }
 	 short    GetCurrentListItem (void);

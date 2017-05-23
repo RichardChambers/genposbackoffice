@@ -21,6 +21,12 @@
 #define HID_EDIT_TRANSMNEMONICEDIT              0x18014
 #define HID_EDIT_LEADTHRUMNEMONICEDIT           0x18015
 #define HID_EDIT_TENDERKEYEDIT                  0x18016
+<<<<<<< HEAD
+=======
+#define HID_DATABASE_SETTINGSRETRIEVE           0x18017
+#define HID_SETTINGSRETRIEVE_TERMINALOVERLAN    0x18018
+#define HID_SETTINGSRETRIEVE_CURRENTDATABASE    0x18019
+>>>>>>> origin/master
  
 // Prompts (IDP_*) 
 #define HIDP_OLE_INIT_FAILED                    0x30064

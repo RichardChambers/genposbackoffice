@@ -30,6 +30,11 @@ CLanConnectionData::CLanConnectionData () :
 		, m_csHostSessionPassword(L"")
 		, m_dwHostSessionIpAddress(0)
 		, m_bUseIpAddress(0)
+		, m_hSqlite3db(0)
+{
+}
+
+CLanConnectionData::~CLanConnectionData ()
 {
 }
 
@@ -44,12 +49,39 @@ CLanConnectionData & CLanConnectionData::operator = (const CLanConnectionData & 
 		m_csHostSessionPassword = other.m_csHostSessionPassword;
 		m_dwHostSessionIpAddress = other.m_dwHostSessionIpAddress;
 		m_bUseIpAddress = other.m_bUseIpAddress;
-		m_csDatabaseFileName = other.m_csDatabaseFileName;
+		m_csSqlite3dbFileName = other.m_csSqlite3dbFileName;
+		m_hSqlite3db = other.m_hSqlite3db;   // operator =() - this shares the pointer and is not a transfer of ownership
 	}
 
 	return *this;
 }
 
+int CLanConnectionData::OpenSqlite3db (wchar_t *csFileName)
+{
+	if (csFileName) {
+		m_csSqlite3dbFileName = csFileName;
+	}
+
+	m_csSqlite3dbFileName.TrimLeft();
+	m_csSqlite3dbFileName.TrimRight();
+	if (m_csSqlite3dbFileName.GetLength() < 1) return SQLITE_ERROR;
+
+	static  char filePath[512] = {0};
+	for (int i = 0; i < m_csSqlite3dbFileName.GetLength(); i++) {
+		filePath[i] = m_csSqlite3dbFileName.GetAt(i);
+	}
+	filePath[m_csSqlite3dbFileName.GetLength()] = 0;
+
+	return sqlite3_open(filePath, &m_hSqlite3db);
+}
+
+void CLanConnectionData::CloseSqlite3db (void)
+{
+	if (m_hSqlite3db) sqlite3_close(m_hSqlite3db);
+
+	m_hSqlite3db = 0;
+	return;
+}
 
 /*
  *  CArchive & operator <<() - write (serialize) CLanConnectionData to an archive.
@@ -76,7 +108,7 @@ CArchive & operator << (CArchive & rhs, const CLanConnectionData & other)
 		// do not save the password in the archive so write the empty string instead.
 		rhs << dummyPassword;
 	}
-	rhs << other.m_csDatabaseFileName;
+	rhs << other.m_csSqlite3dbFileName;
 	return rhs;
 }
 
@@ -95,7 +127,7 @@ CArchive & operator >> (CArchive & rhs, CLanConnectionData & other)
 	rhs >> other.m_dwHostSessionIpAddress;
 	rhs >> other.m_bSavePassword;
 	rhs >> other.m_csHostSessionPassword;
-	rhs >> other.m_csDatabaseFileName;
+	rhs >> other.m_csSqlite3dbFileName;
 	return rhs;
 }
 
@@ -115,13 +147,11 @@ BEGIN_MESSAGE_MAP(CGenposBackOfficeDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_TERMINAL_LOGOUT, &CGenposBackOfficeDoc::OnUpdateViewLanconnection)
 	ON_COMMAND(ID_TERMINAL_TOTALRETRIEVE, &CGenposBackOfficeDoc::OnTerminalTotalretrieve)
 	ON_COMMAND(ID_TERMINAL_FLEXMRETRIEVE, &CGenposBackOfficeDoc::OnTerminalFlexmretrieve)
-	ON_COMMAND(ID_TERMINAL_CASHIERRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCashierretrieve)
-	ON_COMMAND(ID_TERMINAL_COUPONRETRIEVE, &CGenposBackOfficeDoc::OnTerminalCouponretrieve)
 	ON_COMMAND(ID_TERMINAL_EJRETRIEVE, &CGenposBackOfficeDoc::OnTerminalEJretrieve)
-	ON_COMMAND(ID_TERMINAL_PLURETRIEVE, &CGenposBackOfficeDoc::OnTerminalPluretrieve)
 	ON_COMMAND(ID_TERMINAL_LOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalLockkeyboard)
 	ON_COMMAND(ID_TERMINAL_UNLOCKKEYBOARD, &CGenposBackOfficeDoc::OnTerminalUnlockkeyboard)
 	ON_COMMAND(ID_TERMINAL_SETTINGSRETRIEVE, &CGenposBackOfficeDoc::OnTerminalSettingsretrieve)
+	ON_COMMAND(ID_DATABASE_SETTINGSRETRIEVE, &CGenposBackOfficeDoc::OnDatabaseSettingsretrieve)
 	ON_COMMAND(ID_EDIT_CASHIEREDIT, &CGenposBackOfficeDoc::OnEditCashieredit)
 	ON_COMMAND(ID_EDIT_COUPONEDIT, &CGenposBackOfficeDoc::OnEditCouponedit)
 	ON_COMMAND(ID_EDIT_PLUEDIT, &CGenposBackOfficeDoc::OnEditPluedit)
@@ -334,6 +364,10 @@ void CGenposBackOfficeDoc::OnTerminalLogout()
 	UpdateAllViews (NULL);
 }
 
+// Perform message ID_TERMINAL_TOTALRETRIEVE - CGenposBackOfficeDoc::OnTerminalTotalretrieve()
+// This message handler will pull totals data from the terminal currently logged into.
+// Only the Master Terminal and the Backup Master Terminal will have totals data.
+// Satellite Terminals do not maintain totals data.
 void CGenposBackOfficeDoc::OnTerminalTotalretrieve()
 {
 	TRACE2 ("** %S(%d): -- OnTerminalTotalretrieve() Entry.\n", __FILE__, __LINE__);
@@ -404,19 +438,6 @@ void CGenposBackOfficeDoc::OnTerminalFlexmretrieve()
 	}
 }
 
-void CGenposBackOfficeDoc::OnTerminalCashierretrieve()
-{
-	if (m_bLanOpen && m_bLanLogInto) {
-		listCashier.BuildCashierArray ();
-	}
-}
-
-void CGenposBackOfficeDoc::OnTerminalCouponretrieve()
-{
-	if (m_bLanOpen && m_bLanLogInto) {
-		listCoupon.RetrieveList ();
-	}
-}
 
 void CGenposBackOfficeDoc::OnTerminalEJretrieve()
 {
@@ -471,12 +492,6 @@ BOOL CGenposBackOfficeDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return TRUE;
 }
 
-void CGenposBackOfficeDoc::OnTerminalPluretrieve()
-{
-	if (m_bLanOpen && m_bLanLogInto) {
-		listPlu.RetrieveList ();
-	}
-}
 
 void CGenposBackOfficeDoc::OnTerminalLockkeyboard()
 {
@@ -509,34 +524,57 @@ void CGenposBackOfficeDoc::OnTerminalSettingsretrieve()
 
 		paramFlexMem.PullParam ();
 		paramFlexMem.SummaryToText (m_csHostFlexMem);
-		paramMdc.PullParam ();
 
-#if 0
-		listTrans.RetrieveList ();
-		listLeadThru.RetrieveList ();
-
-		listPlu.RetrieveList ();
-		listCoupon.RetrieveList ();
-		listCashier.BuildCashierArray ();
-#endif
-
-		if (m_LanData.m_csDatabaseFileName.IsEmpty()) {
+		if (m_LanData.m_csSqlite3dbFileName.IsEmpty()) {
 			CFileDialog fileDialog(TRUE);
 			if (fileDialog.DoModal () != IDOK) {
 				return;
 			}
-			m_LanData.m_csDatabaseFileName = fileDialog.GetFileName();
+			m_LanData.m_csSqlite3dbFileName = fileDialog.GetFileName();
 		}
 
-		for (int i = 0; i < m_LanData.m_csDatabaseFileName.GetLength(); i++) {
-			filePath[i] = m_LanData.m_csDatabaseFileName.GetAt(i);
+		for (int i = 0; i < m_LanData.m_csSqlite3dbFileName.GetLength(); i++) {
+			filePath[i] = m_LanData.m_csSqlite3dbFileName.GetAt(i);
 		}
-		filePath[m_LanData.m_csDatabaseFileName.GetLength()] = 0;
+		filePath[m_LanData.m_csSqlite3dbFileName.GetLength()] = 0;
 		m_LanBlock.m_InProgress = 1;
 		m_LanThread->PostThreadMessage (ID_TERMINAL_SETTINGSRETRIEVE, (WPARAM)filePath, (LPARAM)&m_LanBlock);
 
 		SetModifiedFlag ();
 		UpdateAllViews (NULL);
+	}
+}
+
+// retrieve the data from the current SQLite3 database file.
+void CGenposBackOfficeDoc::OnDatabaseSettingsretrieve()
+{
+	if (m_LanBlock.m_InProgress != 0) {
+		AfxMessageBox (L"Retrieval of data from Terminal in progress.");
+	} else {
+
+		SetCurrentDirectory (m_currentRootFolder);
+
+		if (m_LanData.m_csSqlite3dbFileName.IsEmpty()) {
+			CFileDialog fileDialog(TRUE);
+			if (fileDialog.DoModal () != IDOK) {
+				return;
+			}
+			m_LanData.m_csSqlite3dbFileName = fileDialog.GetFileName();
+		}
+
+		int rc = m_LanData.OpenSqlite3db ();
+		TRACE2("CGenposBackOfficeDoc::RetrieveProvisioningData: sqlite3_open() %s rc %d\n", m_LanData.m_csSqlite3dbFileName, rc);
+		if( rc != SQLITE_OK ) {
+			TRACE1("  ERROR sqlite3_open() %d\n", rc);
+			return;
+		}
+		listTrans.RetrieveList (m_LanData.m_hSqlite3db);
+		listLeadThru.RetrieveList (m_LanData.m_hSqlite3db);
+		listPlu.RetrieveList (m_LanData.m_hSqlite3db);
+
+		// close the SQLite file as we are done making database changes.
+		m_LanData.CloseSqlite3db ();
+		TRACE0("CLanThread::RetrieveProvisioningData: sqlite3_close() and return.\n");
 	}
 }
 

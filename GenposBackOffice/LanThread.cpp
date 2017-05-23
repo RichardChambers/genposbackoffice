@@ -224,17 +224,6 @@ bool CLanThread::ElectronicJournalReadReset (char *pFilePath, LanBlock *pLanBloc
 	return true;
 }
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName)
-{
-	TRACE0("SQLite callback\n");
-	for(int i = 0; i < argc; i++){
-		TRACE2("   %s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-	}
-
-	TRACE0("\n");
-	return 0;
-}
-
 static int  RetrieveProvisioningData_Plu (sqlite3 *db)
 {
 	int   rc;
@@ -248,44 +237,10 @@ static int  RetrieveProvisioningData_Plu (sqlite3 *db)
 	rc = sqlite3_exec(db, CListerPlu::aszSqlCreate, NULL, 0, &zErrMsg);
 	TRACE2("   sqlite3_exec()  \"%S\" %d\n", CListerPlu::aszSqlCreate, rc);
 
-	// read from GenPOS and keep reading PLUs untile there are no more.
+	// read from GenPOS and keep reading PLUs until there are no more.
 	// for each PLU returned by GenPOS we will create a database record.
-	sqlite3_stmt  *insertStmt;
-	rc = sqlite3_prepare(db, CListerPlu::aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare()  \"%S\" %d\n", CListerPlu::aszSqlInsert, rc);
 
-	CParamPlu  PluData;
-	bool  bStart = true;
-	int   sCount = 0;
-	while ( (sCount = PluData.RetrieveNextSet(bStart)) > 0) {
-		bStart = false;
-		for (int i = 0; i < sCount; i++) {
-			char xKey[14] = {0};
-
-			// convert the PLU number, stored as wchar_t, to char to create the table key.
-			for (int j = 0; j < 14; j++) xKey[j] = (char)PluData.m_paraPlu[i].auchPluNo[j];
-
-			// bind the key to the first parameter of the insert, the key value
-			rc = sqlite3_bind_text (insertStmt, 1, xKey, 14, SQLITE_STATIC);
-			TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
-
-			// bind the PLU data to the second parameter of the insert, the data value
-			rc = sqlite3_bind_blob (insertStmt, 2, PluData.m_paraPlu + i, sizeof(PluData.m_paraPlu[0]), SQLITE_STATIC);
-			TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
-
-			// perform the actual insert with the modified prepared statement
-			rc = sqlite3_step (insertStmt);
-			TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
-
-			// reset the prepared statement so that we do our next set of binds.
-			rc = sqlite3_reset (insertStmt);
-			TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
-		}
-	}
-
-	// we are done with the prepared statement so release all the resources for it.
-	rc = sqlite3_finalize (insertStmt);
-	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
+	CListerPlu::RetrieveAndStoreOnly (db);
 
 	return 1;
 }
@@ -302,48 +257,7 @@ static int  RetrieveProvisioningData_Cashier (sqlite3 *db)
 	rc = sqlite3_exec(db, CListerCashier::aszSqlCreate, NULL, 0, &zErrMsg);
 	TRACE2("   sqlite3_exec() \"%S\" %d\n", CListerCashier::aszSqlCreate, rc);
 
-	// read from GenPOS and keep reading PLUs untile there are no more.
-	// for each PLU returned by GenPOS we will create a database record.
-	sqlite3_stmt  *insertStmt;
-	rc = sqlite3_prepare(db, CListerCashier::aszSqlInsert, -1, &insertStmt, NULL);
-	TRACE2("   sqlite3_prepare() \"%S\" %d\n", CListerCashier::aszSqlInsert, rc);
-
-	CListerCashier  cashierList;
-	cashierList.RetrieveList();
-
-	short sStatus = cashierList.GetFirstListItem();
-	while ( sStatus >= 0) {
-		CParamCashier::CASIF_ETK  dataBlob = {0};
-		char       xKey[14] = {0};
-
-		// convert the PLU number, stored as wchar_t, to char to create the table key.
-		sprintf_s (xKey, 14, "%10.10d", cashierList.CashierData.m_paraCashier.ulCashierNo);
-		dataBlob.m_paraCashier = cashierList.CashierData.m_paraCashier;
-		dataBlob.m_jobETK = cashierList.CashierData.m_jobETK;
-
-		// bind the key to the first parameter of the insert, the key value
-		rc = sqlite3_bind_text (insertStmt, 1, xKey, 10, SQLITE_STATIC);
-		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
-
-		// bind the PLU data to the second parameter of the insert, the data value
-		rc = sqlite3_bind_blob (insertStmt, 2, &dataBlob, sizeof(dataBlob), SQLITE_STATIC);
-		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
-
-		// perform the actual insert with the modified prepared statement
-		rc = sqlite3_step (insertStmt);
-		TRACE2("   sqlite3_step() step insert (%d is SQLITE_DONE) %d\n", SQLITE_DONE, rc);
-
-		// reset the prepared statement so that we do our next set of binds.
-		rc = sqlite3_reset (insertStmt);
-		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
-
-		sStatus = cashierList.GetNextListItem();
-	}
-
-	// we are done with the prepared statement so release all the resources for it.
-	rc = sqlite3_finalize (insertStmt);
-	TRACE1("   sqlite3_finalize() prepared stmt reset %d\n", rc);
-
+	CListerCashier::RetrieveAndStoreOnly(db);
 	return 1;
 }
 
@@ -376,14 +290,20 @@ static int  RetrieveProvisioningData_Department (sqlite3 *db)
 	CParamMinorDept  minorDept;
 
 //	short sStatus = cashierList.GetFirstListItem();
-	short sStatus = 0;
+	short    sStatus = 0;
+	MDEPTIF  tempDept = {0};
+	tempDept.uchMajorDeptNo = 0xff;   // indicate we want to iterate through all departments
+	sStatus = ::SerOpMajorDeptRead(&tempDept, 0);
 	while ( sStatus >= 0) {
-		// bind the key to the first parameter of the insert, the key value
-		rc = sqlite3_bind_int (insertStmt, 1, minorDept.m_paraDept.usDeptNo);
+		DEPTIF  myDept = {0};
+		myDept.usDeptNo = tempDept.usDeptNo;
+		myDept.ParaDept = tempDept.ParaDept;
+	// bind the key to the first parameter of the insert, the key value
+		rc = sqlite3_bind_int (insertStmt, 1, myDept.usDeptNo);
 		TRACE1("   sqlite3_bind_text() bind text key %d\n", rc);
 
 		// bind the PLU data to the second parameter of the insert, the data value
-		rc = sqlite3_bind_blob (insertStmt, 2, &minorDept.m_paraDept, sizeof(minorDept.m_paraDept), SQLITE_STATIC);
+		rc = sqlite3_bind_blob (insertStmt, 2, &myDept, sizeof(myDept), SQLITE_STATIC);
 		TRACE1("   sqlite3_bind_blob() bind blob value %d\n", rc);
 
 		// perform the actual insert with the modified prepared statement
@@ -394,6 +314,7 @@ static int  RetrieveProvisioningData_Department (sqlite3 *db)
 		rc = sqlite3_reset (insertStmt);
 		TRACE1("   sqlite3_reset() prepared stmt reset %d\n", rc);
 
+		sStatus = ::SerOpMajorDeptRead(&tempDept, 0);
 //		sStatus = cashierList.GetNextListItem();
 	}
 
@@ -463,6 +384,8 @@ bool CLanThread::RetrieveProvisioningData (char *pFilePath, LanBlock *pLanBlock)
 	RetrieveProvisioningData_Plu (db);
 	TRACE0("  RetrieveProvisioningData_Cashier()\n");
 	RetrieveProvisioningData_Cashier (db);
+	TRACE0("  RetrieveProvisioningData_Department()\n");
+	RetrieveProvisioningData_Department (db);
 	TRACE0("  RetrieveProvisioningData_TransMnemo()\n");
 	RetrieveProvisioningData_TransMnemo (db);
 	TRACE0("  RetrieveProvisioningData_LeadthruMnemo()\n");

@@ -9,7 +9,6 @@ public:
 	CListerPlu(void);
 	~CListerPlu(void);
 
-	short   RetrieveList (void);
 	short   RetrieveList (sqlite3 *db);
 	CLister *getListObjectPtr (void) { return this; }
 	short   GetCurrentListItem (void);
@@ -20,7 +19,8 @@ public:
 	short    GetFirstListTotal (void);
 	short    GetCurrentListItemTotal (void);
 	short    GetCurrentListTotalItem (void);
-	short    BuildPluArray (void);
+
+	static short    RetrieveAndStoreOnly (sqlite3 *db);
 
 public:
 	static char const * const aszSqlDrop;
@@ -29,6 +29,10 @@ public:
 	static char const * const aszSqlUpdate;
 	static char const * const aszSqlDelete;
 	static char const * const aszSqlSelect;
+	static char const * const aszSqlSelectSet;
+	static char const * const aszSqlSelectSetKeyOnly;
+	static char const * const aszSqlSelectAll;
+	static char const * const aszSqlSelectAllKeyOnly;
 
 public:
 	BOOL      bPluData;

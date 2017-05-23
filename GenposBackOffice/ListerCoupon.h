@@ -10,7 +10,6 @@ public:
 	CListerCoupon(void);
 	~CListerCoupon(void);
 
-	short   RetrieveList (void);
 	short   RetrieveList (sqlite3 *db);
 	CLister *getListObjectPtr (void) { return this; }
 	short   GetCurrentListItem (void);
